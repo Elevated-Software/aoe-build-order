@@ -16,7 +16,7 @@ export const NavBar = () => {
       mx="auto"
     >
       <Box w={40}>
-        <Link href={'/'}>
+        <Link href={'/'} passHref>
           <Text cursor="pointer" fontSize="lg" fontWeight="bold">AOE Build Orders</Text>
         </Link>
       </Box>
