@@ -2,7 +2,7 @@ import { Box, Flex, HStack, Text } from '@chakra-ui/react';
 import Link from 'next/link';
 import { DarkModeSwitch } from './DarkModeSwitch';
 
-export const NavBar = () => {
+export const NavBar = (): JSX.Element => {
   return (
     <Flex
       as="nav"
@@ -11,7 +11,7 @@ export const NavBar = () => {
       w="100%"
       maxWidth="800px"
       minWidth="356px"
-      mb={8}
+      mb={14}
       p={8}
       mx="auto"
     >

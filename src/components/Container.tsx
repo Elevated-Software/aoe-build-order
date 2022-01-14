@@ -1,7 +1,7 @@
 import { Box, Flex, FlexProps, useColorModeValue } from '@chakra-ui/react';
 import { NavBar } from './navbar/NavBar';
 
-export const Container = (props: FlexProps) => {
+export const Container = (props: FlexProps): JSX.Element => {
   const bg = useColorModeValue('light.bg', 'dark.bg');
   const color = useColorModeValue('light.primary', 'dark.primary');
 
