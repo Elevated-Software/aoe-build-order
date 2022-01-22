@@ -2,7 +2,7 @@
 import { NextApiHandler, NextApiRequest, NextApiResponse } from 'next';
 
 // https://github.com/zeit/micro#error-handling
-const handleErrors = (fn: NextApiHandler) => async (
+const withHandleErrors = (fn: NextApiHandler) => async (
   req: NextApiRequest,
   res: NextApiResponse,
 ) => {
@@ -15,4 +15,4 @@ const handleErrors = (fn: NextApiHandler) => async (
   }
 };
 
-export default handleErrors;
+export default withHandleErrors;
