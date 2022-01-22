@@ -1,5 +1,6 @@
 import { CheckCircleIcon, CloseIcon } from '@chakra-ui/icons';
 import { Box, Button, Flex, Heading, List, ListIcon, ListItem, Spacer, Stack, Text, useColorModeValue } from '@chakra-ui/react';
+import { signIn } from 'next-auth/react';
 // import { useRouter } from 'next/router';
 import React from 'react';
 
@@ -38,7 +39,7 @@ export const CallToAction = (): JSX.Element => {
     <Box maxW="42rem" my="auto" mx={{ md: 'auto', lg: '0' }} ml={{ lg: 'auto' }} px={8}>
       <Stack spacing={6}>
         <Text fontSize="xs" color={subText} casing="uppercase" opacity="75%">Join with other players</Text>
-        <Heading as="h1" fontSize={[ '4xl', '6xl' ]} mb={6}>Organize Your<br />Build Orders</Heading>
+        <Heading as="h1" fontSize={['4xl', '6xl']} mb={6}>Organize Your<br />Build Orders</Heading>
         <List spacing={3} mb={4}>
           {features.map(feature => (
             <ListItem key={feature.feature}>
@@ -59,7 +60,7 @@ export const CallToAction = (): JSX.Element => {
             {/* <Button onClick={() => signIn('battlenet', { callbackUrl: `${window.location.origin}/groups` })} p={6} colorScheme="blue" disabled={loading}>
                 Sign In
               </Button> */}
-            <Button onClick={() => { }} p={6} colorScheme="blue">
+            <Button onClick={() => signIn()} p={6} colorScheme="blue">
               Sign In
             </Button>
           </Flex>
