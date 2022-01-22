@@ -1,5 +1,4 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
-import { Model } from 'mongoose';
 import type { NextApiHandler, NextApiRequest, NextApiResponse } from 'next';
 import withDb from '../../lib/middlewares/withDb';
 import withHandleErrors from '../../lib/middlewares/withErrorHandler';

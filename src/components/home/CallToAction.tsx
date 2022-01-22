@@ -1,6 +1,5 @@
 import { CheckCircleIcon, CloseIcon } from '@chakra-ui/icons';
 import { Box, Button, Flex, Heading, List, ListIcon, ListItem, Spacer, Stack, Text, useColorModeValue } from '@chakra-ui/react';
-import { signIn } from 'next-auth/react';
 // import { useRouter } from 'next/router';
 import React from 'react';
 
@@ -49,19 +48,16 @@ export const CallToAction = (): JSX.Element => {
           ))}
         </List>
 
-        {/* Sign In using steam or go to My Builds */}
+        {/* Go to build orders */}
         <Box bgColor={cardBg} px={6} py={5} maxW="md" rounded="md" shadow="lg">
           <Flex alignItems="center">
             <Stack>
-              <Text fontSize="xs" color="gray.500" opacity="75%">Start Managing Your Build Orders</Text>
-              <Text fontSize="lg">Sign In using Steam</Text>
+              <Text fontSize="xs" color="gray.500" opacity="75%">Expand your knowledge</Text>
+              <Text fontSize="lg">See All Build Orders</Text>
             </Stack>
             <Spacer />
-            {/* <Button onClick={() => signIn('battlenet', { callbackUrl: `${window.location.origin}/groups` })} p={6} colorScheme="blue" disabled={loading}>
-                Sign In
-              </Button> */}
-            <Button onClick={() => signIn()} p={6} colorScheme="blue">
-              Sign In
+            <Button onClick={() => { }} p={6} colorScheme="green">
+              Build Orders
             </Button>
           </Flex>
         </Box>

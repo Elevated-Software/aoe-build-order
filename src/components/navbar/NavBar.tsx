@@ -1,8 +1,10 @@
-import { Box, Flex, HStack, Text } from '@chakra-ui/react';
+import { Box, Button, Flex, HStack, Text } from '@chakra-ui/react';
+import { signIn, signOut, useSession } from 'next-auth/react';
 import Link from 'next/link';
 import { DarkModeSwitch } from './DarkModeSwitch';
 
 export const NavBar = (): JSX.Element => {
+  const { data: session, status } = useSession();
   return (
     <Flex
       as="nav"
@@ -25,16 +27,16 @@ export const NavBar = (): JSX.Element => {
         spacing={4}
       >
         <DarkModeSwitch />
-        {/* { !session &&
-          <Button onClick={ () => signIn('battlenet', { callbackUrl: `${window.location.origin}/groups` }) } colorScheme="blue" disabled={ loading }>
-            Sign In
-          </Button>
-        }
-        { session &&
-          <Button onClick={ () => signOut({ callbackUrl: `${window.location.origin}` }) } colorScheme="blue" disabled={ loading }>
-            Sign Out
-          </Button>
-        } */}
+        <Button
+          onClick={session
+            ? () => signOut({ callbackUrl: `${window.location.origin}` })
+            : () => signIn()
+          }
+          colorScheme="blue"
+          disabled={status === 'loading'}
+        >
+          {session ? 'Sign Out' : 'Sign In'}
+        </Button>
       </HStack>
     </Flex>
   );
