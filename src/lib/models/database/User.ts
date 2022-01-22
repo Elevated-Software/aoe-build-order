@@ -1,6 +1,6 @@
 import mongoose, { Document, Model, model, Schema } from 'mongoose';
 
-export interface IUser {
+interface IUser {
   email: string;
   emailVerified: Date;
 }
