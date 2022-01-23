@@ -9,7 +9,7 @@ export const dbConnect = async () => {
   await mongoose.connect(process.env.MONGODB_URI!);
 };
 
-const withDb = (handler: NextApiHandler) => async (req: NextApiRequest, res: NextApiResponse) => {
+export const withDb = (handler: NextApiHandler) => async (req: NextApiRequest, res: NextApiResponse) => {
   if (mongoose.connection.readyState) {
     return handler(req, res);
   }
@@ -17,5 +17,3 @@ const withDb = (handler: NextApiHandler) => async (req: NextApiRequest, res: Nex
   await mongoose.connect(process.env.MONGODB_URI!);
   return handler(req, res);
 };
-
-export default withDb;
