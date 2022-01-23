@@ -5,7 +5,7 @@ import { IUserDoc } from './User';
 interface IBuildOrder {
   name: string;
   user: ObjectId | IUserDoc;
-  lineItems: ObjectId[] | IBoLineItemDoc;
+  lineItems: ObjectId[] | IBoLineItemDoc[];
 }
 
 export interface IBuildOrderDoc extends IBuildOrder, Document { };
