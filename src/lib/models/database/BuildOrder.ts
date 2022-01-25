@@ -4,7 +4,9 @@ import { IUserDoc } from './User';
 
 interface IBuildOrder {
   name: string;
+  description: string;
   user: ObjectId | IUserDoc;
+  civ: string;
   lineItems: ObjectId[] | IBoLineItemDoc[];
 }
 
@@ -15,9 +17,14 @@ const BuildOrderSchemaFields: Record<keyof IBuildOrder, any> = {
     type: String,
     require: true,
   },
+  description: String,
   user: {
     type: Schema.Types.ObjectId,
     ref: 'User',
+    require: true,
+  },
+  civ: {
+    type: String,
     require: true,
   },
   lineItems: [{
