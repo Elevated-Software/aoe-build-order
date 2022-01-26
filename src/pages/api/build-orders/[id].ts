@@ -1,7 +1,7 @@
 import { LeanDocument } from 'mongoose';
 import type { NextApiHandler, NextApiRequest } from 'next';
 import { withDb, withHandleErrors } from '../../../lib/middlewares';
-import { EsApiResponse } from '../../../lib/models/api';
+import { EsApiResponse, EsError } from '../../../lib/models/api';
 import { BuildOrder, IBoLineItemDoc, IBuildOrderDoc } from '../../../lib/models/database';
 
 interface Data {
@@ -9,13 +9,20 @@ interface Data {
 };
 
 const handler: NextApiHandler = async (req: NextApiRequest, res: EsApiResponse<Data>) => {
-  const { id: boId } = req.query;
-  switch (req.method) {
+  const {
+    method,
+    query: { id: boId }
+  } = req;
+
+  switch (method) {
     case 'GET': {
       const buildOrders = await get(boId as string);
       res.json({ success: true, buildOrders });
     }
-    default: break;
+    default: {
+      res.setHeader('Allow', ['GET']);
+      throw new EsError(`Method ${method} Not Allowed`, 405);
+    };
   }
 };
 

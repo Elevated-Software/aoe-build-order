@@ -18,6 +18,12 @@ export default NextAuth({
       maxAge: 60 * 60 * 2,
     }),
   ],
-  adapter: MongoDBAdapter(new Promise((resolve, reject) => resolve(mongoose.connection.getClient() as any))),
+  adapter: MongoDBAdapter(new Promise((resolve, _) => resolve(mongoose.connection.getClient() as any))),
   secret: process.env.EMAIL_SECRET,
+  callbacks: {
+    session({ session, user }) {
+      session.user.userId = user.id;
+      return session;
+    },
+  }
 });
