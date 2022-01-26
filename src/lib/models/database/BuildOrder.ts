@@ -1,4 +1,5 @@
 import mongoose, { Document, Model, model, ObjectId, Schema } from 'mongoose';
+import { Civilization } from '../../consts';
 import { IBoLineItemDoc } from './BoLineItem';
 import { IUserDoc } from './User';
 
@@ -6,7 +7,7 @@ interface IBuildOrder {
   name: string;
   description: string;
   user: ObjectId | IUserDoc;
-  civ: string;
+  civilization: string;
   lineItems: ObjectId[] | IBoLineItemDoc[];
 }
 
@@ -23,8 +24,9 @@ const BuildOrderSchemaFields: Record<keyof IBuildOrder, any> = {
     ref: 'User',
     require: true,
   },
-  civ: {
+  civilization: {
     type: String,
+    enum: Civilization,
     require: true,
   },
   lineItems: [{

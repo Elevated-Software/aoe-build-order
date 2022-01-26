@@ -1,5 +1,6 @@
 import { ObjectId } from 'mongoose';
 import type { NextApiHandler, NextApiRequest, NextApiResponse } from 'next';
+import { Civilization } from '../../lib/consts';
 import { withDb, withHandleErrors } from '../../lib/middlewares';
 import { BoLineItem, BuildOrder, User } from '../../lib/models/database';
 import { getRandomInt } from '../../lib/utils/numbers';
@@ -31,6 +32,8 @@ const handler: NextApiHandler = async (req: NextApiRequest, res: NextApiResponse
   await BuildOrder.create({
     name: 'Test Build Order',
     user: user._id,
+    description: 'Ram Archer Rush',
+    civilization: Civilization.DELHI_SULTANATE,
     lineItems: boLineItemIds,
   });
 
