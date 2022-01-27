@@ -4,7 +4,7 @@ import { getSession } from 'next-auth/react';
 import { Civilization } from '../../../lib/consts';
 import { withDb, withHandleErrors } from '../../../lib/middlewares';
 import { EsApiResponse, EsError } from '../../../lib/models/api';
-import { BuildOrder, IBoLineItemDoc, IBuildOrderDoc } from '../../../lib/models/database';
+import { BuildOrder, IBoStepDoc, IBuildOrderDoc } from '../../../lib/models/database';
 
 interface Data {
   buildOrders: LeanDocument<IBuildOrderDoc>[];
@@ -35,7 +35,7 @@ const handler: NextApiHandler = async (req: NextApiRequest, res: EsApiResponse<D
 };
 
 const get = async () => {
-  return await BuildOrder.find({}).populate<{ lineItems: IBoLineItemDoc[]; }>('lineItems').lean().exec();
+  return await BuildOrder.find({}).populate<{ steps: IBoStepDoc[]; }>('steps').lean().exec();
 };
 
 interface PostOpts {

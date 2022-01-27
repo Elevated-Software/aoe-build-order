@@ -4,7 +4,7 @@ import { getSession } from 'next-auth/react';
 import { Civilization } from '../../../../lib/consts';
 import { withDb, withHandleErrors } from '../../../../lib/middlewares';
 import { EsApiResponse, EsError } from '../../../../lib/models/api';
-import { BuildOrder, IBoLineItemDoc, IBuildOrderDoc } from '../../../../lib/models/database';
+import { BuildOrder, IBoStepDoc, IBuildOrderDoc } from '../../../../lib/models/database';
 
 interface Data {
   buildOrder: LeanDocument<IBuildOrderDoc>;
@@ -40,7 +40,7 @@ const handler: NextApiHandler = async (req: NextApiRequest, res: EsApiResponse<D
 };
 
 const get = async (boId: string) => {
-  return await BuildOrder.findById(boId).populate<{ lineItems: IBoLineItemDoc[]; }>('lineItems').lean().exec();
+  return await BuildOrder.findById(boId).populate<{ steps: IBoStepDoc[]; }>('steps').lean().exec();
 };
 
 interface PutOpts {
@@ -55,7 +55,7 @@ const put = async ({ id, name, userId, description, civilization }: PutOpts) => 
     id,
     { name, userId, description, civilization },
     { returnDocument: 'after', runValidators: true })
-    .populate<{ lineItems: IBoLineItemDoc[]; }>('lineItems').lean().exec();
+    .populate<{ steps: IBoStepDoc[]; }>('steps').lean().exec();
 };
 
 export default withHandleErrors(withDb(handler));

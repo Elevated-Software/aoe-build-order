@@ -1,7 +1,7 @@
 import mongoose, { Document, Model, model, Schema } from 'mongoose';
 
-export interface IBoLineItem {
-  lineNumber: number;
+export interface IBoStep {
+  stepNumber: number;
   gameTime: string,
   population: number,
   food: number,
@@ -11,10 +11,10 @@ export interface IBoLineItem {
   description: string,
 }
 
-export interface IBoLineItemDoc extends IBoLineItem, Document { };
+export interface IBoStepDoc extends IBoStep, Document { };
 
-const BoLineItemSchemaFields: Record<keyof IBoLineItem, any> = {
-  lineNumber: {
+const BoStepSchemaFields: Record<keyof IBoStep, any> = {
+  stepNumber: {
     type: Number,
     require: true,
   },
@@ -29,6 +29,6 @@ const BoLineItemSchemaFields: Record<keyof IBoLineItem, any> = {
     require: true,
   },
 };
-const BoLineItemSchema = new Schema(BoLineItemSchemaFields);
+const BoStepSchema = new Schema(BoStepSchemaFields);
 
-export const BoLineItem: Model<IBoLineItemDoc> = mongoose.models.BoLineItem || model<IBoLineItemDoc>('BoLineItem', BoLineItemSchema);
+export const BoStep: Model<IBoStepDoc> = mongoose.models.BoStep || model<IBoStepDoc>('BoStep', BoStepSchema);

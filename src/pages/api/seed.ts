@@ -2,22 +2,22 @@ import { ObjectId } from 'mongoose';
 import type { NextApiHandler, NextApiRequest, NextApiResponse } from 'next';
 import { Civilization } from '../../lib/consts';
 import { withDb, withHandleErrors } from '../../lib/middlewares';
-import { BoLineItem, BuildOrder, User } from '../../lib/models/database';
+import { BoStep, BuildOrder, User } from '../../lib/models/database';
 import { getRandomInt } from '../../lib/utils/numbers';
 
 const handler: NextApiHandler = async (req: NextApiRequest, res: NextApiResponse<void>) => {
   await BuildOrder.deleteMany();
-  await BoLineItem.deleteMany();
+  await BoStep.deleteMany();
 
   const user = await User.findOne({ email: 'brennendavis@gmail.com' }).exec();
   if (!user) {
     throw new Error('No User Found');
   }
 
-  const boLineItemIds: ObjectId[] = [];
+  const boStepIds: ObjectId[] = [];
   for (let i = 1; i <= 5; i++) {
-    const boLineItem = await BoLineItem.create({
-      lineNumber: i,
+    const boLineItem = await BoStep.create({
+      stepNumber: i,
       gameTime: `${getRandomInt((0 + i) * i, 2 * i)}:${getRandomInt(0, 60)}`,
       population: getRandomInt((0 + i * i) * i, 10 * i),
       food: getRandomInt((0 + i) * i, 50 * i),
@@ -26,7 +26,7 @@ const handler: NextApiHandler = async (req: NextApiRequest, res: NextApiResponse
       stone: getRandomInt((0 + i) * i, 50 * i),
       description: `This is description ${i}`,
     });
-    boLineItemIds.push(boLineItem._id);
+    boStepIds.push(boLineItem._id);
   }
 
   await BuildOrder.create({
@@ -34,7 +34,7 @@ const handler: NextApiHandler = async (req: NextApiRequest, res: NextApiResponse
     user: user._id,
     description: 'Ram Archer Rush',
     civilization: Civilization.DELHI_SULTANATE,
-    lineItems: boLineItemIds,
+    steps: boStepIds,
   });
 
   res.status(201).send();

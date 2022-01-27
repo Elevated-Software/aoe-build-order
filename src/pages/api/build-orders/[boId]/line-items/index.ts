@@ -3,7 +3,7 @@ import type { NextApiHandler, NextApiRequest } from 'next';
 import { getSession } from 'next-auth/react';
 import { withDb, withHandleErrors } from '../../../../../lib/middlewares';
 import { EsApiResponse, EsError } from '../../../../../lib/models/api';
-import { BoLineItem, BuildOrder, IBoLineItem, IBoLineItemDoc, IBuildOrderDoc } from '../../../../../lib/models/database';
+import { BoStep, BuildOrder, IBoStep, IBoStepDoc, IBuildOrderDoc } from '../../../../../lib/models/database';
 
 interface Data {
   buildOrder: LeanDocument<IBuildOrderDoc>;
@@ -22,8 +22,8 @@ const handler: NextApiHandler = async (req: NextApiRequest, res: EsApiResponse<D
         throw new EsError('You must be logged in to create a build order step', 401);
       }
 
-      const { lineNumber, gameTime, population, food, wood, gold, stone, description } = req.body;
-      const buildOrder = await post({ boId: boId as string, lineNumber, gameTime, population, food, wood, gold, stone, description });
+      const { stepNumber, gameTime, population, food, wood, gold, stone, description } = req.body;
+      const buildOrder = await post({ boId: boId as string, stepNumber, gameTime, population, food, wood, gold, stone, description });
       res.status(201).json({ success: true, buildOrder });
       break;
     default:
@@ -32,12 +32,12 @@ const handler: NextApiHandler = async (req: NextApiRequest, res: EsApiResponse<D
   }
 };
 
-interface PostOpts extends IBoLineItem {
+interface PostOpts extends IBoStep {
   boId: string;
 }
-const post = async ({ boId, lineNumber, gameTime, population, food, wood, gold, stone, description }: PostOpts) => {
-  const boLineItem = await BoLineItem.create({
-    lineNumber,
+const post = async ({ boId, stepNumber, gameTime, population, food, wood, gold, stone, description }: PostOpts) => {
+  const boStep = await BoStep.create({
+    stepNumber,
     gameTime,
     population,
     food,
@@ -49,9 +49,9 @@ const post = async ({ boId, lineNumber, gameTime, population, food, wood, gold, 
 
   return await BuildOrder.findByIdAndUpdate(
     boId,
-    { $push: { lineItems: boLineItem } },
+    { $push: { steps: boStep } },
     { returnDocument: 'after' })
-    .populate<{ lineItems: IBoLineItemDoc[]; }>('lineItems').lean().exec();
+    .populate<{ steps: IBoStepDoc[]; }>('steps').lean().exec();
 };
 
 export default withHandleErrors(withDb(handler));
