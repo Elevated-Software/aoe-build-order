@@ -31,7 +31,7 @@ const handler: NextApiHandler = async (req: NextApiRequest, res: EsApiResponse<D
       buildOrder = await put({ id: boId as string, name, userId: session.user.userId, description, civilization });
       break;
     default: {
-      res.setHeader('Allow', ['GET']);
+      res.setHeader('Allow', ['GET', 'PUT']);
       throw new EsError(`Method ${method} Not Allowed`, 405);
     };
   }

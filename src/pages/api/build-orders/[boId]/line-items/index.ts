@@ -3,7 +3,7 @@ import type { NextApiHandler, NextApiRequest } from 'next';
 import { getSession } from 'next-auth/react';
 import { withDb, withHandleErrors } from '../../../../../lib/middlewares';
 import { EsApiResponse, EsError } from '../../../../../lib/models/api';
-import { BoLineItem, BuildOrder, IBoLineItemDoc, IBuildOrderDoc } from '../../../../../lib/models/database';
+import { BoLineItem, BuildOrder, IBoLineItem, IBoLineItemDoc, IBuildOrderDoc } from '../../../../../lib/models/database';
 
 interface Data {
   buildOrder: LeanDocument<IBuildOrderDoc>;
@@ -32,16 +32,8 @@ const handler: NextApiHandler = async (req: NextApiRequest, res: EsApiResponse<D
   }
 };
 
-interface PostOpts {
+interface PostOpts extends IBoLineItem {
   boId: string;
-  lineNumber: number;
-  gameTime: string;
-  population: number;
-  food: number;
-  wood: number;
-  gold: number;
-  stone: number;
-  description: string;
 }
 const post = async ({ boId, lineNumber, gameTime, population, food, wood, gold, stone, description }: PostOpts) => {
   const boLineItem = await BoLineItem.create({

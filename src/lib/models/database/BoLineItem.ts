@@ -1,6 +1,6 @@
 import mongoose, { Document, Model, model, Schema } from 'mongoose';
 
-interface IBoLineItem {
+export interface IBoLineItem {
   lineNumber: number;
   gameTime: string,
   population: number,
