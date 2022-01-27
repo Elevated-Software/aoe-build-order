@@ -20,11 +20,11 @@ const handler: NextApiHandler = async (req: NextApiRequest, res: EsApiResponse<D
       break;
     case 'POST':
       const session = await getSession({ req });
-      const { name, description, civilization } = req.body;
       if (!session) {
         throw new EsError('You must be logged in to create a build order', 401);
       }
 
+      const { name, description, civilization } = req.body;
       const buildOrder = await post({ name, userId: session.user.userId, description, civilization });
       res.status(201).json({ success: true, buildOrders: [buildOrder] });
       break;
