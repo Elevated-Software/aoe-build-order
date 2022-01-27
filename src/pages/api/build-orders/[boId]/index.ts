@@ -1,10 +1,10 @@
 import { LeanDocument } from 'mongoose';
 import type { NextApiHandler, NextApiRequest } from 'next';
 import { getSession } from 'next-auth/react';
-import { Civilization } from '../../../lib/consts';
-import { withDb, withHandleErrors } from '../../../lib/middlewares';
-import { EsApiResponse, EsError } from '../../../lib/models/api';
-import { BuildOrder, IBoLineItemDoc, IBuildOrderDoc } from '../../../lib/models/database';
+import { Civilization } from '../../../../lib/consts';
+import { withDb, withHandleErrors } from '../../../../lib/middlewares';
+import { EsApiResponse, EsError } from '../../../../lib/models/api';
+import { BuildOrder, IBoLineItemDoc, IBuildOrderDoc } from '../../../../lib/models/database';
 
 interface Data {
   buildOrder: LeanDocument<IBuildOrderDoc>;
@@ -13,7 +13,7 @@ interface Data {
 const handler: NextApiHandler = async (req: NextApiRequest, res: EsApiResponse<Data>) => {
   const {
     method,
-    query: { id: boId }
+    query: { boId },
   } = req;
 
   let buildOrder: LeanDocument<IBuildOrderDoc>;
@@ -54,7 +54,7 @@ const put = async ({ id, name, userId, description, civilization }: PutOpts) => 
   return await BuildOrder.findByIdAndUpdate(
     id,
     { name, userId, description, civilization },
-    { new: true })
+    { returnDocument: 'after', runValidators: true })
     .populate<{ lineItems: IBoLineItemDoc[]; }>('lineItems').lean().exec();
 };
 
