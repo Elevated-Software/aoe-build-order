@@ -7,7 +7,7 @@ interface IBuildOrder {
   name: string;
   description: string;
   user: ObjectId | IUserDoc;
-  civilization: string;
+  civilization: Civilization;
   steps: ObjectId[] | IBoStepDoc[];
 }
 

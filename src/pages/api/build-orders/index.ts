@@ -7,7 +7,7 @@ import { EsApiResponse, EsError } from '../../../lib/models/api';
 import { BuildOrder, IBoStepDoc, IBuildOrderDoc } from '../../../lib/models/database';
 
 interface Data {
-  buildOrders: LeanDocument<IBuildOrderDoc>[];
+  buildOrders: LeanDocument<IBuildOrderDoc>[] | LeanDocument<IBuildOrderDoc>;
 };
 
 const handler: NextApiHandler = async (req: NextApiRequest, res: EsApiResponse<Data>) => {
@@ -21,12 +21,12 @@ const handler: NextApiHandler = async (req: NextApiRequest, res: EsApiResponse<D
     case 'POST':
       const session = await getSession({ req });
       if (!session) {
-        throw new EsError('You must be logged in to create a build order', 401);
+        throw new EsError('You must be logged in to create a Build Order', 401);
       }
 
       const { name, description, civilization } = req.body;
       const buildOrder = await post({ name, userId: session.user.userId, description, civilization });
-      res.status(201).json({ success: true, buildOrders: [buildOrder] });
+      res.status(201).json({ success: true, buildOrders: buildOrder });
       break;
     default:
       res.setHeader('Allow', ['GET', 'POST']);

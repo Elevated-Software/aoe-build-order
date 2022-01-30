@@ -1,9 +1,9 @@
 import { LeanDocument } from 'mongoose';
 import type { NextApiHandler, NextApiRequest } from 'next';
-import { getSession } from 'next-auth/react';
 import { withDb, withHandleErrors } from '../../../../../lib/middlewares';
 import { EsApiResponse, EsError } from '../../../../../lib/models/api';
 import { BoStep, BuildOrder, IBoStep, IBoStepDoc, IBuildOrderDoc } from '../../../../../lib/models/database';
+import { ensureLoggedIn } from '../../../../../lib/utils/api';
 
 interface Data {
   buildOrder: LeanDocument<IBuildOrderDoc>;
@@ -17,10 +17,7 @@ const handler: NextApiHandler = async (req: NextApiRequest, res: EsApiResponse<D
 
   switch (method) {
     case 'POST':
-      const session = await getSession({ req });
-      if (!session) {
-        throw new EsError('You must be logged in to create a build order step', 401);
-      }
+      await ensureLoggedIn(req, `You must be logged in to create a Build Order Step`);
 
       const { stepNumber, gameTime, population, food, wood, gold, stone, description } = req.body;
       const buildOrder = await post({ boId: boId as string, stepNumber, gameTime, population, food, wood, gold, stone, description });
