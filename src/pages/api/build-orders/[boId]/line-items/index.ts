@@ -1,5 +1,6 @@
 import { LeanDocument } from 'mongoose';
 import type { NextApiHandler, NextApiRequest } from 'next';
+import { Errors } from '../../../../../lib/consts';
 import { withDb, withHandleErrors } from '../../../../../lib/middlewares';
 import { EsApiResponse, EsError } from '../../../../../lib/models/api';
 import { BoStep, BuildOrder, IBoStep, IBoStepDoc, IBuildOrderDoc } from '../../../../../lib/models/database';
@@ -17,7 +18,7 @@ const handler: NextApiHandler = async (req: NextApiRequest, res: EsApiResponse<D
 
   switch (method) {
     case 'POST':
-      await ensureLoggedIn(req, `You must be logged in to create a Build Order Step`);
+      await ensureLoggedIn(req);
 
       const { stepNumber, gameTime, population, food, wood, gold, stone, description } = req.body;
       const buildOrder = await post({ boId: boId as string, stepNumber, gameTime, population, food, wood, gold, stone, description });
@@ -25,7 +26,7 @@ const handler: NextApiHandler = async (req: NextApiRequest, res: EsApiResponse<D
       break;
     default:
       res.setHeader('Allow', ['POST']);
-      throw new EsError(`Method ${method} Not Allowed`, 405);
+      throw new EsError(Errors.methodNotAllowed(method as string), 405);
   }
 };
 

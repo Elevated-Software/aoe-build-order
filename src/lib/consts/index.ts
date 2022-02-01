@@ -1,3 +1,5 @@
+export * from './errors';
+
 export enum Civilization {
   RUS = 'Rus',
   HOLY_ROMAN_EMPIRE = 'Holy Roman Empire',

@@ -1,10 +1,11 @@
 import { LeanDocument } from 'mongoose';
 import type { NextApiHandler, NextApiRequest } from 'next';
 import { getSession } from 'next-auth/react';
-import { Civilization } from '../../../lib/consts';
+import { Civilization, Errors } from '../../../lib/consts';
 import { withDb, withHandleErrors } from '../../../lib/middlewares';
 import { EsApiResponse, EsError } from '../../../lib/models/api';
 import { BuildOrder, IBoStepDoc, IBuildOrderDoc } from '../../../lib/models/database';
+import { ensureLoggedIn } from '../../../lib/utils/api';
 
 interface Data {
   buildOrders: LeanDocument<IBuildOrderDoc>[] | LeanDocument<IBuildOrderDoc>;
@@ -19,10 +20,7 @@ const handler: NextApiHandler = async (req: NextApiRequest, res: EsApiResponse<D
       res.json({ success: true, buildOrders });
       break;
     case 'POST':
-      const session = await getSession({ req });
-      if (!session) {
-        throw new EsError('You must be logged in to create a Build Order', 401);
-      }
+      const session = await ensureLoggedIn(req);
 
       const { name, description, civilization } = req.body;
       const buildOrder = await post({ name, userId: session.user.userId, description, civilization });
@@ -30,7 +28,7 @@ const handler: NextApiHandler = async (req: NextApiRequest, res: EsApiResponse<D
       break;
     default:
       res.setHeader('Allow', ['GET', 'POST']);
-      throw new EsError(`Method ${method} Not Allowed`, 405);
+      throw new EsError(Errors.methodNotAllowed(method as string), 405);
   }
 };
 
@@ -45,12 +43,15 @@ interface PostOpts {
   civilization: Civilization,
 }
 const post = async ({ name, userId, description, civilization }: PostOpts) => {
-  return await BuildOrder.create({
+  let buildOrder = new BuildOrder({
     name,
     user: userId,
     description,
     civilization
   });
+
+  buildOrder = await buildOrder.save();
+  return buildOrder.toObject();
 };
 
 export default withHandleErrors(withDb(handler));
