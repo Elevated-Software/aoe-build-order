@@ -61,7 +61,7 @@ const put = async ({ id, name, userId, description, civilization }: PutOpts) => 
 
   const objectIdUserId = toObjectId(userId);
   if (!objectIdUserId) {
-    throw new EsError(Errors.notFound(userId), 404);
+    throw new EsError(Errors.notFound('User'), 404);
   }
 
   if (buildOrder.user.toString() !== userId) {
