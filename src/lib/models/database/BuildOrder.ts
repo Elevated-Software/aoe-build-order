@@ -3,7 +3,7 @@ import { Civilization } from '../../consts';
 import { IBoStepDoc } from './BoStep';
 import { IUserDoc } from './User';
 
-interface IBuildOrder {
+export interface IBuildOrder {
   name: string;
   description: string;
   user: ObjectId | IUserDoc;

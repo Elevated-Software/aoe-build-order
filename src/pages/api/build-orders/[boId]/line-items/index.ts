@@ -7,7 +7,7 @@ import { BoStep, BuildOrder, IBoStep, IBoStepDoc, IBuildOrderDoc } from '../../.
 import { ensureLoggedIn } from '../../../../../lib/utils/api';
 
 interface Data {
-  buildOrder: LeanDocument<IBuildOrderDoc>;
+  buildOrder: LeanDocument<IBuildOrderDoc & { _id: any; } & { steps: IBoStepDoc[]; }>;
 }
 
 const handler: NextApiHandler = async (req: NextApiRequest, res: EsApiResponse<Data>) => {

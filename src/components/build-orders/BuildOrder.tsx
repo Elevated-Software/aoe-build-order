@@ -1,13 +1,21 @@
-import { Box, Flex, HStack } from '@chakra-ui/react';
-import { BoLineItem } from './bo-line-items/BoLineItem';
+import { Box, Heading, Text, VStack } from '@chakra-ui/react';
+import { BoWithPopulatedSteps } from '../../lib/models/api';
+import { BoStep } from './bo-steps/BoStep';
 
-export const BuildOrder = (): JSX.Element => {
+export const BuildOrder = ({ buildOrder }: BoWithPopulatedSteps): JSX.Element => {
   return (
-    <Flex p={12} bgColor='red.300'>
-      Build Order
-      <HStack spacing={2}>
-        <BoLineItem />
-      </HStack>
-    </Flex>
+    <Box maxW="56rem" px={8}>
+      <VStack>
+        <Box>
+          <Heading>Description</Heading>
+          <Text>{buildOrder.description}</Text>
+        </Box>
+        {
+          buildOrder.steps.map(step => (
+            <BoStep key={step._id} step={step} />
+          ))
+        }
+      </VStack>
+    </Box>
   );
 };
