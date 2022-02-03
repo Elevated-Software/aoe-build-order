@@ -8,7 +8,7 @@ export const BuildOrder = ({ buildOrder }: BoWithPopulatedSteps): JSX.Element =>
       <VStack>
         <Box>
           <Heading>Description</Heading>
-          <Text>{buildOrder.description}</Text>
+          <Text mt={4}>{buildOrder.description}</Text>
         </Box>
         {
           buildOrder.steps.map(step => (
