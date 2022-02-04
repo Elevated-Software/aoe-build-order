@@ -2,9 +2,14 @@ import { Box, Heading, Text, VStack } from '@chakra-ui/react';
 import { BoWithPopulatedSteps } from '../../lib/models/api';
 import { BoStep } from './bo-steps/BoStep';
 
-export const BuildOrder = ({ buildOrder }: BoWithPopulatedSteps): JSX.Element => {
+interface Props {
+  buildOrder: BoWithPopulatedSteps;
+}
+
+export const BuildOrder = ({ buildOrder }: Props): JSX.Element => {
   return (
-    <Box maxW="56rem" px={8}>
+    // This maxW will change. Maybe we won't even use a maxW
+    <Box maxW="42rem" px={8}>
       <VStack>
         <Box>
           <Heading>Description</Heading>

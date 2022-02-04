@@ -10,3 +10,15 @@ export enum Civilization {
   ABBASID_DYNASTY = 'Abbasid Dynasty',
   FRENCH = 'French',
 };
+
+export const civToCode = {
+  Rus: 'rus',
+  ['Holy Roman Empire']: 'hre',
+  Chinese: 'chinese',
+  English: 'english',
+  ['Delhi Sultanate']: 'delhi',
+  Mongols: 'mongol',
+  ['Abbasid Dynasty']: 'abbasid',
+  French: 'french'
+
+};

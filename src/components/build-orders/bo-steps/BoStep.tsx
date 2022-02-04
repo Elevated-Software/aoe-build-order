@@ -45,7 +45,7 @@ export const BoStep = ({ step }: Props): JSX.Element => {
         <VStack>
           <Image
             src="/images/resources/stone.png"
-            alt="Food Resource"
+            alt="Stone"
             width={31}
             height={22}
           />

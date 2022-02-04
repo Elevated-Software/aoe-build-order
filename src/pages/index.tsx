@@ -1,18 +1,24 @@
-import { SimpleGrid } from '@chakra-ui/react';
+import { Box, SimpleGrid } from '@chakra-ui/react';
 import type { GetStaticProps } from 'next';
-import { BuildOrder } from '../components/build-orders/BuildOrder';
+import { BuildOrderList } from '../components/build-orders/BuildOrderList';
 import { Container } from '../components/Container';
 import { CallToAction } from '../components/home/CallToAction';
 import { dbConnect } from '../lib/middlewares';
-import { BoWithPopulatedSteps } from '../lib/models/api';
+import { Bo } from '../lib/models/api';
 import { BuildOrder as BuildOrderModel, IBoStepDoc } from '../lib/models/database';
 
-const Home = ({ buildOrder }: BoWithPopulatedSteps): JSX.Element => {
+interface Props {
+  buildOrders: Bo[];
+}
+
+const Home = ({ buildOrders }: Props): JSX.Element => {
   return (
     <Container>
-      <SimpleGrid spacing={2} columns={[1, null, 2]}>
+      <SimpleGrid spacing={2} columns={[1, null, 2]} >
         <CallToAction />
-        <BuildOrder buildOrder={buildOrder} />
+        <Box my="auto">
+          <BuildOrderList title="" size="lg" buildOrders={buildOrders} />
+        </Box>
       </SimpleGrid>
     </Container>
   );
@@ -20,10 +26,10 @@ const Home = ({ buildOrder }: BoWithPopulatedSteps): JSX.Element => {
 
 export const getStaticProps: GetStaticProps = async () => {
   await dbConnect();
-  const buildOrder = await BuildOrderModel.findById('61f2b57d6e523c4f1e498801').populate<{ steps: IBoStepDoc[]; }>('steps').lean().exec();
+  const buildOrders = await BuildOrderModel.find().lean().limit(3).exec();
   return {
     props: {
-      buildOrder: JSON.parse(JSON.stringify(buildOrder)),
+      buildOrders: JSON.parse(JSON.stringify(buildOrders)),
     },
     revalidate: 60 * 60 * 24,
   };
