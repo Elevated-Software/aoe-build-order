@@ -12,13 +12,32 @@ export enum Civilization {
 };
 
 export const civToCode = {
-  Rus: 'rus',
-  ['Holy Roman Empire']: 'hre',
-  Chinese: 'chinese',
-  English: 'english',
-  ['Delhi Sultanate']: 'delhi',
-  Mongols: 'mongol',
-  ['Abbasid Dynasty']: 'abbasid',
-  French: 'french'
+  [Civilization.RUS]: 'rus',
+  [Civilization.HOLY_ROMAN_EMPIRE]: 'hre',
+  [Civilization.CHINESE]: 'chinese',
+  [Civilization.ENGLISH]: 'english',
+  [Civilization.DELHI_SULTANATE]: 'delhi',
+  [Civilization.MONGOLS]: 'mongol',
+  [Civilization.ABBASID_DYNASTY]: 'abbasid',
+  [Civilization.FRENCH]: 'french'
+};
 
+export enum Tag {
+  BOOM = 'Boom',
+  CHEESE = 'Cheese',
+  FAST_FEUDAL = 'Fast Feudal',
+  FAST_CASTLE = 'Fast Castle',
+  LAND = 'Land',
+  RUSH = 'Rush',
+  WATER = 'Water',
+}
+
+export const tagToCode = {
+  [Tag.BOOM]: 'boom',
+  [Tag.CHEESE]: 'cheese',
+  [Tag.FAST_FEUDAL]: 'fastFeudal',
+  [Tag.FAST_CASTLE]: 'fastCastle',
+  [Tag.LAND]: 'land',
+  [Tag.RUSH]: 'rush',
+  [Tag.WATER]: 'water',
 };

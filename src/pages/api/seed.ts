@@ -1,6 +1,6 @@
 import { ObjectId } from 'mongoose';
 import type { NextApiHandler, NextApiRequest, NextApiResponse } from 'next';
-import { Civilization } from '../../lib/consts';
+import { Civilization, Tag } from '../../lib/consts';
 import { withDb, withHandleErrors } from '../../lib/middlewares';
 import { BoStep, BuildOrder, User } from '../../lib/models/database';
 import { getRandomInt } from '../../lib/utils/numbers';
@@ -35,6 +35,9 @@ const handler: NextApiHandler = async (req: NextApiRequest, res: NextApiResponse
       user: user._id,
       description: 'Ram Archer Rush actually this is the super long description that would tell people about the build and what it\'s good for and bad against and stuff now i\'m just saying words',
       civilization: Civilization.DELHI_SULTANATE,
+      tags: [Tag.CHEESE, Tag.RUSH],
+      patch: '11009',
+      youtube: 'https://www.youtube.com/watch?v=mO3aX06hmlc',
       steps: boStepIds,
     });
   }

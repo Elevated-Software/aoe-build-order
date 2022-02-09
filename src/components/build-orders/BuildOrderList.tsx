@@ -19,8 +19,8 @@ export const BuildOrderList = ({ title = 'Build Orders', size = 'sm', buildOrder
         {
           buildOrders.map(buildOrder => (
             size === 'sm'
-              ? <BuildOrderListSmallTile buildOrder={buildOrder} />
-              : <BuildOrderListTile buildOrder={buildOrder} />
+              ? <BuildOrderListSmallTile key={buildOrder._id} buildOrder={buildOrder} />
+              : <BuildOrderListTile key={buildOrder._id} buildOrder={buildOrder} />
           ))
         }
       </VStack>

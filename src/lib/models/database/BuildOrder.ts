@@ -1,5 +1,5 @@
 import mongoose, { Document, Model, model, ObjectId, Schema } from 'mongoose';
-import { Civilization } from '../../consts';
+import { Civilization, Tag } from '../../consts';
 import { IBoStepDoc } from './BoStep';
 import { IUserDoc } from './User';
 
@@ -8,6 +8,9 @@ export interface IBuildOrder {
   description: string;
   user: ObjectId | IUserDoc;
   civilization: Civilization;
+  tags: Tag[];
+  patch: string;
+  youtube: string;
   steps: ObjectId[] | IBoStepDoc[];
 }
 
@@ -29,12 +32,19 @@ const BuildOrderSchemaFields: Record<keyof IBuildOrder, any> = {
     enum: Civilization,
     require: true,
   },
+  tags: [{
+    type: String,
+    enum: Tag,
+    default: [],
+  }],
+  patch: String,
+  youtube: String,
   steps: [{
     type: Schema.Types.ObjectId,
     ref: 'BoStep',
     default: [],
   }],
 };
-const BuildOrderSchema = new Schema(BuildOrderSchemaFields);
+const BuildOrderSchema = new Schema(BuildOrderSchemaFields, { timestamps: true });
 
 export const BuildOrder: Model<IBuildOrderDoc> = mongoose.models.BuildOrder || model<IBuildOrderDoc>('BuildOrder', BuildOrderSchema);
