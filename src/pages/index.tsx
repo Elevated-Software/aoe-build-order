@@ -1,11 +1,11 @@
-import { Box, SimpleGrid } from '@chakra-ui/react';
+import { Box, Center, SimpleGrid } from '@chakra-ui/react';
 import type { GetStaticProps } from 'next';
 import { BuildOrderList } from '../components/build-orders/BuildOrderList';
 import { Container } from '../components/Container';
 import { CallToAction } from '../components/home/CallToAction';
 import { dbConnect } from '../lib/middlewares';
 import { Bo } from '../lib/models/api';
-import { BuildOrder as BuildOrderModel, IBoStepDoc } from '../lib/models/database';
+import { BuildOrder as BuildOrderModel } from '../lib/models/database';
 
 interface Props {
   buildOrders: Bo[];
@@ -13,12 +13,10 @@ interface Props {
 
 const Home = ({ buildOrders }: Props): JSX.Element => {
   return (
-    <Container>
-      <SimpleGrid spacing={2} columns={[1, null, 2]} >
-        <CallToAction />
-        <Box my="auto">
-          <BuildOrderList title="" size="lg" buildOrders={buildOrders} />
-        </Box>
+    <Container height="80vh" justifyContent="center">
+      <SimpleGrid spacing={2} columns={[1, null, 2]} width="100%" minChildWidth="32rem">
+        <CallToAction width="100%" />
+        <BuildOrderList title="" size="lg" buildOrders={buildOrders} maxW="56rem" p={12} />
       </SimpleGrid>
     </Container>
   );

@@ -1,4 +1,4 @@
-import { Box, Heading, VStack } from '@chakra-ui/react';
+import { Box, BoxProps, Heading, VStack } from '@chakra-ui/react';
 import React from 'react';
 import { Bo } from '../../lib/models/api';
 import { BuildOrderListSmallTile } from './BuildOrderListSmallTile';
@@ -10,10 +10,10 @@ interface Props {
   buildOrders: Bo[];
 }
 
-export const BuildOrderList = ({ title = 'Build Orders', size = 'sm', buildOrders }: Props): JSX.Element => {
+export const BuildOrderList = ({ title = 'Build Orders', size = 'sm', buildOrders, ...rest }: Props & BoxProps): JSX.Element => {
 
   return (
-    <Box maxW="42rem" px={8}>
+    <Box {...rest}>
       <Heading pb={4} size="2xl">{title}</Heading>
       <VStack spacing={2} alignItems="start">
         {

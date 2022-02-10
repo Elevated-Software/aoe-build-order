@@ -1,9 +1,9 @@
 import { CheckCircleIcon, CloseIcon } from '@chakra-ui/icons';
-import { Box, Button, Flex, Heading, List, ListIcon, ListItem, Spacer, Stack, Text, useColorModeValue } from '@chakra-ui/react';
+import { Box, BoxProps, Button, Flex, Heading, List, ListIcon, ListItem, Spacer, Stack, Text, useColorModeValue } from '@chakra-ui/react';
 // import { useRouter } from 'next/router';
 import React from 'react';
 
-export const CallToAction = (): JSX.Element => {
+export const CallToAction = (rest: BoxProps): JSX.Element => {
   // const router = useRouter();
 
   const cardBg = useColorModeValue('light.cardBg', 'dark.cardBg');
@@ -35,7 +35,7 @@ export const CallToAction = (): JSX.Element => {
   ];
 
   return (
-    <Box maxW="42rem" my="auto" mx={{ md: 'auto', lg: '0' }} ml={{ lg: 'auto' }} px={8}>
+    <Box maxW="42rem" my="auto" mx={{ md: 'auto', lg: '0' }} ml={{ lg: 'auto' }} px={8} {...rest}>
       <Stack spacing={6}>
         <Text fontSize="xs" color={subText} casing="uppercase" opacity="75%">Join with other players</Text>
         <Heading as="h1" fontSize={['4xl', '6xl']} mb={6}>Organize Your<br />Build Orders</Heading>
