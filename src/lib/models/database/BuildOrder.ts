@@ -1,4 +1,4 @@
-import mongoose, { Document, Model, model, ObjectId, Schema } from 'mongoose';
+import mongoose, { Document, Model, model, ObjectId, Schema, SchemaTimestampsConfig } from 'mongoose';
 import { Civilization, Tag } from '../../consts';
 import { IBoStepDoc } from './BoStep';
 import { IUserDoc } from './User';
@@ -14,7 +14,7 @@ export interface IBuildOrder {
   steps: ObjectId[] | IBoStepDoc[];
 }
 
-export interface IBuildOrderDoc extends IBuildOrder, Document { };
+export interface IBuildOrderDoc extends IBuildOrder, Document, SchemaTimestampsConfig { };
 
 const BuildOrderSchemaFields: Record<keyof IBuildOrder, any> = {
   name: {

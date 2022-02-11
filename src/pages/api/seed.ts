@@ -14,7 +14,7 @@ const handler: NextApiHandler = async (req: NextApiRequest, res: NextApiResponse
     throw new Error('No User Found');
   }
 
-  for (let j = 0; j < 3; j++) {
+  for (let j = 0; j < 5; j++) {
     const boStepIds: ObjectId[] = [];
     for (let i = 1; i <= 5; i++) {
       const boLineItem = await BoStep.create({
@@ -30,12 +30,20 @@ const handler: NextApiHandler = async (req: NextApiRequest, res: NextApiResponse
       boStepIds.push(boLineItem._id);
     }
 
+    const tags = [
+      [],
+      [Tag.CHEESE],
+      [Tag.CHEESE, Tag.RUSH],
+      [Tag.CHEESE, Tag.RUSH, Tag.BOOM, Tag.FAST_CASTLE],
+      [Tag.CHEESE, Tag.RUSH, Tag.BOOM, Tag.FAST_FEUDAL, Tag.FAST_CASTLE, Tag.LAND, Tag.WATER],
+    ];
+
     await BuildOrder.create({
       name: `Test Build Order ${j}`,
       user: user._id,
-      description: 'Ram Archer Rush actually this is the super long description that would tell people about the build and what it\'s good for and bad against and stuff now i\'m just saying words',
+      description: 'Ram Archer Rush actually this is the super long description that would tell people about the build and what it\'s good for and bad against and stuff now i\'m just saying words but this does need to be longer so that I can get three lines on the main page',
       civilization: Civilization.DELHI_SULTANATE,
-      tags: [Tag.CHEESE, Tag.RUSH],
+      tags: tags[j],
       patch: '11009',
       youtube: 'https://www.youtube.com/watch?v=mO3aX06hmlc',
       steps: boStepIds,

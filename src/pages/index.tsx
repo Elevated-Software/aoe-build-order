@@ -13,7 +13,7 @@ interface Props {
 
 const Home = ({ buildOrders }: Props): JSX.Element => {
   return (
-    <Container height="80vh" justifyContent="center">
+    <Container>
       <SimpleGrid spacing={2} columns={[1, null, 2]} width="100%" minChildWidth="32rem">
         <CallToAction width="100%" />
         <BuildOrderList title="" size="lg" buildOrders={buildOrders} maxW="56rem" p={12} />
@@ -24,7 +24,7 @@ const Home = ({ buildOrders }: Props): JSX.Element => {
 
 export const getStaticProps: GetStaticProps = async () => {
   await dbConnect();
-  const buildOrders = await BuildOrderModel.find().lean().limit(3).exec();
+  const buildOrders = await BuildOrderModel.find().lean().limit(5).exec();
   return {
     props: {
       buildOrders: JSON.parse(JSON.stringify(buildOrders)),

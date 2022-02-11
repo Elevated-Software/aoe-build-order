@@ -41,3 +41,13 @@ export const tagToCode = {
   [Tag.RUSH]: 'rush',
   [Tag.WATER]: 'water',
 };
+
+export const tagToColor = {
+  [Tag.BOOM]: 'teal',
+  [Tag.CHEESE]: 'yellow',
+  [Tag.FAST_FEUDAL]: 'orange',
+  [Tag.FAST_CASTLE]: 'gray',
+  [Tag.LAND]: 'green',
+  [Tag.RUSH]: 'red',
+  [Tag.WATER]: 'blue',
+};
