@@ -23,6 +23,10 @@ const handler: NextApiHandler = async (req: NextApiRequest, res: EsApiResponse<D
       const session = await ensureLoggedIn(req);
 
       const { name, description, civilization } = req.body;
+      if (!name || !description || !civilization) {
+        throw new EsError(Errors.badRequest, 400);
+      }
+
       const buildOrder = await post({ name, userId: session.user.userId, description, civilization });
       res.status(201).json({ success: true, buildOrders: buildOrder });
       break;

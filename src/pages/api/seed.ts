@@ -47,6 +47,15 @@ const handler: NextApiHandler = async (req: NextApiRequest, res: NextApiResponse
       patch: '11009',
       youtube: 'https://www.youtube.com/watch?v=mO3aX06hmlc',
       steps: boStepIds,
+      reactionCounts: {
+        l: getRandomInt(0, 10),
+        d: getRandomInt(0, 10),
+      },
+      reactionLimitReached: false,
+      reactions: [{
+        reaction: 'l',
+        userId: '61ebb1d955196fb0c6fc53ee'
+      }]
     });
   }
 

@@ -16,7 +16,7 @@ const Home = ({ buildOrders }: Props): JSX.Element => {
     <Container>
       <SimpleGrid spacing={2} columns={[1, null, 2]} width="100%" minChildWidth="32rem">
         <CallToAction width="100%" />
-        <BuildOrderList title="" size="lg" buildOrders={buildOrders} maxW="56rem" p={12} />
+        <BuildOrderList title="" size="lg" buildOrders={buildOrders} maxW="56rem" px={12} />
       </SimpleGrid>
     </Container>
   );

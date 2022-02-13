@@ -2,6 +2,9 @@ import mongoose, { Document, Model, model, ObjectId, Schema, SchemaTimestampsCon
 import { Civilization, Tag } from '../../consts';
 import { IBoStepDoc } from './BoStep';
 import { IUserDoc } from './User';
+const wilsonScore = require('wilson-score-rank');
+
+const REACTION_LIMIT = 1000;
 
 export interface IBuildOrder {
   name: string;
@@ -12,6 +15,10 @@ export interface IBuildOrder {
   patch: string;
   youtube: string;
   steps: ObjectId[] | IBoStepDoc[];
+  wilsonScore: number;
+  reactionCounts: { l: number, d: number; };
+  reactionLimitReached: boolean,
+  reactions: { reaction: 'l' | 'd', userId: ObjectId; }[];
 }
 
 export interface IBuildOrderDoc extends IBuildOrder, Document, SchemaTimestampsConfig { };
@@ -44,7 +51,28 @@ const BuildOrderSchemaFields: Record<keyof IBuildOrder, any> = {
     ref: 'BoStep',
     default: [],
   }],
+  wilsonScore: { type: Number, require: true, default: 0 },
+  reactionCounts: {
+    l: { type: Number, default: 0 },
+    d: { type: Number, default: 0 },
+  },
+  reactionLimitReached: { type: Boolean, default: false },
+  reactions: [{
+    reaction: String,
+    userId: Schema.Types.ObjectId,
+  }]
 };
 const BuildOrderSchema = new Schema(BuildOrderSchemaFields, { timestamps: true });
+
+BuildOrderSchema.pre('save', function (next) {
+  if (this.isModified('reactionCounts')) {
+    this.wilsonScore = wilsonScore.lowerBound(this.reactionCounts.l, this.reactionCounts.l + this.reactionCounts.d);
+    if (!this.reactionLimitReached && this.reactionCounts.l + this.reactioncounts.d >= REACTION_LIMIT) {
+      this.reactionLimitReached = true;
+    }
+  }
+
+  next();
+});
 
 export const BuildOrder: Model<IBuildOrderDoc> = mongoose.models.BuildOrder || model<IBuildOrderDoc>('BuildOrder', BuildOrderSchema);

@@ -1,3 +1,4 @@
+import { ObjectId } from 'mongodb';
 import { LeanDocument } from 'mongoose';
 import type { NextApiHandler, NextApiRequest } from 'next';
 import { Civilization, Errors } from '../../../../lib/consts';
