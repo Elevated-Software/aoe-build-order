@@ -1,7 +1,7 @@
 import { ObjectId } from 'mongodb';
 import { LeanDocument } from 'mongoose';
 import type { NextApiHandler, NextApiRequest } from 'next';
-import { Civilization, Errors } from '../../../../lib/consts';
+import { Civilization, Errors, Tag } from '../../../../lib/consts';
 import { withDb, withHandleErrors } from '../../../../lib/middlewares';
 import { EsApiResponse, EsError } from '../../../../lib/models/api';
 import { BuildOrder, IBoStepDoc, IBuildOrderDoc } from '../../../../lib/models/database';
@@ -25,14 +25,15 @@ const handler: NextApiHandler = async (req: NextApiRequest, res: EsApiResponse<D
       break;
     case 'PUT': {
       const session = await ensureLoggedIn(req);
-      const { name, description, civilization } = req.body;
-      buildOrder = await put({ id: boId as string, name, userId: session.user.userId, description, civilization });
+      const { name, description, civilization, youtube, tags, patch } = req.body;
+      buildOrder = await put({ id: boId as string, name, userId: session.user.userId, description, civilization, youtube, tags, patch });
       break;
     }
     case 'DELETE': {
       const session = await ensureLoggedIn(req);
       await deleteAction({ id: boId as string, userId: session.user.userId });
       res.json({ success: true });
+      return;
     }
     default: {
       res.setHeader('Allow', ['GET', 'PUT', 'DELETE']);
@@ -53,8 +54,11 @@ interface PutOpts {
   userId: string;
   description: string;
   civilization: Civilization;
+  youtube?: string;
+  tags?: Tag[];
+  patch?: string;
 }
-const put = async ({ id, name, userId, description, civilization }: PutOpts) => {
+const put = async ({ id, name, userId, description, civilization, youtube, tags, patch }: PutOpts) => {
   let buildOrder = await BuildOrder.findById(id).populate<{ steps: IBoStepDoc[]; }>('steps').exec();
   if (!buildOrder) {
     throw new EsError(Errors.notFound('Build Order'), 404);
@@ -70,9 +74,11 @@ const put = async ({ id, name, userId, description, civilization }: PutOpts) => 
   }
 
   buildOrder.name = name;
-  buildOrder.user = objectIdUserId as any;
   buildOrder.description = description;
   buildOrder.civilization = civilization;
+  buildOrder.youtube = youtube;
+  buildOrder.tags = tags || [];
+  buildOrder.patch = patch;
   buildOrder = await buildOrder.save();
   return buildOrder.toObject();
 };

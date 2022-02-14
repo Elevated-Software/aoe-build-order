@@ -12,8 +12,8 @@ export interface IBuildOrder {
   user: ObjectId | IUserDoc;
   civilization: Civilization;
   tags: Tag[];
-  patch: string;
-  youtube: string;
+  patch?: string;
+  youtube?: string;
   steps: ObjectId[] | IBoStepDoc[];
   wilsonScore: number;
   reactionCounts: { l: number, d: number; };
@@ -67,7 +67,7 @@ const BuildOrderSchema = new Schema(BuildOrderSchemaFields, { timestamps: true }
 BuildOrderSchema.pre('save', function (next) {
   if (this.isModified('reactionCounts')) {
     this.wilsonScore = wilsonScore.lowerBound(this.reactionCounts.l, this.reactionCounts.l + this.reactionCounts.d);
-    if (!this.reactionLimitReached && this.reactionCounts.l + this.reactioncounts.d >= REACTION_LIMIT) {
+    if (!this.reactionLimitReached && (this.reactionCounts.l + this.reactionCounts.d) >= REACTION_LIMIT) {
       this.reactionLimitReached = true;
     }
   }

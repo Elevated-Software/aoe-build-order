@@ -1,8 +1,8 @@
-import { FilterQuery, LeanDocument, UpdateQuery } from 'mongoose';
+import { LeanDocument } from 'mongoose';
 import type { NextApiHandler, NextApiRequest } from 'next';
 import { Errors } from '../../../../lib/consts';
 import { withDb, withHandleErrors } from '../../../../lib/middlewares';
-import { EsApiResponse, EsError } from '../../../../lib/models/api';
+import { Bo, EsApiResponse, EsError } from '../../../../lib/models/api';
 import { BuildOrder, IBoStepDoc, IBuildOrderDoc } from '../../../../lib/models/database';
 import { ensureLoggedIn } from '../../../../lib/utils/api';
 import { toObjectId } from '../../../../lib/utils/database';
@@ -32,7 +32,7 @@ const handler: NextApiHandler = async (req: NextApiRequest, res: EsApiResponse<D
   let buildOrder: LeanDocument<IBuildOrderDoc>;
   switch (method) {
     case 'POST':
-      buildOrder = await post(session.user.userId, boId as string, likeOrDislike, direction as string);
+      buildOrder = await post(session.user.userId, boId as string, likeOrDislike, direction);
       break;
     default: {
       res.setHeader('Allow', ['POST']);
@@ -43,10 +43,10 @@ const handler: NextApiHandler = async (req: NextApiRequest, res: EsApiResponse<D
   res.json({ success: true, buildOrder });
 };
 
-const post = async (userId: string, id: string, reaction: 'like' | 'dislike', direction: string) => {
+const post = async (userId: string, id: string, reaction: 'like' | 'dislike', direction: 'up' | 'down') => {
   let buildOrder = await BuildOrder.findById(id).populate<{ steps: IBoStepDoc[]; }>('steps').exec();
-  if (buildOrder.user.toString() !== userId) {
-    throw new EsError(Errors.noPermission, 403);
+  if (!buildOrder) {
+    throw new EsError(Errors.notFound('Build Order'), 404);
   }
 
   const userObjectId = toObjectId(userId);
@@ -55,12 +55,23 @@ const post = async (userId: string, id: string, reaction: 'like' | 'dislike', di
   }
 
   const shortReaction = reaction === 'like' ? 'l' : 'd';
+  const userReaction = buildOrder.reactions.find(reaction => reaction.userId.toString() === userId);
   if (direction === 'up') {
+    if (userReaction) {
+      throw new EsError(Errors.alreadyReacted, 403);
+    }
+
     buildOrder.reactions.push({ reaction: shortReaction, userId: userObjectId as any });
-    buildOrder.reactionCounts[shortReaction]++;
-  } else {
-    buildOrder.reactions.filter(reaction => reaction.userId.toString() !== userObjectId.toString());
-    buildOrder.reactionCounts[shortReaction]--;
+    buildOrder.reactionCounts[shortReaction] += 1;
+  } else if (direction === 'down' && userReaction) {
+    if (userReaction.reaction !== shortReaction) {
+      throw new EsError(Errors.alreadyReacted, 403);
+    }
+
+    buildOrder.reactions = buildOrder.reactions.filter(reaction => reaction.userId.toString() !== userId);
+    if (buildOrder.reactionCounts[shortReaction] > 0) {
+      buildOrder.reactionCounts[shortReaction] -= 1;
+    }
   }
 
   buildOrder = await buildOrder.save();

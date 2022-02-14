@@ -14,7 +14,7 @@ export const BuildOrderListTile = ({ buildOrder }: Props): JSX.Element => {
 
   return (
     <Box px={6} py={5} shadow="md" borderWidth="1px" rounded="lg" width="100%" bgColor={cardBg}>
-      <VStack>
+      <VStack align="start">
         <HStack width="100%" justifyContent="stretch">
           <Box display="inline-flex" width="50%" alignItems="start">
             <Box>

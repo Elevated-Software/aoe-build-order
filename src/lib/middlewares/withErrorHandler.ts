@@ -12,6 +12,9 @@ export const withHandleErrors = (fn: NextApiHandler) => async (req: NextApiReque
   try {
     return await fn(req, res);
   } catch (err) {
+    if (process.env.NODE_ENV !== 'production') {
+      console.error(err);
+    }
     const code = (err as any).code || 500;
     const message = (err as any).message || 'Oops, something went wrong!';
     res.status(code).json({ success: false, code, message });

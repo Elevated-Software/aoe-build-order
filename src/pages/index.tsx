@@ -24,7 +24,7 @@ const Home = ({ buildOrders }: Props): JSX.Element => {
 
 export const getStaticProps: GetStaticProps = async () => {
   await dbConnect();
-  const buildOrders = await BuildOrderModel.find().lean().limit(5).exec();
+  const buildOrders = await BuildOrderModel.find().lean().limit(5).sort({ wilsonScore: -1 }).exec();
   return {
     props: {
       buildOrders: JSON.parse(JSON.stringify(buildOrders)),
