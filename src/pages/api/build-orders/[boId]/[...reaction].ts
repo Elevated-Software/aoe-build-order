@@ -2,7 +2,8 @@ import { LeanDocument } from 'mongoose';
 import type { NextApiHandler, NextApiRequest } from 'next';
 import { Errors } from '../../../../lib/consts';
 import { withDb, withHandleErrors } from '../../../../lib/middlewares';
-import { Bo, EsApiResponse, EsError } from '../../../../lib/models/api';
+import { withObjectIdQueryParam } from '../../../../lib/middlewares/withObjectIdQueryParam';
+import { EsApiResponse, EsError } from '../../../../lib/models/api';
 import { BuildOrder, IBoStepDoc, IBuildOrderDoc } from '../../../../lib/models/database';
 import { ensureLoggedIn } from '../../../../lib/utils/api';
 import { toObjectId } from '../../../../lib/utils/database';
@@ -78,4 +79,4 @@ const post = async (userId: string, id: string, reaction: 'like' | 'dislike', di
   return buildOrder.toObject();
 };
 
-export default withHandleErrors(withDb(handler));
+export default withHandleErrors(withDb(withObjectIdQueryParam(handler, 'boId')));

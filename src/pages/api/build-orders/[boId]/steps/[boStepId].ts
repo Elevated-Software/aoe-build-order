@@ -2,6 +2,7 @@ import { LeanDocument } from 'mongoose';
 import type { NextApiHandler, NextApiRequest } from 'next';
 import { Errors } from '../../../../../lib/consts';
 import { withDb, withHandleErrors } from '../../../../../lib/middlewares';
+import { withObjectIdQueryParam } from '../../../../../lib/middlewares/withObjectIdQueryParam';
 import { EsApiResponse, EsError } from '../../../../../lib/models/api';
 import { BoStep, BuildOrder, IBoStep, IBoStepDoc, IBuildOrderDoc } from '../../../../../lib/models/database';
 import { ensureLoggedIn } from '../../../../../lib/utils/api';
@@ -54,7 +55,7 @@ const put = async ({ id, boId, userId, stepNumber, gameTime, population, food, w
     throw new EsError(Errors.notFound('User'), 404);
   }
 
-  let buildOrder = await BuildOrder.findById(boId).lean().exec();
+  let buildOrder = await BuildOrder.findById(boId).populate<{ steps: IBoStepDoc[]; }>('steps').exec();
   if (!buildOrder) {
     throw new EsError(Errors.notFound('Build Order'), 404);
   }
@@ -72,8 +73,8 @@ const put = async ({ id, boId, userId, stepNumber, gameTime, population, food, w
   boStep.description = description;
 
   await boStep.save();
-  buildOrder = await BuildOrder.findById(boId).populate<{ steps: IBoStepDoc[]; }>('steps').lean().exec();
-  return buildOrder;
+  await buildOrder.populate<{ steps: IBoStepDoc[]; }>('steps');
+  return buildOrder.toObject();
 };
 
 interface DeleteOpts {
@@ -91,7 +92,7 @@ const deleteBoStep = async ({ id, boId, userId }: DeleteOpts) => {
     throw new EsError(Errors.noPermission, 403);
   }
 
-  await BoStep.deleteOne({ _id: id }).exec();
+  await BoStep.findByIdAndDelete(id).exec();
 };
 
-export default withHandleErrors(withDb(handler));
+export default withHandleErrors(withDb(withObjectIdQueryParam(handler, 'boId', 'boStepId')));

@@ -1,8 +1,8 @@
-import { ObjectId } from 'mongodb';
 import { LeanDocument } from 'mongoose';
 import type { NextApiHandler, NextApiRequest } from 'next';
 import { Civilization, Errors, Tag } from '../../../../lib/consts';
 import { withDb, withHandleErrors } from '../../../../lib/middlewares';
+import { withObjectIdQueryParam } from '../../../../lib/middlewares/withObjectIdQueryParam';
 import { EsApiResponse, EsError } from '../../../../lib/models/api';
 import { BuildOrder, IBoStepDoc, IBuildOrderDoc } from '../../../../lib/models/database';
 import { ensureLoggedIn } from '../../../../lib/utils/api';
@@ -100,4 +100,4 @@ const deleteAction = async ({ id, userId }: DeleteOpts) => {
   await buildOrder.delete();
 };
 
-export default withHandleErrors(withDb(handler));
+export default withHandleErrors(withDb(withObjectIdQueryParam(handler, 'boId')));

@@ -2,6 +2,7 @@ import { LeanDocument } from 'mongoose';
 import type { NextApiHandler, NextApiRequest } from 'next';
 import { Errors } from '../../../../../lib/consts';
 import { withDb, withHandleErrors } from '../../../../../lib/middlewares';
+import { withObjectIdQueryParam } from '../../../../../lib/middlewares/withObjectIdQueryParam';
 import { EsApiResponse, EsError } from '../../../../../lib/models/api';
 import { BoStep, BuildOrder, IBoStep, IBoStepDoc, IBuildOrderDoc } from '../../../../../lib/models/database';
 import { ensureLoggedIn } from '../../../../../lib/utils/api';
@@ -45,11 +46,17 @@ const post = async ({ boId, stepNumber, gameTime, population, food, wood, gold, 
     description,
   });
 
-  return await BuildOrder.findByIdAndUpdate(
+  const buildOrder = await BuildOrder.findByIdAndUpdate(
     boId,
     { $push: { steps: boStep } },
     { returnDocument: 'after' })
     .populate<{ steps: IBoStepDoc[]; }>('steps').lean().exec();
+
+  if (!buildOrder) {
+    throw new EsError(Errors.notFound('Build Order'), 404);
+  }
+
+  return buildOrder;
 };
 
-export default withHandleErrors(withDb(handler));
+export default withHandleErrors(withDb(withObjectIdQueryParam(handler, 'boId')));

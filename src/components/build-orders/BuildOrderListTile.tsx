@@ -30,7 +30,7 @@ export const BuildOrderListTile = ({ buildOrder }: Props): JSX.Element => {
             </Box>
             <Box ml={4}>
               <Heading size="md" alignItems="center">{buildOrder.name}</Heading>
-              <Text fontSize="xs">Updated at {new Date(buildOrder.updatedAt as string).toLocaleString()}</Text>
+              <Text fontSize="sm">Updated at {new Date(buildOrder.updatedAt as string).toLocaleString()}</Text>
             </Box>
           </Box>
 

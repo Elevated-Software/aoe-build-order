@@ -1,4 +1,5 @@
 import mongoose, { Document, Model, model, Schema } from 'mongoose';
+import { BuildOrder } from '.';
 
 export interface IBoStep {
   stepNumber: number;
@@ -30,5 +31,9 @@ const BoStepSchemaFields: Record<keyof IBoStep, any> = {
   },
 };
 const BoStepSchema = new Schema(BoStepSchemaFields);
+
+BoStepSchema.post('findOneAndDelete', async function (doc) {
+  await BuildOrder.findOneAndUpdate({ steps: { $in: [doc._id] } }, { $pull: { steps: doc._id } }).exec();
+});
 
 export const BoStep: Model<IBoStepDoc> = mongoose.models.BoStep || model<IBoStepDoc>('BoStep', BoStepSchema);
