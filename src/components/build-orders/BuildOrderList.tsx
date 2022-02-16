@@ -1,4 +1,4 @@
-import { Box, BoxProps, Heading, VStack } from '@chakra-ui/react';
+import { Box, BoxProps, Divider, Heading, VStack } from '@chakra-ui/react';
 import React from 'react';
 import { Bo } from '../../lib/models/api';
 import { BuildOrderListSmallTile } from './BuildOrderListSmallTile';
@@ -13,7 +13,7 @@ export const BuildOrderList = ({ size = 'sm', buildOrders, ...rest }: Props): JS
 
   return (
     <Box {...rest}>
-      <VStack spacing={2} alignItems="start">
+      <VStack spacing={2} alignItems="start" divider={size === 'sm' ? <Divider /> : undefined}>
         {
           buildOrders.map(buildOrder => (
             size === 'sm'

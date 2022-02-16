@@ -11,18 +11,17 @@ const BuildOrders = (): JSX.Element => {
 
   return (
     <Container>
-      <Grid w="80%" templateColumns="repeat(3, 1fr)" gap={4}>
+      <Grid w="80%" templateColumns={{ base: "repeat(1, 1fr)", md: "repeat(3, 1fr)" }} gap={20}>
+        <GridItem colSpan={1}>
+          <BuildOrderFilter />
+        </GridItem>
         <GridItem colSpan={2}>
           <Heading pb={4} size="xl">Build Orders</Heading>
           {
             data
-              ? <BuildOrderList buildOrders={data.buildOrders} alignContent="start">Hello from Build Orders</BuildOrderList>
+              ? <BuildOrderList buildOrders={data.buildOrders} alignContent="start" width={{ sm: "100%", md: "80%" }} pb={10} />
               : <Center><Spinner /></Center>
           }
-
-        </GridItem>
-        <GridItem colSpan={1}>
-          <BuildOrderFilter />
         </GridItem>
       </Grid>
     </Container>

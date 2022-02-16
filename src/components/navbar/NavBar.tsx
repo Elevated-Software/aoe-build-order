@@ -1,6 +1,6 @@
-import { Box, Button, Flex, HStack, Text } from '@chakra-ui/react';
+import { Box, Button, Flex, HStack, Link, Spacer, Text } from '@chakra-ui/react';
 import { signIn, signOut, useSession } from 'next-auth/react';
-import Link from 'next/link';
+import NextLink from 'next/link';
 import { DarkModeSwitch } from './DarkModeSwitch';
 
 export const NavBar = (): JSX.Element => {
@@ -11,21 +11,37 @@ export const NavBar = (): JSX.Element => {
       alignItems="center"
       justifyContent="space-between"
       w="100%"
-      maxWidth="800px"
+      maxWidth="50%"
       minWidth="356px"
       mb={14}
       p={8}
       mx="auto"
     >
       <Box w={40}>
-        <Link href={'/'} passHref>
+        <NextLink href={'/'} passHref>
           <Text cursor="pointer" fontSize="lg" fontWeight="bold">AOE Build Orders</Text>
-        </Link>
+        </NextLink>
       </Box>
       <HStack
         align="center"
         spacing={4}
       >
+        <NextLink href="/build-orders" passHref>
+          <Link fontWeight="semibold" transitionDuration=".3s" _hover={{
+            color: 'teal.400',
+          }}>
+            Build Orders
+          </Link>
+        </NextLink>
+        <Spacer />
+        <NextLink href="">
+          <Link fontWeight="semibold" transitionDuration=".3s" _hover={{
+            color: 'teal.400',
+          }}>
+            Donate
+          </Link>
+        </NextLink>
+        <Spacer />
         <DarkModeSwitch />
         <Button
           onClick={session

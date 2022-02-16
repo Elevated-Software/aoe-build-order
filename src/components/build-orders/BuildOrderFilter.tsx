@@ -1,7 +1,5 @@
-import { Box, BoxProps, Heading, Text } from '@chakra-ui/react';
+import { Box, Heading, Text } from '@chakra-ui/react';
 import React from 'react';
-import { Bo } from '../../lib/models/api';
-
 
 export const BuildOrderFilter = (): JSX.Element => {
   return (
