@@ -1,10 +1,9 @@
 import { CheckCircleIcon, CloseIcon } from '@chakra-ui/icons';
 import { Box, BoxProps, Button, Flex, Heading, List, ListIcon, ListItem, Spacer, Stack, Text, useColorModeValue } from '@chakra-ui/react';
-// import { useRouter } from 'next/router';
+import Link from 'next/link';
 import React from 'react';
 
 export const CallToAction = (rest: BoxProps): JSX.Element => {
-  // const router = useRouter();
 
   const cardBg = useColorModeValue('light.cardBg', 'dark.cardBg');
   const subText = useColorModeValue('teal.800', 'teal.300');
@@ -56,9 +55,11 @@ export const CallToAction = (rest: BoxProps): JSX.Element => {
               <Text fontSize="lg">See All Build Orders</Text>
             </Stack>
             <Spacer />
-            <Button onClick={() => { }} p={6} colorScheme="green">
-              Build Orders
-            </Button>
+            <Link href="/build-orders" passHref>
+              <Button p={6} colorScheme="green">
+                Build Orders
+              </Button>
+            </Link>
           </Flex>
         </Box>
       </Stack>
