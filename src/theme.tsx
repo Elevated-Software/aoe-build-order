@@ -18,9 +18,9 @@ const config: ThemeConfig = {
 const theme = extendTheme({
   colors: {
     light: {
-      bg: 'gray.50',
+      bg: '#F7FAFC',
       cardBg: '#CBD5E0',
-      primary: 'gray.900'
+      primary: '#171923'
     },
     dark: {
       bg: '#121212',

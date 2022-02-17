@@ -6,7 +6,7 @@ export const Container = (props: FlexProps): JSX.Element => {
   const color = useColorModeValue('light.primary', 'dark.primary');
 
   return (
-    <Box bg={bg} color={color} minHeight="100vh">
+    <Box bgColor={bg} color={color} minHeight="100vh">
       <NavBar />
       <Flex
         direction="column"

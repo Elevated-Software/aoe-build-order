@@ -22,8 +22,8 @@ export const BuildOrderListTile = ({ buildOrder }: Props): JSX.Element => {
               <Image
                 src={`/images/flags/${civToCode[buildOrder.civilization]}.png`}
                 alt={`${buildOrder.civilization} flag`}
-                width={'43px'}
-                height={'24px'}
+                width={'53px'}
+                height={'29px'}
               />
               <Text fontSize="sm">
                 <Icon as={ThumbUpIcon} color="green.500" /> {buildOrder.reactionCounts.l} <Icon as={ThumbDownIcon} color="red.400" /> {buildOrder.reactionCounts.d}

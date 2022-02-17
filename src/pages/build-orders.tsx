@@ -11,7 +11,7 @@ const BuildOrders = (): JSX.Element => {
 
   return (
     <Container>
-      <Grid w="80%" templateColumns={{ base: "repeat(1, 1fr)", md: "repeat(3, 1fr)" }} gap={20}>
+      <Grid w={{ base: '90%', md: '60%' }} templateColumns={{ base: "repeat(1, 1fr)", md: "repeat(3, 1fr)" }} gap={20}>
         <GridItem colSpan={1}>
           <BuildOrderFilter />
         </GridItem>
@@ -19,7 +19,7 @@ const BuildOrders = (): JSX.Element => {
           <Heading pb={4} size="xl">Build Orders</Heading>
           {
             data
-              ? <BuildOrderList buildOrders={data.buildOrders} alignContent="start" width={{ sm: "100%", md: "80%" }} pb={10} />
+              ? <BuildOrderList buildOrders={data.buildOrders} alignContent="start" width="100%" pb={10} />
               : <Center><Spinner /></Center>
           }
         </GridItem>
