@@ -2,6 +2,7 @@ import { Box, Flex, Icon, Image, Spacer, Text, useColorMode, useColorModeValue, 
 import { ThumbDownIcon, ThumbUpIcon } from '@heroicons/react/outline';
 import { civToCode } from '../../lib/consts';
 import { Bo } from '../../lib/models/api';
+import { FlagImage } from '../FlagImage';
 import { Tags } from './Tags';
 
 interface Props {
@@ -14,13 +15,7 @@ export const BuildOrderListSmallTile = ({ buildOrder }: Props): JSX.Element => {
   return (
     <Flex py={2} px={4} width="100%" rounded="lg" transitionDuration=".3s" _hover={{ bgColor: cardBg }}>
       <VStack mr={{ base: 2, md: 4 }} spacing={1} width={20} minWidth={10}>
-        <Image
-          src={`/images/flags/${civToCode[buildOrder.civilization]}.png`}
-          alt={`${buildOrder.civilization} flag`}
-          width={'53px'}
-          height={'29px'}
-          mb={1}
-        />
+        <FlagImage civilization={buildOrder.civilization} />
         <Text fontSize="sm">
           <Icon as={ThumbUpIcon} color="green.500" /> {buildOrder.reactionCounts.l} <Icon as={ThumbDownIcon} color="red.400" /> {buildOrder.reactionCounts.d}
         </Text>

@@ -22,6 +22,17 @@ export const civToCode = {
   [Civilization.FRENCH]: 'french'
 };
 
+export const civToColor = {
+  [Civilization.RUS]: '#d65046',
+  [Civilization.HOLY_ROMAN_EMPIRE]: '#dcc34d',
+  [Civilization.CHINESE]: '#b94730',
+  [Civilization.ENGLISH]: '#d6dcdf',
+  [Civilization.DELHI_SULTANATE]: '#269058',
+  [Civilization.MONGOLS]: '#1b8ac8',
+  [Civilization.ABBASID_DYNASTY]: '#343539',
+  [Civilization.FRENCH]: '#2fa1f3'
+};
+
 export enum Tag {
   BOOM = 'Boom',
   CHEESE = 'Cheese',
