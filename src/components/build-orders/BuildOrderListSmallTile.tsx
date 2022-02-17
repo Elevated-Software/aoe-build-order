@@ -30,7 +30,7 @@ export const BuildOrderListSmallTile = ({ buildOrder }: Props): JSX.Element => {
         <Text fontSize="sm">Updated at {new Date(buildOrder.updatedAt as string).toLocaleString()}</Text>
       </VStack>
       <Spacer />
-      <Tags size="sm" tags={buildOrder.tags} width={{ base: '100%', md: '35%' }} />
+      <Tags size="sm" tags={buildOrder.tags} width={{ base: '100%', md: '40%' }} />
     </Flex>
   );
 };
