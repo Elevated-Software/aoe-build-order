@@ -14,7 +14,7 @@ interface Props {
 const Home = ({ buildOrders }: Props): JSX.Element => {
   return (
     <Container>
-      <SimpleGrid spacing={{ base: 6, md: 0 }} columns={[1, null, 2]} width="100%" minChildWidth="32rem">
+      <SimpleGrid spacing={{ base: 4, md: 0 }} columns={[1, null, 2]} width="100%" minChildWidth="32rem">
         <CallToAction width="100%" />
         <BuildOrderList size="lg" buildOrders={buildOrders} maxW="56rem" px={{ base: 6, md: 12 }} pb={4} />
       </SimpleGrid>

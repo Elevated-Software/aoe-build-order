@@ -1,9 +1,9 @@
 import { Center, Grid, GridItem, Heading, Spinner, Text } from '@chakra-ui/react';
 import useSWR from 'swr';
-import { BuildOrderFilter } from '../components/build-orders/BuildOrderFilter';
-import { BuildOrderList } from '../components/build-orders/BuildOrderList';
-import { Container } from '../components/Container';
-import { Bo } from '../lib/models/api';
+import { BuildOrderFilter } from '../../components/build-orders/BuildOrderFilter';
+import { BuildOrderList } from '../../components/build-orders/BuildOrderList';
+import { Container } from '../../components/Container';
+import { Bo } from '../../lib/models/api';
 
 
 const BuildOrders = (): JSX.Element => {
