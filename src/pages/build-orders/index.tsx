@@ -10,7 +10,6 @@ const BuildOrders = (): JSX.Element => {
   const { data, error } = useSWR<{ success: boolean, buildOrders: Bo[]; }>('/api/build-orders');
   const breakpoint = useBreakpoint();
   const smallScreen = breakpoint === 'base' || breakpoint === 'sm';
-  console.log(breakpoint);
 
   return (
     <Container>

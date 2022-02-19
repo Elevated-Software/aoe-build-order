@@ -9,7 +9,6 @@ const BuildOrder = (): JSX.Element => {
   const router = useRouter();
   const { boId } = router.query;
   const { data, error } = useSWR<{ success: boolean, buildOrder: Bo; }>(`/api/build-orders/${boId}`);
-  console.log(data);
 
 
   return (

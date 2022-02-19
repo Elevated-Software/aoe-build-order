@@ -1,5 +1,7 @@
 export * from './errors';
 
+export const PAGE_LIMIT = 10;
+
 export enum Civilization {
   RUS = 'Rus',
   HOLY_ROMAN_EMPIRE = 'Holy Roman Empire',
@@ -22,6 +24,17 @@ export const civToCode = {
   [Civilization.FRENCH]: 'french'
 };
 
+export const codeToCiv: { [key: string]: Civilization; } = {
+  rus: Civilization.RUS,
+  hre: Civilization.HOLY_ROMAN_EMPIRE,
+  chinese: Civilization.CHINESE,
+  english: Civilization.ENGLISH,
+  delhi: Civilization.DELHI_SULTANATE,
+  mongol: Civilization.MONGOLS,
+  abbasid: Civilization.ABBASID_DYNASTY,
+  french: Civilization.FRENCH,
+};
+
 export const civToColor = {
   [Civilization.RUS]: '#d65046',
   [Civilization.HOLY_ROMAN_EMPIRE]: '#dcc34d',
@@ -30,7 +43,7 @@ export const civToColor = {
   [Civilization.DELHI_SULTANATE]: '#269058',
   [Civilization.MONGOLS]: '#1b8ac8',
   [Civilization.ABBASID_DYNASTY]: '#343539',
-  [Civilization.FRENCH]: '#2fa1f3'
+  [Civilization.FRENCH]: '#2fa1f3',
 };
 
 export enum Tag {
@@ -51,6 +64,16 @@ export const tagToCode = {
   [Tag.LAND]: 'land',
   [Tag.RUSH]: 'rush',
   [Tag.WATER]: 'water',
+};
+
+export const codeToTag: { [key: string]: Tag; } = {
+  boom: Tag.BOOM,
+  cheese: Tag.CHEESE,
+  fastFeudal: Tag.FAST_FEUDAL,
+  fastCastle: Tag.FAST_CASTLE,
+  land: Tag.LAND,
+  rush: Tag.RUSH,
+  water: Tag.WATER,
 };
 
 export const tagToColor = {
