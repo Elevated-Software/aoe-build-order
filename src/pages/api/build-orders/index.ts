@@ -73,7 +73,7 @@ const get = async (page: number, tags: Tag[], civ: Civilization) => {
   const skip = (page - 1) * PAGE_LIMIT;
 
   const query: FilterQuery<IBuildOrderDoc> = {};
-  if (tags?.length > 0) {
+  if (tags.length > 0) {
     query.tags = { $all: tags };
   }
   if (civ) {

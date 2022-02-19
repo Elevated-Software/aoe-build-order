@@ -1,7 +1,6 @@
-import { Box, Flex, Icon, Image, Spacer, Text, useColorMode, useColorModeValue, VStack } from '@chakra-ui/react';
+import { Flex, Icon, Spacer, Text, useColorModeValue, VStack } from '@chakra-ui/react';
 import { ThumbDownIcon, ThumbUpIcon } from '@heroicons/react/outline';
 import Link from 'next/link';
-import { civToCode } from '../../lib/consts';
 import { Bo } from '../../lib/models/api';
 import { FlagImage } from '../FlagImage';
 import { Tags } from './Tags';
