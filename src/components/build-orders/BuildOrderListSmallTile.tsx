@@ -1,12 +1,12 @@
 import { Flex, Icon, Spacer, Text, useColorModeValue, VStack } from '@chakra-ui/react';
 import { ThumbDownIcon, ThumbUpIcon } from '@heroicons/react/outline';
 import Link from 'next/link';
-import { Bo } from '../../lib/models/api';
+import { BoListItem } from '../../lib/models/api';
 import { FlagImage } from '../FlagImage';
 import { Tags } from './Tags';
 
 interface Props {
-  buildOrder: Bo;
+  buildOrder: BoListItem;
 }
 
 export const BuildOrderListSmallTile = ({ buildOrder }: Props): JSX.Element => {

@@ -1,8 +1,7 @@
 import { FilterQuery, LeanDocument } from 'mongoose';
 import type { NextApiHandler, NextApiRequest } from 'next';
-import { getSession } from 'next-auth/react';
 import { NextApiRequestQuery } from 'next/dist/server/api-utils';
-import { Civilization, codeToCiv, codeToTag, Errors, PAGE_LIMIT, Tag } from '../../../lib/consts';
+import { Civilization, codeToCiv, codeToTag, Errors, PAGINATION_SIZE_LIMIT, Tag } from '../../../lib/consts';
 import { withDb, withHandleErrors } from '../../../lib/middlewares';
 import { EsApiResponse, EsError } from '../../../lib/models/api';
 import { BuildOrder, IBoStepDoc, IBuildOrderDoc } from '../../../lib/models/database';
@@ -70,7 +69,7 @@ const get = async (page: number, tags: Tag[], civ: Civilization) => {
   if (!page) {
     page = 1;
   }
-  const skip = (page - 1) * PAGE_LIMIT;
+  const skip = (page - 1) * PAGINATION_SIZE_LIMIT;
 
   const query: FilterQuery<IBuildOrderDoc> = {};
   if (tags.length > 0) {
@@ -81,10 +80,10 @@ const get = async (page: number, tags: Tag[], civ: Civilization) => {
   }
 
   const buildOrderCount = await BuildOrder.find(query).countDocuments().exec();
-  const pagesCount = Math.ceil(buildOrderCount / PAGE_LIMIT);
+  const pagesCount = Math.ceil(buildOrderCount / PAGINATION_SIZE_LIMIT);
 
-  const buildOrders = await BuildOrder.find(query).select('name description civilization tags reactionCounts').limit(PAGE_LIMIT).skip(skip).lean().exec();
-  return { pagesCount, page, size: PAGE_LIMIT, buildOrders };
+  const buildOrders = await BuildOrder.find(query).select('name description civilization tags reactionCounts updatedAt').limit(PAGINATION_SIZE_LIMIT).skip(skip).lean().exec();
+  return { pagesCount, page, size: PAGINATION_SIZE_LIMIT, buildOrders };
 };
 
 interface PostOpts {

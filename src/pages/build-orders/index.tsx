@@ -1,11 +1,10 @@
-import { Box, Button, ButtonGroup, Center, Grid, GridItem, Heading, Icon, Spinner, Text, useBreakpoint, useColorModeValue } from '@chakra-ui/react';
+import { Button, ButtonGroup, Grid, GridItem, Heading, Icon, Text, useBreakpoint, useColorModeValue } from '@chakra-ui/react';
 import { ArrowSmLeftIcon, ArrowSmRightIcon } from '@heroicons/react/outline';
-import { useState } from 'react';
-import useSWR from 'swr';
+import { useCallback, useState } from 'react';
 import { BuildOrderFilter } from '../../components/build-orders/BuildOrderFilter';
 import { BuildOrderList } from '../../components/build-orders/BuildOrderList';
 import { Container } from '../../components/Container';
-import { Bo } from '../../lib/models/api';
+import { Tag } from '../../lib/consts';
 
 
 const BuildOrders = (): JSX.Element => {
@@ -14,9 +13,18 @@ const BuildOrders = (): JSX.Element => {
   const activeButtonBg = useColorModeValue('gray.300', 'gray.700');
 
   const [pageIndex, setPageIndex] = useState(1);
-  const [tagsFilter, setTagsFilter] = useState([]);
+  const [pagesCount, setPagesCount] = useState<number>(1);
+  const [tagsFilter, setTagsFilter] = useState<Tag[]>([]);
   const [civFilter, setCivFilter] = useState<string>();
-  const { data, error } = useSWR<{ success: boolean, pagesCount: number, page: number, size: number, buildOrders: Bo[]; }>(`/api/build-orders?page=${pageIndex}&tags=${tagsFilter.join(',')}&civ=${civFilter}`);
+
+  const setFilters = (tags: Tag[], civ: string) => {
+    setTagsFilter(tags);
+    setCivFilter(civ);
+  };
+
+  const updatePagesCount = useCallback(pagesCount => {
+    setPagesCount(pagesCount);
+  }, []);
 
   return (
     <Container>
@@ -32,16 +40,18 @@ const BuildOrders = (): JSX.Element => {
         }
         <GridItem colSpan={2}>
           <Heading pb={4} size="xl">Build Orders</Heading>
-          {
-            data
-              ? <BuildOrderList buildOrders={data.buildOrders} alignContent="start" width="100%" pb={10} />
-              : <Center><Spinner /></Center>
-          }
-          <ButtonGroup variant="outline" spacing={2}>
+          <BuildOrderList page={pageIndex} filters={{ tagsFilter, civFilter }} setPagesCount={updatePagesCount} alignContent="start" width="100%" pb={4} />
+          <BuildOrderList display={"none"} page={pageIndex + 1} filters={{ tagsFilter, civFilter }} setPagesCount={updatePagesCount} alignContent="start" width="100%" />
+          <ButtonGroup variant="outline" spacing={2} pb={4}>
             <Button disabled={pageIndex === 1} leftIcon={<Icon as={ArrowSmLeftIcon} />} onClick={() => setPageIndex(pageIndex - 1)}>Prev</Button>
             {
               pageIndex >= 3
-                ? (<Box display="inline-flex"><Button onClick={() => setPageIndex(1)} >1</Button><Text pl={2} fontSize="2xl" alignSelf="flex-end">...</Text></Box>)
+                ? <Button onClick={() => setPageIndex(1)}>1</Button>
+                : null
+            }
+            {
+              pageIndex >= 4
+                ? <Text fontSize="2xl" alignSelf="flex-end">...</Text>
                 : null
             }
             {
@@ -51,18 +61,21 @@ const BuildOrders = (): JSX.Element => {
             }
             <Button bgColor={activeButtonBg}>{pageIndex}</Button>
             {
-              data?.pagesCount && pageIndex < data?.pagesCount
+              pagesCount && pageIndex < pagesCount
                 ? <Button onClick={() => setPageIndex(pageIndex + 1)} >{pageIndex + 1}</Button>
                 : null
             }
             {
-              data?.pagesCount && pageIndex < data?.pagesCount - 1
-                ? (<Box display="inline-flex"><Text pr={2} fontSize="2xl" alignSelf="flex-end">...</Text><Button onClick={() => setPageIndex(data.pagesCount)}>{data.pagesCount}</Button></Box>)
+              pagesCount && pageIndex < pagesCount - 2
+                ? <Text fontSize="2xl" alignSelf="flex-end">...</Text>
                 : null
             }
-
-            <Button disabled={pageIndex === data?.pagesCount} rightIcon={<Icon as={ArrowSmRightIcon} />} onClick={() => setPageIndex(pageIndex + 1)}>Next</Button>
-
+            {
+              pagesCount && pageIndex < pagesCount - 1
+                ? <Button onClick={() => setPageIndex(pagesCount)}>{pagesCount}</Button>
+                : null
+            }
+            <Button disabled={pageIndex === pagesCount} rightIcon={<Icon as={ArrowSmRightIcon} />} onClick={() => setPageIndex(pageIndex + 1)}>Next</Button>
           </ButtonGroup>
         </GridItem>
         {

@@ -1,6 +1,6 @@
 export * from './errors';
 
-export const PAGE_LIMIT = 10;
+export const PAGINATION_SIZE_LIMIT = 8;
 
 export enum Civilization {
   RUS = 'Rus',

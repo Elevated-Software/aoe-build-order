@@ -1,14 +1,12 @@
-import { Box, Heading, HStack, Icon, Tag, TagLabel, Text, useColorModeValue, VStack, Wrap, WrapItem } from '@chakra-ui/react';
-import Image from 'next/image';
-import { civToCode, tagToColor } from '../../lib/consts';
-import { Bo } from '../../lib/models/api';
+import { Box, Heading, HStack, Icon, Text, useColorModeValue, VStack } from '@chakra-ui/react';
+import { BoListItem } from '../../lib/models/api';
 import { ThumbUpIcon, ThumbDownIcon } from '@heroicons/react/outline';
 import { Tags } from './Tags';
 import { FlagImage } from '../FlagImage';
 
 
 interface Props {
-  buildOrder: Bo;
+  buildOrder: BoListItem;
 }
 
 export const BuildOrderListTile = ({ buildOrder }: Props): JSX.Element => {

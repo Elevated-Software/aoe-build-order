@@ -1,25 +1,49 @@
-import { Box, BoxProps, StackDivider, VStack } from '@chakra-ui/react';
-import React from 'react';
-import { Bo } from '../../lib/models/api';
+import { Box, BoxProps, Center, Spinner, StackDivider, Text, VStack } from '@chakra-ui/react';
+import React, { useEffect } from 'react';
+import useSWR from 'swr';
+import { Tag } from '../../lib/consts';
+import { BoListItem } from '../../lib/models/api';
 import { BuildOrderListSmallTile } from './BuildOrderListSmallTile';
 import { BuildOrderListTile } from './BuildOrderListTile';
 
 interface Props extends BoxProps {
-  size?: 'sm' | 'lg';
-  buildOrders: Bo[];
+  buildOrders?: BoListItem[]; // Used on the main page for Static generation
+  page?: number;
+  filters?: { tagsFilter: Tag[], civFilter?: string; };
+  setPagesCount?: (pageCount: number) => void;
 }
 
-export const BuildOrderList = ({ size = 'sm', buildOrders, ...rest }: Props): JSX.Element => {
+export const BuildOrderList = ({ buildOrders, page = 1, filters, setPagesCount, ...rest }: Props): JSX.Element => {
+  const { data, error } = useSWR<{ success: boolean, pagesCount: number, page: number, size: number, buildOrders: BoListItem[]; }>(!buildOrders?.length ? `/api/build-orders?page=${page}&tags=${filters?.tagsFilter.join(',')}&civ=${filters?.civFilter}` : null);
+  useEffect(() => {
+    if (data && setPagesCount) {
+      setPagesCount(data.pagesCount);
+    }
+  }, [data, setPagesCount]);
+
+  if (buildOrders?.length) {
+    return (<Box {...rest}>
+      <VStack spacing={2} alignItems="start">
+        {
+          buildOrders.map(buildOrder => (
+            <BuildOrderListTile key={buildOrder._id} buildOrder={buildOrder} />
+          ))
+        }
+      </VStack>
+    </Box>);
+  }
+
 
   return (
     <Box {...rest}>
-      <VStack spacing={2} alignItems="start" divider={size === 'sm' ? <StackDivider /> : undefined}>
+      <VStack spacing={2} alignItems="start" divider={<StackDivider />}>
         {
-          buildOrders.map(buildOrder => (
-            size === 'sm'
-              ? <BuildOrderListSmallTile key={buildOrder._id} buildOrder={buildOrder} />
-              : <BuildOrderListTile key={buildOrder._id} buildOrder={buildOrder} />
-          ))
+          data
+            ? data.buildOrders.map(buildOrder => (
+              <BuildOrderListSmallTile key={buildOrder._id} buildOrder={buildOrder} />
+            ))
+            : <Center><Spinner /></Center>
+
         }
       </VStack>
     </Box>
