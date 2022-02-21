@@ -32,10 +32,10 @@ const handler: NextApiHandler = async (req: NextApiRequest, res: EsApiResponse<D
         if (tags?.includes(',')) {
           const tagStrings = tags.split(',');
           for (const tag of tagStrings) {
-            tagList.push(codeToTag[tag]);
+            tagList.push((<any>Tag)[queryTagToEnumTag(tag)]);
           }
         } else {
-          tagList.push(codeToTag[tags]);
+          tagList.push((<any>Tag)[queryTagToEnumTag(tags)]);
         }
       }
 
@@ -59,6 +59,10 @@ const handler: NextApiHandler = async (req: NextApiRequest, res: EsApiResponse<D
       res.setHeader('Allow', ['GET', 'POST']);
       throw new EsError(Errors.methodNotAllowed(method as string), 405);
   }
+};
+
+const queryTagToEnumTag = (tag: string) => {
+  return tag.toUpperCase().replace(' ', '_');
 };
 
 const getQueryParams = (query: NextApiRequestQuery): QueryParams => {

@@ -85,3 +85,13 @@ export const tagToColor = {
   [Tag.RUSH]: 'red',
   [Tag.WATER]: 'blue',
 };
+
+export const tagToHexWithAlpha = {
+  [Tag.BOOM]: '#319795CC',
+  [Tag.CHEESE]: '#d69e2eCC',
+  [Tag.FAST_FEUDAL]: '#dd6b20CC',
+  [Tag.FAST_CASTLE]: '#718096CC',
+  [Tag.LAND]: '#38a169CC',
+  [Tag.RUSH]: '#e53e3eCC',
+  [Tag.WATER]: '#3182ceCC',
+};

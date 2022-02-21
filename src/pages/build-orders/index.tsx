@@ -4,7 +4,7 @@ import { useCallback, useState } from 'react';
 import { BuildOrderFilter } from '../../components/build-orders/BuildOrderFilter';
 import { BuildOrderList } from '../../components/build-orders/BuildOrderList';
 import { Container } from '../../components/Container';
-import { Tag } from '../../lib/consts';
+import { codeToTag, Tag, tagToCode } from '../../lib/consts';
 
 
 const BuildOrders = (): JSX.Element => {
@@ -17,10 +17,10 @@ const BuildOrders = (): JSX.Element => {
   const [tagsFilter, setTagsFilter] = useState<Tag[]>([]);
   const [civFilter, setCivFilter] = useState<string>();
 
-  const setFilters = (tags: Tag[], civ: string) => {
+  const setFilters = useCallback((tags: Tag[], civ?: string) => {
     setTagsFilter(tags);
     setCivFilter(civ);
-  };
+  }, []);
 
   const updatePagesCount = useCallback(pagesCount => {
     setPagesCount(pagesCount);
@@ -33,7 +33,7 @@ const BuildOrders = (): JSX.Element => {
           smallScreen
             ? (
               <GridItem colSpan={1}>
-                <BuildOrderFilter />
+                <BuildOrderFilter selectedTags={tagsFilter} civ={civFilter} setFilters={setFilters} />
               </GridItem>
             )
             : null
@@ -82,7 +82,7 @@ const BuildOrders = (): JSX.Element => {
           !smallScreen
             ? (
               <GridItem colSpan={1}>
-                <BuildOrderFilter />
+                <BuildOrderFilter selectedTags={tagsFilter} civ={civFilter} setFilters={setFilters} />
               </GridItem>
             )
             : null

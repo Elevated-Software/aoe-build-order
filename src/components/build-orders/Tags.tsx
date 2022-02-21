@@ -1,4 +1,4 @@
-import { Box, BoxProps, Tag as ChakraTag, TagLabel, useColorModeValue, Wrap, WrapItem } from '@chakra-ui/react';
+import { Box, BoxProps, Tag as ChakraTag, TagLabel, Wrap, WrapItem } from '@chakra-ui/react';
 import { Tag, tagToColor } from '../../lib/consts';
 
 
