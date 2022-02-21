@@ -12,3 +12,7 @@ export const ensureLoggedIn = async (req: NextApiRequest): Promise<Session> => {
 
   return session;
 };
+
+export const queryParamToEnumTag = (param: string) => {
+  return param.toUpperCase().replaceAll(' ', '_');
+};

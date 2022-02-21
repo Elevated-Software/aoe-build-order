@@ -5,7 +5,7 @@ import { Civilization, codeToCiv, Errors, PAGINATION_SIZE_LIMIT, Tag } from '../
 import { withDb, withHandleErrors } from '../../../lib/middlewares';
 import { EsApiResponse, EsError } from '../../../lib/models/api';
 import { BuildOrder, IBuildOrderDoc } from '../../../lib/models/database';
-import { ensureLoggedIn } from '../../../lib/utils/api';
+import { ensureLoggedIn, queryParamToEnumTag } from '../../../lib/utils/api';
 
 interface Data {
   pagesCount?: number;
@@ -32,14 +32,15 @@ const handler: NextApiHandler = async (req: NextApiRequest, res: EsApiResponse<D
         if (tags?.includes(',')) {
           const tagStrings = tags.split(',');
           for (const tag of tagStrings) {
-            tagList.push((<any>Tag)[queryTagToEnumTag(tag)]);
+            tagList.push((<any>Tag)[queryParamToEnumTag(tag)]);
           }
         } else {
-          tagList.push((<any>Tag)[queryTagToEnumTag(tags)]);
+          tagList.push((<any>Tag)[queryParamToEnumTag(tags)]);
         }
       }
 
-      const { pagesCount, page: retPage, size, buildOrders } = await get(page, tagList, codeToCiv[civ]);
+      const civilization: Civilization = (<any>Civilization)[queryParamToEnumTag(civ)];
+      const { pagesCount, page: retPage, size, buildOrders } = await get(page, tagList, civilization);
       res.json({ success: true, pagesCount, page: retPage, size, buildOrders });
       break;
     }
@@ -61,10 +62,6 @@ const handler: NextApiHandler = async (req: NextApiRequest, res: EsApiResponse<D
   }
 };
 
-const queryTagToEnumTag = (tag: string) => {
-  return tag.toUpperCase().replace(' ', '_');
-};
-
 const getQueryParams = (query: NextApiRequestQuery): QueryParams => {
   return { page: parseInt(query.page as string), tags: (query.tags as string), civ: (query.civ as string) };
 };
@@ -80,7 +77,7 @@ const get = async (page: number, tags: Tag[], civ: Civilization) => {
     query.tags = { $all: tags };
   }
   if (civ) {
-    query.civ = civ;
+    query.civilization = civ;
   }
 
   const buildOrderCount = await BuildOrder.find(query).countDocuments().exec();

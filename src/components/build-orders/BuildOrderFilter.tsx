@@ -1,29 +1,40 @@
-import { Box, Heading, Tag as ChakraTag, TagLabel, TagLeftIcon, Wrap, WrapItem } from '@chakra-ui/react';
+import { Box, Button, Heading, Select, Tag as ChakraTag, TagLabel, TagLeftIcon, Wrap, WrapItem } from '@chakra-ui/react';
 import { BadgeCheckIcon, PlusCircleIcon } from '@heroicons/react/outline';
 import React from 'react';
-import { tagToHexWithAlpha, Tag, tagToColor } from '../../lib/consts';
+import { tagToHexWithAlpha, Tag, tagToColor, Civilization } from '../../lib/consts';
 
 interface Props {
   selectedTags: Tag[];
   civ?: string;
-  setFilters: (tags: Tag[], civ?: string) => void;
+  // setFilters: (tags: Tag[], civ?: string) => void;
+  setTagsFilter: (tags: Tag[]) => void;
+  setCivFilter: (civ: string) => void;
 }
 
-export const BuildOrderFilter = ({ selectedTags, civ, setFilters }: Props): JSX.Element => {
+export const BuildOrderFilter = ({ selectedTags, civ, setTagsFilter, setCivFilter }: Props): JSX.Element => {
   const onTagClick = (tag: Tag) => {
     if (selectedTags.includes(tag)) {
       const updatedSelectedTags = selectedTags.filter(selectedTag => selectedTag !== tag);
-      setFilters(updatedSelectedTags);
+      setTagsFilter(updatedSelectedTags);
     } else {
-      setFilters([...selectedTags, tag]);
+      setTagsFilter([...selectedTags, tag]);
     }
+  };
+
+  const onCivClick = (event: any) => {
+    setCivFilter(event.target.value);
+  };
+
+  const clearAllFilters = () => {
+    setTagsFilter([]);
+    setCivFilter('');
   };
 
   return (
     <Box>
-      <Heading size="md" pb={4}>Filters</Heading>
-      <Heading size="sm" pb={2}>Tags</Heading>
-      <Wrap>
+      <Heading size="md" mb={4}>Filters</Heading>
+      <Heading size="sm" mb={2}>Tags</Heading>
+      <Wrap mb={8}>
         {
           Object.values(Tag).map(tag => (
             <WrapItem key={tag}>
@@ -42,12 +53,21 @@ export const BuildOrderFilter = ({ selectedTags, civ, setFilters }: Props): JSX.
                 }}
               >
                 <TagLeftIcon fontSize="xl" as={selectedTags.includes(tag) ? BadgeCheckIcon : PlusCircleIcon} />
-                <TagLabel pb={0.5}>{tag}</TagLabel>
+                <TagLabel mb={0.5}>{tag}</TagLabel>
               </ChakraTag>
             </WrapItem>
           ))
         }
       </Wrap>
+      <Heading size="sm" mb={2}>Civilization</Heading>
+      <Select placeholder="Choose A Civilization" value={civ} onChange={onCivClick} mb={8}>
+        {
+          Object.values(Civilization).map(civ => (
+            <option key={civ} value={civ}>{civ}</option>
+          ))
+        }
+      </Select>
+      <Button colorScheme="red" onClick={clearAllFilters}>Clear All</Button>
     </Box>
   );
 };
