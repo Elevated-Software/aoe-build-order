@@ -4,8 +4,7 @@ import { useCallback, useState } from 'react';
 import { BuildOrderFilter } from '../../components/build-orders/BuildOrderFilter';
 import { BuildOrderList } from '../../components/build-orders/BuildOrderList';
 import { Container } from '../../components/Container';
-import { codeToTag, Tag, tagToCode } from '../../lib/consts';
-
+import { Tag } from '../../lib/consts';
 
 const BuildOrders = (): JSX.Element => {
   const breakpoint = useBreakpoint();

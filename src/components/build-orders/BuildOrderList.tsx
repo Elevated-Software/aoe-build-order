@@ -1,4 +1,4 @@
-import { Box, BoxProps, Center, Spinner, StackDivider, Text, VStack } from '@chakra-ui/react';
+import { Box, BoxProps, Center, Spinner, StackDivider, VStack } from '@chakra-ui/react';
 import React, { useEffect } from 'react';
 import useSWR from 'swr';
 import { BoListItem } from '../../lib/models/api';

@@ -1,4 +1,4 @@
-import { Box, Heading, Tag as ChakraTag, TagLabel, TagLeftIcon, Text, Wrap, WrapItem } from '@chakra-ui/react';
+import { Box, Heading, Tag as ChakraTag, TagLabel, TagLeftIcon, Wrap, WrapItem } from '@chakra-ui/react';
 import { BadgeCheckIcon, PlusCircleIcon } from '@heroicons/react/outline';
 import React from 'react';
 import { tagToHexWithAlpha, Tag, tagToColor } from '../../lib/consts';
