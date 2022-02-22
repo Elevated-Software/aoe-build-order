@@ -6,7 +6,6 @@ import { tagToHexWithAlpha, Tag, tagToColor, Civilization } from '../../lib/cons
 interface Props {
   selectedTags: Tag[];
   civ?: string;
-  // setFilters: (tags: Tag[], civ?: string) => void;
   setTagsFilter: (tags: Tag[]) => void;
   setCivFilter: (civ: string) => void;
 }

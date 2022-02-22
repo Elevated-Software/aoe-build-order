@@ -1,19 +1,21 @@
 import { Box, BoxProps, Center, Spinner, StackDivider, VStack } from '@chakra-ui/react';
 import React, { useEffect } from 'react';
-import useSWR from 'swr';
+import { Tag } from '../../lib/consts';
 import { BoListItem } from '../../lib/models/api';
+import { useBuildOrders } from '../../pages/hooks/useBuildOrders';
 import { BuildOrderListSmallTile } from './BuildOrderListSmallTile';
 import { BuildOrderListTile } from './BuildOrderListTile';
 
 interface Props extends BoxProps {
   buildOrders?: BoListItem[]; // Used on the main page for Static generation
   page?: number;
-  filters?: { tagsFilter: string[], civFilter?: string; };
+  filters?: { tagsFilter: Tag[], civFilter?: string; };
   setPagesCount?: (pageCount: number) => void;
 }
 
 export const BuildOrderList = ({ buildOrders, page = 1, filters, setPagesCount, ...rest }: Props): JSX.Element => {
-  const { data, error } = useSWR<{ success: boolean, pagesCount: number, page: number, size: number, buildOrders: BoListItem[]; }>(!buildOrders?.length ? `/api/build-orders?page=${page}&tags=${filters?.tagsFilter.join(',')}&civ=${filters?.civFilter}` : null);
+  const { data, loading, error } = useBuildOrders(page, filters?.tagsFilter || [], filters?.civFilter || '');
+
   useEffect(() => {
     if (data && setPagesCount) {
       setPagesCount(data.pagesCount);
@@ -33,7 +35,6 @@ export const BuildOrderList = ({ buildOrders, page = 1, filters, setPagesCount, 
       </Box>
     );
   }
-
 
   return (
     <Box {...rest}>
