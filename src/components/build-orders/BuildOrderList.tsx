@@ -1,4 +1,4 @@
-import { Box, BoxProps, Center, Spinner, StackDivider, VStack } from '@chakra-ui/react';
+import { Box, BoxProps, Center, Spinner, StackDivider, Text, VStack } from '@chakra-ui/react';
 import React, { useEffect } from 'react';
 import { Tag } from '../../lib/consts';
 import { BoListItem } from '../../lib/models/api';
@@ -40,12 +40,13 @@ export const BuildOrderList = ({ buildOrders, page = 1, filters, setPagesCount, 
     <Box {...rest}>
       <VStack spacing={2} alignItems="start" divider={<StackDivider />}>
         {
-          data
-            ? data.buildOrders.map(buildOrder => (
-              <BuildOrderListSmallTile key={buildOrder._id} buildOrder={buildOrder} />
-            ))
-            : <Center><Spinner /></Center>
-
+          loading
+            ? <Center w="100%" my={10}><Spinner size="xl" /></Center>
+            : error
+              ? <Text>There was an error loading build orders</Text>
+              : data && data.buildOrders?.map(buildOrder => (
+                <BuildOrderListSmallTile key={buildOrder._id} buildOrder={buildOrder} />
+              ))
         }
       </VStack>
     </Box>

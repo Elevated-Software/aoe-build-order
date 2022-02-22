@@ -8,6 +8,6 @@ export function useBuildOrders(page: number, tags: Tag[], civ: string) {
   return {
     data,
     loading: !error && !data,
-    error: error,
+    error,
   };
 }
