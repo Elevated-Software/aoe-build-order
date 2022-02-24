@@ -4,8 +4,8 @@ import { BuildOrderList } from '../components/build-orders/BuildOrderList';
 import { Container } from '../components/Container';
 import { CallToAction } from '../components/home/CallToAction';
 import { dbConnect } from '../lib/middlewares';
-import { Bo, BoListItem } from '../lib/models/api';
-import { BuildOrder as BuildOrderModel } from '../lib/models/database';
+import { BoListItem } from '../lib/models/api';
+import { BuildOrder } from '../lib/models/database';
 
 interface Props {
   buildOrders: BoListItem[];
@@ -24,7 +24,7 @@ const Home = ({ buildOrders }: Props): JSX.Element => {
 
 export const getStaticProps: GetStaticProps = async () => {
   await dbConnect();
-  const buildOrders = await BuildOrderModel.find().select('name description civilization tags reactionCounts updatedAt').lean().limit(5).sort({ wilsonScore: -1 }).exec();
+  const buildOrders = await BuildOrder.find().select('name description civilization tags reactionCounts updatedAt').lean().limit(5).sort({ wilsonScore: -1 }).exec();
   return {
     props: {
       buildOrders: JSON.parse(JSON.stringify(buildOrders)),

@@ -2,7 +2,7 @@ import { Box, BoxProps, Center, Spinner, StackDivider, Text, VStack } from '@cha
 import React, { useEffect } from 'react';
 import { Tag } from '../../lib/consts';
 import { BoListItem } from '../../lib/models/api';
-import { useBuildOrders } from '../../pages/hooks/useBuildOrders';
+import { useBuildOrders } from '../../hooks/useBuildOrders';
 import { BuildOrderListSmallTile } from './BuildOrderListSmallTile';
 import { BuildOrderListTile } from './BuildOrderListTile';
 

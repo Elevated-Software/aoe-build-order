@@ -20,13 +20,10 @@ const BuildOrders = (): JSX.Element => {
     <Container>
       <Grid w={{ base: '90%', md: '60%' }} templateColumns={{ base: "repeat(1, 1fr)", md: "repeat(3, 1fr)" }} gap={smallScreen ? undefined : 16}>
         {
-          smallScreen
-            ? (
-              <GridItem colSpan={1} mb={8}>
-                <BuildOrderFilter selectedTags={tagsFilter} civ={civFilter} setTagsFilter={setTagsFilter} setCivFilter={setCivFilter} />
-              </GridItem>
-            )
-            : null
+          smallScreen &&
+          <GridItem colSpan={1} mb={8}>
+            <BuildOrderFilter selectedTags={tagsFilter} civ={civFilter} setTagsFilter={setTagsFilter} setCivFilter={setCivFilter} />
+          </GridItem>
         }
         <GridItem colSpan={2}>
           <Heading pb={4} size="xl">Build Orders</Heading>
@@ -69,13 +66,10 @@ const BuildOrders = (): JSX.Element => {
           </ButtonGroup>
         </GridItem>
         {
-          !smallScreen
-            ? (
-              <GridItem colSpan={1}>
-                <BuildOrderFilter selectedTags={tagsFilter} civ={civFilter} setTagsFilter={setTagsFilter} setCivFilter={setCivFilter} />
-              </GridItem>
-            )
-            : null
+          !smallScreen &&
+          <GridItem colSpan={1}>
+            <BuildOrderFilter selectedTags={tagsFilter} civ={civFilter} setTagsFilter={setTagsFilter} setCivFilter={setCivFilter} />
+          </GridItem>
         }
       </Grid>
     </Container>
