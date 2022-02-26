@@ -1,8 +1,9 @@
-import { Box, Heading, HStack, Icon, Text } from '@chakra-ui/react';
+import { Box, Heading, HStack, Icon, Text, VStack } from '@chakra-ui/react';
 import { ThumbDownIcon, ThumbUpIcon } from '@heroicons/react/outline';
 import { useSession } from 'next-auth/react';
 import { useCallback } from 'react';
 import { Bo } from '../../lib/models/api';
+import { getLocalDate } from '../../lib/utils/dates';
 import { toaster } from '../../lib/utils/toaster';
 
 interface Props {
@@ -39,22 +40,27 @@ export const BuildOrderDetails = ({ buildOrder, react }: Props): JSX.Element => 
   return (
     <Box>
       <Heading mb={4} fontSize="lg">Details</Heading>
-      <HStack fontSize="lg" spacing={1}>
-        <Icon
-          as={ThumbUpIcon}
-          color="green.500"
-          onClick={() => iconOnClick('like')}
-          _hover={iconHover}
-        />
-        <Text color={userReaction?.reaction === 'l' ? 'blue.300' : ''} >{buildOrder.reactionCounts.l}</Text>
-        <Icon
-          as={ThumbDownIcon}
-          color="red.400"
-          onClick={() => iconOnClick('dislike')}
-          _hover={iconHover}
-        />
-        <Text color={userReaction?.reaction === 'd' ? 'blue.300' : ''} >{buildOrder.reactionCounts.d}</Text>
-      </HStack>
+      <VStack alignItems="start" spacing={1}>
+        <HStack fontSize="lg" spacing={1}>
+          <Icon
+            as={ThumbUpIcon}
+            color="green.500"
+            onClick={() => iconOnClick('like')}
+            _hover={iconHover}
+          />
+          <Text color={userReaction?.reaction === 'l' ? 'blue.300' : ''} >{buildOrder.reactionCounts.l}</Text>
+          <Icon
+            as={ThumbDownIcon}
+            color="red.400"
+            onClick={() => iconOnClick('dislike')}
+            _hover={iconHover}
+          />
+          <Text color={userReaction?.reaction === 'd' ? 'blue.300' : ''} >{buildOrder.reactionCounts.d}</Text>
+        </HStack>
+        <Text>Updated At: {getLocalDate(buildOrder.updatedAt)}</Text>
+        {buildOrder.patch && <Text>Patch: {buildOrder.patch}</Text>}
+      </VStack>
+
     </Box>
   );
 };

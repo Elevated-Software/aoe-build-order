@@ -1,9 +1,10 @@
-import { Center, Grid, GridItem, Heading, Spinner, Text, useBreakpoint } from '@chakra-ui/react';
+import { Center, Grid, GridItem, Heading, HStack, Spinner, Text, useBreakpoint } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
 import { useCallback } from 'react';
 import useSWR from 'swr';
 import { BuildOrderDetails } from '../../components/build-orders/BuildOrderDetails';
 import { Container } from '../../components/Container';
+import { FlagImage } from '../../components/FlagImage';
 import { Bo } from '../../lib/models/api';
 import { toaster } from '../../lib/utils/toaster';
 
@@ -57,7 +58,10 @@ const BuildOrder = (): JSX.Element => {
       <Container>
         <Grid w={{ base: '90%', md: '60%' }} templateColumns={{ base: "repeat(1, 1fr)", md: "repeat(3, 1fr)" }} gap={smallScreen ? 10 : 16}>
           <GridItem colSpan={2}>
-            <Heading mb={4}>{data.buildOrder.name}</Heading>
+            <HStack spacing={4} mb={4}>
+              <FlagImage civilization={data.buildOrder.civilization} />
+              <Heading>{data.buildOrder.name}</Heading>
+            </HStack>
             <Heading mb={2} fontSize="xl">Description</Heading>
             <Text>{data.buildOrder.description}</Text>
           </GridItem>

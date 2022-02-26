@@ -3,6 +3,7 @@ import { BoListItem } from '../../lib/models/api';
 import { ThumbUpIcon, ThumbDownIcon } from '@heroicons/react/outline';
 import { Tags } from './Tags';
 import { FlagImage } from '../FlagImage';
+import { getLocalDate } from '../../lib/utils/dates';
 
 
 interface Props {
@@ -25,7 +26,7 @@ export const BuildOrderListTile = ({ buildOrder }: Props): JSX.Element => {
             </VStack>
             <Box ml={4}>
               <Heading size="md" alignItems="center">{buildOrder.name}</Heading>
-              <Text fontSize="sm">Updated at {new Date(buildOrder.updatedAt as string).toLocaleString()}</Text>
+              <Text fontSize="sm">Updated at {getLocalDate(buildOrder.updatedAt)}</Text>
             </Box>
           </Box>
           <Tags size="md" tags={buildOrder.tags} width="50%" />

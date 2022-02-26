@@ -2,6 +2,7 @@ import { Flex, Icon, Spacer, Text, useColorModeValue, VStack } from '@chakra-ui/
 import { ThumbDownIcon, ThumbUpIcon } from '@heroicons/react/outline';
 import Link from 'next/link';
 import { BoListItem } from '../../lib/models/api';
+import { getLocalDate } from '../../lib/utils/dates';
 import { FlagImage } from '../FlagImage';
 import { Tags } from './Tags';
 
@@ -23,7 +24,7 @@ export const BuildOrderListSmallTile = ({ buildOrder }: Props): JSX.Element => {
         </VStack>
         <VStack alignItems="start" spacing={0}>
           <Text fontWeight="semibold">{buildOrder.name}</Text>
-          <Text fontSize="sm">Updated at {new Date(buildOrder.updatedAt as string).toLocaleString()}</Text>
+          <Text fontSize="sm">Updated at {getLocalDate(buildOrder.updatedAt)}</Text>
         </VStack>
         <Spacer />
         <Tags size="sm" tags={buildOrder.tags} width={{ base: '100%', md: '40%' }} />
