@@ -2,6 +2,7 @@ import { ChakraProvider, createStandaloneToast, RenderProps, Text } from '@chakr
 import { SessionProvider } from 'next-auth/react';
 import type { AppProps } from 'next/app';
 import { SWRConfig } from 'swr';
+import { toaster } from '../lib/utils/toaster';
 import theme from '../theme';
 
 function MyApp({ Component, pageProps }: AppProps) {
@@ -10,25 +11,15 @@ function MyApp({ Component, pageProps }: AppProps) {
     const res = await fetch(url);
     const json = await res.json();
     if (!json.success) {
+      console.log('fetcher error');
       throw new Error(json.message);
     }
 
     return json;
   };
 
-  const toast = createStandaloneToast({ theme });
   const onError = (error: any) => {
-    if (!toast.isActive(error.message)) {
-      toast({
-        id: error.message,
-        position: 'top',
-        title: error.message,
-        description: <Text fontSize="xs">Try again later</Text>,
-        status: 'error',
-        duration: 7000,
-        isClosable: true,
-      });
-    }
+    toaster({ message: error.message, status: 'error' });
   };
 
   return (
