@@ -4,13 +4,15 @@ import { Tag, tagToColor } from '../../lib/consts';
 
 interface Props extends BoxProps {
   size: 'sm' | 'md' | 'lg';
+  justify?: 'left' | 'right';
+
   tags: Tag[];
 }
 
-export const Tags = ({ size, tags, ...rest }: Props): JSX.Element => {
+export const Tags = ({ size, tags, justify = 'right', ...rest }: Props): JSX.Element => {
   return (
     <Box {...rest}>
-      <Wrap px={2} justify="right">
+      <Wrap justify={justify}>
         {
           tags.map(tag => (
             <WrapItem key={tag}>

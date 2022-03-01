@@ -1,13 +1,14 @@
-import { Box, Heading, HStack, Icon, Text, VStack } from '@chakra-ui/react';
+import { AspectRatio, Box, Heading, HStack, Icon, Text, VStack } from '@chakra-ui/react';
 import { ThumbDownIcon, ThumbUpIcon } from '@heroicons/react/outline';
 import { useSession } from 'next-auth/react';
 import { useCallback } from 'react';
-import { Bo } from '../../lib/models/api';
+import { BoWithPopulatedSteps } from '../../lib/models/api';
 import { getLocalDate } from '../../lib/utils/dates';
 import { toaster } from '../../lib/utils/toaster';
+import { Tags } from './Tags';
 
 interface Props {
-  buildOrder: Bo;
+  buildOrder: BoWithPopulatedSteps;
   react: (reaction: 'like' | 'dislike', direction: 1 | -1) => void;
 }
 
@@ -38,7 +39,7 @@ export const BuildOrderDetails = ({ buildOrder, react }: Props): JSX.Element => 
   };
 
   return (
-    <Box>
+    <Box mb={4}>
       <Heading mb={4} fontSize="lg">Details</Heading>
       <VStack alignItems="start" spacing={1}>
         <HStack fontSize="lg" spacing={1}>
@@ -59,6 +60,13 @@ export const BuildOrderDetails = ({ buildOrder, react }: Props): JSX.Element => 
         </HStack>
         <Text>Updated At: {getLocalDate(buildOrder.updatedAt)}</Text>
         {buildOrder.patch && <Text>Patch: {buildOrder.patch}</Text>}
+        <AspectRatio width={{ base: '350px', md: '500px' }} ratio={4 / 3}>
+          <iframe
+            title='build order video'
+            src='https://www.youtube.com/embed/mO3aX06hmlc'
+            allowFullScreen
+          />
+        </AspectRatio>
       </VStack>
 
     </Box>
