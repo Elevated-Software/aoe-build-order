@@ -1,14 +1,14 @@
-import { Box, Center, Grid, GridItem, Heading, HStack, Spinner, Table, Tbody, Td, Text, Th, Thead, Tr, useBreakpoint } from '@chakra-ui/react';
+import { Box, Button, Center, Grid, GridItem, Heading, HStack, Spacer, Spinner, Table, Tbody, Td, Text, Th, Thead, Tr, useBreakpoint } from '@chakra-ui/react';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { useCallback } from 'react';
 import useSWR from 'swr';
-import { BuildOrderDetails } from '../../components/build-orders/BuildOrderDetails';
-import { Tags } from '../../components/build-orders/Tags';
-import { Container } from '../../components/Container';
-import { FlagImage } from '../../components/FlagImage';
-import { BoWithPopulatedSteps } from '../../lib/models/api';
-import { toaster } from '../../lib/utils/toaster';
+import { BuildOrderDetails } from '../../../components/build-orders/BuildOrderDetails';
+import { Tags } from '../../../components/build-orders/Tags';
+import { Container } from '../../../components/Container';
+import { FlagImage } from '../../../components/FlagImage';
+import { BoWithPopulatedSteps } from '../../../lib/models/api';
+import { toaster } from '../../../lib/utils/toaster';
 
 const BuildOrder = (): JSX.Element => {
   const router = useRouter();
@@ -63,6 +63,8 @@ const BuildOrder = (): JSX.Element => {
             <HStack spacing={4} mb={4}>
               <FlagImage civilization={data.buildOrder.civilization} />
               <Heading>{data.buildOrder.name}</Heading>
+              <Spacer />
+              <Button colorScheme="yellow" mb={8} size="sm">Edit</Button>
             </HStack>
             <Heading mb={2} fontSize="xl">Description</Heading>
             <Tags mb={2} tags={data.buildOrder.tags} size="sm" justify="left" />
@@ -99,7 +101,7 @@ const BuildOrder = (): JSX.Element => {
             <BuildOrderDetails buildOrder={data.buildOrder} react={react} />
           </GridItem>
         </Grid>
-      </Container>
+      </Container >
     );
   }
 

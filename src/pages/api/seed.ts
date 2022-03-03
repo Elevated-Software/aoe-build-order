@@ -14,9 +14,11 @@ const handler: NextApiHandler = async (req: NextApiRequest, res: NextApiResponse
     throw new Error('No User Found');
   }
 
-  for (let j = 0; j < 5; j++) {
+  const civs = [Civilization.ABBASID_DYNASTY, Civilization.CHINESE, Civilization.DELHI_SULTANATE, Civilization.ENGLISH, Civilization.FRENCH, Civilization.HOLY_ROMAN_EMPIRE, Civilization.MONGOLS, Civilization.RUS];
+
+  for (let j = 0; j < 10; j++) {
     const boStepIds: ObjectId[] = [];
-    for (let i = 1; i <= 5; i++) {
+    for (let i = 1; i <= 20; i++) {
       const boLineItem = await BoStep.create({
         stepNumber: i,
         gameTime: `${getRandomInt((0 + i) * i, 2 * i)}:${getRandomInt(0, 60)}`,
@@ -42,14 +44,14 @@ const handler: NextApiHandler = async (req: NextApiRequest, res: NextApiResponse
       name: `Test Build Order ${j}`,
       user: user._id,
       description: 'Ram Archer Rush actually this is the super long description that would tell people about the build and what it\'s good for and bad against and stuff now i\'m just saying words but this does need to be longer so that I can get three lines on the main page',
-      civilization: Civilization.DELHI_SULTANATE,
+      civilization: civs[getRandomInt(0, 8)],
       tags: tags[j],
       patch: '11009',
       youtube: 'https://www.youtube.com/watch?v=mO3aX06hmlc',
       steps: boStepIds,
       reactionCounts: {
-        l: getRandomInt(0, 10),
-        d: getRandomInt(0, 10),
+        l: getRandomInt(0, 15),
+        d: getRandomInt(0, 15),
       },
       reactionLimitReached: false,
       reactions: [{

@@ -1,4 +1,4 @@
-import { Button, ButtonGroup, Grid, GridItem, Heading, Icon, Text, useBreakpoint, useColorModeValue } from '@chakra-ui/react';
+import { Box, Button, ButtonGroup, Flex, Grid, GridItem, Heading, Icon, Text, useBreakpoint, useColorModeValue } from '@chakra-ui/react';
 import { ArrowSmLeftIcon, ArrowSmRightIcon } from '@heroicons/react/outline';
 import { useState } from 'react';
 import { BuildOrderFilter } from '../../components/build-orders/BuildOrderFilter';
@@ -26,10 +26,13 @@ const BuildOrders = (): JSX.Element => {
           </GridItem>
         }
         <GridItem colSpan={2}>
-          <Heading pb={4} size="xl">Build Orders</Heading>
+          <Flex justifyContent="space-between" mb={4}>
+            <Heading size="xl">Build Orders</Heading>
+            <Button colorScheme="green" size="sm">Create New Build Order</Button>
+          </Flex>
           <BuildOrderList page={pageIndex} filters={{ tagsFilter, civFilter }} setPagesCount={setPagesCount} alignContent="start" width="100%" pb={4} />
           <BuildOrderList display={"none"} page={pageIndex + 1} filters={{ tagsFilter, civFilter }} setPagesCount={setPagesCount} alignContent="start" width="100%" />
-          <ButtonGroup variant="outline" spacing={2} pb={4}>
+          <ButtonGroup variant="outline" spacing={2} mb={4}>
             <Button disabled={pageIndex === 1} leftIcon={<Icon as={ArrowSmLeftIcon} />} onClick={() => setPageIndex(pageIndex - 1)}>Prev</Button>
             {
               pageIndex >= 3
