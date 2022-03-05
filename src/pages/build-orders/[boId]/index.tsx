@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 import { useCallback } from 'react';
 import useSWR from 'swr';
 import { BuildOrderDetails } from '../../../components/build-orders/BuildOrderDetails';
-import { Tags } from '../../../components/build-orders/Tags';
+import { Tags } from '../../../components/build-orders/tags/Tags';
 import { Container } from '../../../components/Container';
 import { FlagImage } from '../../../components/FlagImage';
 import { BoWithPopulatedSteps } from '../../../lib/models/api';

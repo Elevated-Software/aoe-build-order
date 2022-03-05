@@ -1,5 +1,5 @@
 import { Box, BoxProps, Tag as ChakraTag, TagLabel, Wrap, WrapItem } from '@chakra-ui/react';
-import { Tag, tagToColor } from '../../lib/consts';
+import { Tag, tagToColor } from '../../../lib/consts';
 
 
 interface Props extends BoxProps {

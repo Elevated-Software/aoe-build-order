@@ -1,16 +1,16 @@
-import { FormControl, FormErrorMessage, FormLabel, Select } from '@chakra-ui/react';
+import { FormControl, FormControlProps, FormErrorMessage, FormLabel, Select, SelectProps } from '@chakra-ui/react';
 import { Field, FieldHookConfig, FormikProps, useField } from 'formik';
 
 
-interface Props {
+interface Props extends SelectProps {
   label: string;
   options: { value: string, text: string; }[],
 }
 
-export const FieldSelect = ({ label, options, ...rest }: Props & FieldHookConfig<string>) => {
+export const FieldSelect = ({ label, options, ...rest }: Props & FieldHookConfig<string> & SelectProps) => {
   const [field, meta] = useField(rest);
   return (
-    <FormControl isInvalid={!!(meta.error && meta.touched)}>
+    <FormControl isInvalid={!!(meta.error && meta.touched)} isRequired={rest.isRequired}>
       <FormLabel>{label}</FormLabel>
       <Field as={Select} {...field} {...rest}>
         {

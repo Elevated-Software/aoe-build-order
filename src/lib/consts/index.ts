@@ -95,3 +95,6 @@ export const tagToHexWithAlpha = {
   [Tag.RUSH]: '#e53e3eCC',
   [Tag.WATER]: '#3182ceCC',
 };
+
+export const Patch = Object.freeze(<const>['11963', '11009', '10257']);
+export type Patch = typeof Patch[number];

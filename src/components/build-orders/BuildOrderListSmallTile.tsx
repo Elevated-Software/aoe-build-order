@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { BoListItem } from '../../lib/models/api';
 import { getLocalDate } from '../../lib/utils/dates';
 import { FlagImage } from '../FlagImage';
-import { Tags } from './Tags';
+import { Tags } from './tags/Tags';
 
 interface Props {
   buildOrder: BoListItem;

@@ -5,7 +5,6 @@ import { useCallback } from 'react';
 import { BoWithPopulatedSteps } from '../../lib/models/api';
 import { getLocalDate } from '../../lib/utils/dates';
 import { toaster } from '../../lib/utils/toaster';
-import { Tags } from './Tags';
 
 interface Props {
   buildOrder: BoWithPopulatedSteps;
