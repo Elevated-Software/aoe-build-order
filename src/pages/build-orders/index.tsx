@@ -1,5 +1,6 @@
 import { Box, Button, ButtonGroup, Flex, Grid, GridItem, Heading, Icon, Text, useBreakpoint, useColorModeValue } from '@chakra-ui/react';
 import { ArrowSmLeftIcon, ArrowSmRightIcon } from '@heroicons/react/outline';
+import Link from 'next/link';
 import { useState } from 'react';
 import { BuildOrderFilter } from '../../components/build-orders/BuildOrderFilter';
 import { BuildOrderList } from '../../components/build-orders/BuildOrderList';
@@ -28,7 +29,9 @@ const BuildOrders = (): JSX.Element => {
         <GridItem colSpan={2}>
           <Flex justifyContent="space-between" mb={4}>
             <Heading size="xl">Build Orders</Heading>
-            <Button colorScheme="green" size="sm">Create New Build Order</Button>
+            <Link href={`/build-orders/create`} passHref>
+              <Button colorScheme="green" size="sm" >Create New Build Order</Button>
+            </Link>
           </Flex>
           <BuildOrderList page={pageIndex} filters={{ tagsFilter, civFilter }} setPagesCount={setPagesCount} alignContent="start" width="100%" pb={4} />
           <BuildOrderList display={"none"} page={pageIndex + 1} filters={{ tagsFilter, civFilter }} setPagesCount={setPagesCount} alignContent="start" width="100%" />
