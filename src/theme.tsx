@@ -1,5 +1,6 @@
 import { extendTheme, ThemeConfig } from '@chakra-ui/react';
 import { createBreakpoints } from '@chakra-ui/theme-tools';
+import { StepsStyleConfig as Steps } from 'chakra-ui-steps';
 
 const fonts = { mono: `'Menlo', monospace` };
 
@@ -16,6 +17,9 @@ const config: ThemeConfig = {
 };
 
 const theme = extendTheme({
+  components: {
+    Steps,
+  },
   colors: {
     light: {
       bg: '#F7FAFC',

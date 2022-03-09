@@ -2,7 +2,7 @@ import { FormControl, FormControlProps, FormErrorMessage, FormLabel, Input, Inpu
 import { Field, FieldHookConfig, useField } from 'formik';
 
 interface Props extends InputProps {
-  label: string;
+  label?: string;
 }
 
 export const FieldText = ({ label, ...rest }: Props & FieldHookConfig<string>): JSX.Element => {
