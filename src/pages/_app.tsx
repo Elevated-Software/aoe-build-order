@@ -11,7 +11,6 @@ function MyApp({ Component, pageProps }: AppProps) {
     const res = await fetch(url);
     const json = await res.json();
     if (!json.success) {
-      console.log('fetcher error');
       throw new Error(json.message);
     }
 

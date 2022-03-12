@@ -1,7 +1,7 @@
 import { FilterQuery, LeanDocument } from 'mongoose';
 import type { NextApiHandler, NextApiRequest } from 'next';
 import { NextApiRequestQuery } from 'next/dist/server/api-utils';
-import { Civilization, codeToCiv, Errors, PAGINATION_SIZE_LIMIT, Tag } from '../../../lib/consts';
+import { Civilization, Errors, PAGINATION_SIZE_LIMIT, Tag } from '../../../lib/consts';
 import { withDb, withHandleErrors } from '../../../lib/middlewares';
 import { EsApiResponse, EsError } from '../../../lib/models/api';
 import { BuildOrder, IBuildOrderDoc } from '../../../lib/models/database';

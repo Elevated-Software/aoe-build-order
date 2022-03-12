@@ -17,9 +17,12 @@ export interface IBoStepDoc extends IBoStep, Document { };
 const BoStepSchemaFields: Record<keyof IBoStep, any> = {
   stepNumber: {
     type: Number,
-    require: true,
+    required: true,
   },
-  gameTime: String,
+  gameTime: {
+    type: String,
+    match: [/\d{2}:\d{2}/, 'Game time must be in the format 00:00'],
+  },
   population: Number,
   food: Number,
   wood: Number,
@@ -27,7 +30,7 @@ const BoStepSchemaFields: Record<keyof IBoStep, any> = {
   stone: Number,
   description: {
     type: String,
-    require: true,
+    required: true,
   },
 };
 const BoStepSchema = new Schema(BoStepSchemaFields);

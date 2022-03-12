@@ -15,14 +15,14 @@ const handler: NextApiHandler = async (req: NextApiRequest, res: EsApiResponse<D
   const {
     method,
     query: { boId },
+    body: { steps },
   } = req;
 
   switch (method) {
     case 'POST':
       await ensureLoggedIn(req);
 
-      const { stepNumber, gameTime, population, food, wood, gold, stone, description } = req.body;
-      const buildOrder = await post({ boId: boId as string, stepNumber, gameTime, population, food, wood, gold, stone, description });
+      const buildOrder = await post({ boId: boId as string, steps });
       res.status(201).json({ success: true, buildOrder });
       break;
     default:
@@ -31,25 +31,17 @@ const handler: NextApiHandler = async (req: NextApiRequest, res: EsApiResponse<D
   }
 };
 
-interface PostOpts extends IBoStep {
+interface PostOpts {
   boId: string;
+  steps: IBoStep[];
 }
-const post = async ({ boId, stepNumber, gameTime, population, food, wood, gold, stone, description }: PostOpts) => {
-  const boStep = await BoStep.create({
-    stepNumber,
-    gameTime,
-    population,
-    food,
-    wood,
-    gold,
-    stone,
-    description,
-  });
+const post = async ({ boId, steps }: PostOpts) => {
+  const boSteps = await BoStep.create(steps);
 
   const buildOrder = await BuildOrder.findByIdAndUpdate(
     boId,
-    { $push: { steps: boStep } },
-    { returnDocument: 'after' })
+    { steps: boSteps },
+    { new: true })
     .populate<{ steps: IBoStepDoc[]; }>('steps').lean().exec();
 
   if (!buildOrder) {

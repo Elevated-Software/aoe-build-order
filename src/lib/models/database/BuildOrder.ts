@@ -26,18 +26,18 @@ export interface IBuildOrderDoc extends IBuildOrder, Document, SchemaTimestampsC
 const BuildOrderSchemaFields: Record<keyof IBuildOrder, any> = {
   name: {
     type: String,
-    require: true,
+    required: true,
   },
   description: String,
   user: {
     type: Schema.Types.ObjectId,
     ref: 'User',
-    require: true,
+    required: true,
   },
   civilization: {
     type: String,
     enum: Civilization,
-    require: true,
+    required: true,
   },
   tags: [{
     type: String,
@@ -51,7 +51,7 @@ const BuildOrderSchemaFields: Record<keyof IBuildOrder, any> = {
     ref: 'BoStep',
     default: [],
   }],
-  wilsonScore: { type: Number, require: true, default: 0 },
+  wilsonScore: { type: Number, required: true, default: 0 },
   reactionCounts: {
     l: { type: Number, default: 0 },
     d: { type: Number, default: 0 },
