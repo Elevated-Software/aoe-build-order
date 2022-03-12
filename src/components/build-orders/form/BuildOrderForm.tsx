@@ -2,7 +2,7 @@ import { Box, Button, Flex, Grid, GridItem, Heading, IconButton, Text, VStack } 
 import Image from 'next/image';
 import { Step, Steps, useSteps } from 'chakra-ui-steps';
 import { FieldArray, Formik } from 'formik';
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import * as Yup from "yup";
 import { Civilization, Patch, Tag } from '../../../lib/consts';
 import { SelectTags } from '../tags/SelectTags';
@@ -32,12 +32,20 @@ const emptyStep = {
 // This will be used by the edit to populate the fields with the existing data
 // So it will need to be moved inside the component
 const initialValues = {
+  civilization: '',
+  name: '',
+  description: '',
+  tags: [],
+  patch: '',
+  youtube: '',
   steps: [emptyStep],
 };
 
 export const BuildOrderForm = (): JSX.Element => {
   const [selectedTags, setSelectedTags] = useState<Tag[]>([]);
   const { nextStep, prevStep, reset, activeStep } = useSteps({ initialStep: 0 });
+
+  const validateFirstStep = useCallback((data) => Object.keys(data).reduce((obj, key) => ({ ...obj, [key]: true }), {}), []);
 
   return (
     <Box>
@@ -57,7 +65,7 @@ export const BuildOrderForm = (): JSX.Element => {
           actions.resetForm();
         }}
       >
-        {({ handleSubmit, values }) => (
+        {({ handleSubmit, values, validateForm, setTouched }) => (
           <VStack
             as="form" onSubmit={e => handleSubmit(e as any)}
             mb={4}
@@ -143,34 +151,34 @@ export const BuildOrderForm = (): JSX.Element => {
                 </Step>
               ))}
             </Steps>
+            {activeStep === steps.length ? (
+              <Flex px={4} py={4} width="100%" flexDirection="column">
+                <Heading fontSize="xl" textAlign="center">
+                  Woohoo! All steps completed!
+                </Heading>
+                <Button mx="auto" mt={6} size="sm" onClick={reset}>
+                  Reset
+                </Button>
+              </Flex>
+            ) : (
+              <Flex width="100%" justify="flex-end">
+                <Button
+                  isDisabled={activeStep === 0}
+                  mr={4}
+                  onClick={prevStep}
+                  size="sm"
+                  variant="ghost"
+                >
+                  Prev
+                </Button>
+                <Button size="sm" onClick={() => validateForm().then((data) => Object.keys(data).length === 0 ? nextStep() : setTouched(validateFirstStep(data)))}>
+                  {activeStep === steps.length - 1 ? "Finish" : "Next"}
+                </Button>
+              </Flex>
+            )}
           </VStack>
         )}
       </Formik>
-      {activeStep === steps.length ? (
-        <Flex px={4} py={4} width="100%" flexDirection="column">
-          <Heading fontSize="xl" textAlign="center">
-            Woohoo! All steps completed!
-          </Heading>
-          <Button mx="auto" mt={6} size="sm" onClick={reset}>
-            Reset
-          </Button>
-        </Flex>
-      ) : (
-        <Flex width="100%" justify="flex-end">
-          <Button
-            isDisabled={activeStep === 0}
-            mr={4}
-            onClick={prevStep}
-            size="sm"
-            variant="ghost"
-          >
-            Prev
-          </Button>
-          <Button size="sm" onClick={nextStep}>
-            {activeStep === steps.length - 1 ? "Finish" : "Next"}
-          </Button>
-        </Flex>
-      )}
     </Box>
   );
 };

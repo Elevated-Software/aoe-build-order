@@ -8,7 +8,7 @@ interface Props extends InputProps {
 export const FieldText = ({ label, ...rest }: Props & FieldHookConfig<string>): JSX.Element => {
   const [field, meta] = useField(rest);
   return (
-    <FormControl isInvalid={!!meta.error && meta.touched} isRequired={rest.isRequired}>
+    <FormControl isInvalid={!!(meta.error && meta.touched)} isRequired={rest.isRequired}>
       <FormLabel>{label}</FormLabel>
       <Field as={Input} {...field} {...rest} />
       <FormErrorMessage>{meta.error}</FormErrorMessage>
