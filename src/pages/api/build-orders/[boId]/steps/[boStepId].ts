@@ -25,8 +25,8 @@ const handler: NextApiHandler = async (req: NextApiRequest, res: EsApiResponse<D
 
   switch (method) {
     case 'PUT':
-      const { stepNumber, gameTime, population, food, wood, gold, stone, description } = req.body;
-      const buildOrder = await put({ id: boStepId as string, boId: boId as string, userId: session.user.userId, stepNumber, gameTime, population, food, wood, gold, stone, description });
+      const { gameTime, population, food, wood, gold, stone, description } = req.body;
+      const buildOrder = await put({ id: boStepId as string, boId: boId as string, userId: session.user.userId, gameTime, population, food, wood, gold, stone, description });
       res.json({ success: true, buildOrder });
       break;
     case 'DELETE':
@@ -44,7 +44,7 @@ interface PutOpts extends IBoStep {
   boId: string;
   userId: string;
 }
-const put = async ({ id, boId, userId, stepNumber, gameTime, population, food, wood, gold, stone, description }: PutOpts) => {
+const put = async ({ id, boId, userId, gameTime, population, food, wood, gold, stone, description }: PutOpts) => {
   const boStep = await BoStep.findById(id).exec();
   if (!boStep) {
     throw new EsError(Errors.notFound('Build Order Step'), 404);
@@ -63,7 +63,6 @@ const put = async ({ id, boId, userId, stepNumber, gameTime, population, food, w
     throw new EsError(Errors.noPermission, 403);
   }
 
-  boStep.stepNumber = stepNumber;
   boStep.gameTime = gameTime;
   boStep.population = population;
   boStep.food = food;

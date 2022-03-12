@@ -1,8 +1,8 @@
-import { Box, Button, Flex, Grid, GridItem, Heading, IconButton, Text, VStack } from '@chakra-ui/react';
+import { Box, Button, Center, filter, Flex, Grid, GridItem, Heading, IconButton, Spinner, Text, VStack } from '@chakra-ui/react';
 import Image from 'next/image';
 import { Step, Steps, useSteps } from 'chakra-ui-steps';
 import { FieldArray, Formik } from 'formik';
-import { useCallback, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import * as Yup from "yup";
 import { Civilization, Patch, Tag } from '../../../lib/consts';
 import { SelectTags } from '../tags/SelectTags';
@@ -10,6 +10,7 @@ import { FieldSelect } from './FieldSelect';
 import { FieldText } from './FieldText';
 import { FieldTextarea } from './FieldTextarea';
 import { AddIcon, DeleteIcon } from '@chakra-ui/icons';
+import { useRouter } from 'next/router';
 
 const steps = [
   { label: 'Details' },
@@ -19,7 +20,7 @@ const steps = [
 const civilizationOptions = Object.values(Civilization).map(civ => ({ value: civ, text: civ }));
 const patchOptions = Patch.map(patch => ({ value: patch, text: patch }));
 
-const emptyStep = {
+const emptyStep: { [key: string]: any; } = {
   food: '',
   gold: '',
   stone: '',
@@ -42,6 +43,8 @@ const initialValues = {
 };
 
 export const BuildOrderForm = (): JSX.Element => {
+  const router = useRouter();
+
   const [selectedTags, setSelectedTags] = useState<Tag[]>([]);
   const { nextStep, prevStep, reset, activeStep } = useSteps({ initialStep: 0 });
 
@@ -60,14 +63,28 @@ export const BuildOrderForm = (): JSX.Element => {
             .max(1000, 'Description can only be 1000 characters'),
           youtube: Yup.string().url('Must be a valid YouTube link (don\'t forget the https://)').matches(/(.*youtube.*)/, { message: 'Must be a valid YouTube link', excludeEmptyString: true }),
         })}
-        onSubmit={(values, actions) => {
-          alert(JSON.stringify(values, null, 2));
+        onSubmit={async (values, actions) => {
+          const buildOrderBody = {
+            name: values.name,
+            civilization: values.civilization,
+            description: values.description,
+            tags: values.tags,
+            patch: values.patch,
+            youtube: values.youtube,
+          };
+
+          const buildOrderRes = await fetch(`/api/build-orders`, { method: 'POST', body: JSON.stringify(buildOrderBody) });
+          const buildOrderJson = await buildOrderRes.json();
+
+          await fetch(`/api/build-orders/${buildOrderJson.buildOrders._id}/steps`, { method: 'POST', body: JSON.stringify(values.steps) });
           actions.resetForm();
+
+          router.push(`/build-orders/${buildOrderJson.buildOrders._id}`);
         }}
       >
         {({ handleSubmit, values, validateForm, setTouched }) => (
           <VStack
-            as="form" onSubmit={e => handleSubmit(e as any)}
+            as="form"
             mb={4}
             spacing={4}
             width={{ base: 'xs', md: 'container.lg' }}
@@ -114,7 +131,7 @@ export const BuildOrderForm = (): JSX.Element => {
                             {
                               values.steps.length > 0 &&
                               values.steps.map((step, stepIndex) => (
-                                <>
+                                <React.Fragment key={stepIndex}>
                                   <GridItem>
                                     <FieldText name={`steps.${stepIndex}.food`} type="number" placeholder='0' />
                                   </GridItem>
@@ -137,10 +154,14 @@ export const BuildOrderForm = (): JSX.Element => {
                                     <FieldText name={`steps.${stepIndex}.description`} />
                                   </GridItem>
                                   <GridItem display="flex">
-                                    <IconButton size="sm" mr={2} colorScheme="red" aria-label="delete row" icon={<DeleteIcon />} onClick={() => remove(index)} />
-                                    <IconButton size="sm" colorScheme="green" aria-label="add row" icon={<AddIcon />} onClick={() => push(emptyStep)} />
+                                    {
+                                      values.steps.length !== 1 && <IconButton size="sm" mr={2} colorScheme="red" aria-label="delete row" icon={<DeleteIcon />} onClick={() => remove(index)} />
+                                    }
+                                    {
+                                      stepIndex === values.steps.length - 1 && <IconButton size="sm" colorScheme="green" aria-label="add row" icon={<AddIcon />} onClick={() => push(emptyStep)} />
+                                    }
                                   </GridItem>
-                                </>
+                                </React.Fragment>
                               ))
                             }
                           </Grid>
@@ -153,12 +174,12 @@ export const BuildOrderForm = (): JSX.Element => {
             </Steps>
             {activeStep === steps.length ? (
               <Flex px={4} py={4} width="100%" flexDirection="column">
-                <Heading fontSize="xl" textAlign="center">
-                  Woohoo! All steps completed!
+                <Heading fontSize="xl" textAlign="center" mb={4}>
+                  Creating your Build Order for all to see...
                 </Heading>
-                <Button mx="auto" mt={6} size="sm" onClick={reset}>
-                  Reset
-                </Button>
+                <Center>
+                  <Spinner />
+                </Center>
               </Flex>
             ) : (
               <Flex width="100%" justify="flex-end">
@@ -171,8 +192,8 @@ export const BuildOrderForm = (): JSX.Element => {
                 >
                   Prev
                 </Button>
-                <Button size="sm" onClick={() => validateForm().then((data) => Object.keys(data).length === 0 ? nextStep() : setTouched(validateFirstStep(data)))}>
-                  {activeStep === steps.length - 1 ? "Finish" : "Next"}
+                <Button size="sm" onClick={activeStep === steps.length - 1 ? (e) => { nextStep(); handleSubmit(e as any); } : () => validateForm().then((data) => Object.keys(data).length === 0 ? nextStep() : setTouched(validateFirstStep(data)))}>
+                  {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
                 </Button>
               </Flex>
             )}

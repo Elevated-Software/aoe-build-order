@@ -83,7 +83,7 @@ const BuildOrder = (): JSX.Element => {
                 </Thead>
                 <Tbody>
                   {data.buildOrder.steps.map(step => (
-                    <Tr key={step.stepNumber}>
+                    <Tr key={step._id}>
                       <Td>{step.food}</Td>
                       <Td>{step.gold}</Td>
                       <Td>{step.stone}</Td>

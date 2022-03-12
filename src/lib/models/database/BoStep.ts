@@ -2,7 +2,6 @@ import mongoose, { Document, Model, model, Schema } from 'mongoose';
 import { BuildOrder } from '.';
 
 export interface IBoStep {
-  stepNumber: number;
   gameTime: string,
   population: number,
   food: number,
@@ -15,10 +14,6 @@ export interface IBoStep {
 export interface IBoStepDoc extends IBoStep, Document { };
 
 const BoStepSchemaFields: Record<keyof IBoStep, any> = {
-  stepNumber: {
-    type: Number,
-    required: true,
-  },
   gameTime: {
     type: String,
     match: [/\d{2}:\d{2}/, 'Game time must be in the format 00:00'],

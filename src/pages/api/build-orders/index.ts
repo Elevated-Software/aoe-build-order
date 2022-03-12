@@ -47,8 +47,8 @@ const handler: NextApiHandler = async (req: NextApiRequest, res: EsApiResponse<D
     case 'POST': {
       const session = await ensureLoggedIn(req);
 
-      const { name, description, civilization, youtube, tags, patch } = req.body;
-      if (!name || !description || !civilization) {
+      const { name, description, civilization, youtube, tags, patch } = JSON.parse(req.body);
+      if (!name || !civilization) {
         throw new EsError(Errors.badRequest, 400);
       }
 

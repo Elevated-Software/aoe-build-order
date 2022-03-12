@@ -59,13 +59,15 @@ export const BuildOrderDetails = ({ buildOrder, react }: Props): JSX.Element => 
         </HStack>
         <Text>Updated At: {getLocalDate(buildOrder.updatedAt)}</Text>
         {buildOrder.patch && <Text>Patch: {buildOrder.patch}</Text>}
-        <AspectRatio width={{ base: '350px', md: '500px' }} ratio={4 / 3}>
-          <iframe
-            title='build order video'
-            src='https://www.youtube.com/embed/mO3aX06hmlc'
-            allowFullScreen
-          />
-        </AspectRatio>
+        {buildOrder.youtube &&
+          <AspectRatio width={{ base: '350px', md: '500px' }} ratio={4 / 3}>
+            <iframe
+              title='build order video'
+              src={buildOrder.youtube}
+              allowFullScreen
+            />
+          </AspectRatio>
+        }
       </VStack>
 
     </Box>

@@ -15,14 +15,13 @@ const handler: NextApiHandler = async (req: NextApiRequest, res: EsApiResponse<D
   const {
     method,
     query: { boId },
-    body: { steps },
   } = req;
 
   switch (method) {
     case 'POST':
       await ensureLoggedIn(req);
 
-      const buildOrder = await post({ boId: boId as string, steps });
+      const buildOrder = await post({ boId: boId as string, steps: JSON.parse(req.body) });
       res.status(201).json({ success: true, buildOrder });
       break;
     default:

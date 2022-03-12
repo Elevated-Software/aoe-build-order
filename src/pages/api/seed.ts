@@ -20,7 +20,6 @@ const handler: NextApiHandler = async (req: NextApiRequest, res: NextApiResponse
     const boStepIds: ObjectId[] = [];
     for (let i = 1; i <= 20; i++) {
       const boLineItem = await BoStep.create({
-        stepNumber: i,
         gameTime: `${getRandomInt((0 + i) * i, 2 * i)}:${getRandomInt(0, 60)}`,
         population: getRandomInt((0 + i * i) * i, 10 * i),
         food: getRandomInt((0 + i) * i, 10 * i),
