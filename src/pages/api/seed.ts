@@ -20,7 +20,7 @@ const handler: NextApiHandler = async (req: NextApiRequest, res: NextApiResponse
     const boStepIds: ObjectId[] = [];
     for (let i = 1; i <= 20; i++) {
       const boLineItem = await BoStep.create({
-        gameTime: `${getRandomInt((0 + i) * i, 2 * i)}:${getRandomInt(0, 60)}`,
+        gameTime: `${getRandomInt((0 + i) * i, 2 * i)}${getRandomInt((0 + i) * i, 2 * i)}:${getRandomInt(0, 9)}${getRandomInt(0, 9)}`,
         population: getRandomInt((0 + i * i) * i, 10 * i),
         food: getRandomInt((0 + i) * i, 10 * i),
         wood: getRandomInt((0 + i) * i, 10 * i),
@@ -38,12 +38,12 @@ const handler: NextApiHandler = async (req: NextApiRequest, res: NextApiResponse
       [Tag.CHEESE, Tag.RUSH, Tag.BOOM, Tag.FAST_CASTLE],
       [Tag.CHEESE, Tag.RUSH, Tag.BOOM, Tag.FAST_FEUDAL, Tag.FAST_CASTLE, Tag.LAND, Tag.WATER],
     ];
-
+    const civ = civs[getRandomInt(0, 8)];
     await BuildOrder.create({
       name: `Test Build Order ${j}`,
       user: user._id,
       description: 'Ram Archer Rush actually this is the super long description that would tell people about the build and what it\'s good for and bad against and stuff now i\'m just saying words but this does need to be longer so that I can get three lines on the main page',
-      civilization: civs[getRandomInt(0, 8)],
+      civilization: civ,
       tags: tags[j],
       patch: '11009',
       youtube: 'https://www.youtube.com/watch?v=mO3aX06hmlc',
