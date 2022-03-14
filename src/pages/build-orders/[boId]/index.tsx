@@ -1,4 +1,5 @@
-import { Box, Button, Center, Grid, GridItem, Heading, HStack, Spacer, Spinner, Table, Tbody, Td, Text, Th, Thead, Tr, useBreakpoint } from '@chakra-ui/react';
+import { Box, Button, Center, Grid, GridItem, Heading, HStack, Spacer, Spinner, Table, Tbody, Td, Text, Th, Thead, Tooltip, Tr, useBreakpoint } from '@chakra-ui/react';
+import { useSession } from 'next-auth/react';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { useCallback } from 'react';
@@ -12,12 +13,14 @@ import { toaster } from '../../../lib/utils/toaster';
 
 const BuildOrder = (): JSX.Element => {
   const router = useRouter();
+  const { data: session, status } = useSession();
   const { boId } = router.query;
   const breakpoint = useBreakpoint();
   const smallScreen = breakpoint === 'base' || breakpoint === 'sm';
 
   const swrKey = `/api/build-orders/${boId}`;
   const { data, error, mutate } = useSWR<{ success: boolean, buildOrder: BoWithPopulatedSteps; }>(boId ? swrKey : null, { dedupingInterval: 5000 });
+  const isOwnedByLoggedInUser = data?.buildOrder.user.toString() === session?.user.userId;
 
   const react = useCallback(async (reaction: 'like' | 'dislike', direction: 1 | -1) => {
     if (!data) {
@@ -64,7 +67,12 @@ const BuildOrder = (): JSX.Element => {
               <FlagImage civilization={data.buildOrder.civilization} />
               <Heading>{data.buildOrder.name}</Heading>
               <Spacer />
-              <Button colorScheme="yellow" mb={8} size="sm">Edit</Button>
+              {session && isOwnedByLoggedInUser && (
+                <Tooltip hasArrow shouldWrapChildren label="Coming soon" placement="top">
+                  <Button colorScheme="yellow" mb={8} size="sm" disabled>Edit</Button>
+                </Tooltip>
+              )
+              }
             </HStack>
             <Heading mb={2} fontSize="xl">Description</Heading>
             <Tags mb={2} tags={data.buildOrder.tags} size="sm" justify="left" />

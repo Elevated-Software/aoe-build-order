@@ -1,5 +1,6 @@
-import { Box, Button, ButtonGroup, Flex, Grid, GridItem, Heading, Icon, Text, useBreakpoint, useColorModeValue } from '@chakra-ui/react';
+import { Button, ButtonGroup, Flex, Grid, GridItem, Heading, Icon, Popover, PopoverArrow, PopoverBody, PopoverCloseButton, PopoverContent, PopoverFooter, PopoverHeader, PopoverTrigger, Text, useBreakpoint, useColorModeValue } from '@chakra-ui/react';
 import { ArrowSmLeftIcon, ArrowSmRightIcon } from '@heroicons/react/outline';
+import { signIn, useSession } from 'next-auth/react';
 import Link from 'next/link';
 import { useState } from 'react';
 import { BuildOrderFilter } from '../../components/build-orders/BuildOrderFilter';
@@ -8,6 +9,7 @@ import { Container } from '../../components/Container';
 import { Tag } from '../../lib/consts';
 
 const BuildOrders = (): JSX.Element => {
+  const { data: session, status } = useSession();
   const breakpoint = useBreakpoint();
   const smallScreen = breakpoint === 'base' || breakpoint === 'sm';
   const activeButtonBg = useColorModeValue('gray.300', 'gray.700');
@@ -29,9 +31,28 @@ const BuildOrders = (): JSX.Element => {
         <GridItem colSpan={2}>
           <Flex justifyContent="space-between" mb={4}>
             <Heading size="xl">Build Orders</Heading>
-            <Link href={`/build-orders/create`} passHref>
-              <Button colorScheme="green" size="sm" >Create New Build Order</Button>
-            </Link>
+            {session ? (
+              <Link href={`/build-orders/create`} passHref>
+                <Button colorScheme="green" size="sm" >Create New Build Order</Button>
+              </Link>)
+              : (
+                <Popover>
+                  <PopoverTrigger>
+                    <Button colorScheme="green" size="sm" >Create New Build Order</Button>
+                  </PopoverTrigger>
+                  <PopoverContent>
+                    <PopoverArrow />
+                    <PopoverCloseButton />
+                    <PopoverHeader fontWeight="bold">Sign In</PopoverHeader>
+                    <PopoverBody>You must sign in to create a Build Order</PopoverBody>
+                    <PopoverFooter border={0}>
+                      <Button onClick={() => signIn()} colorScheme="blue" size="sm">Sign In</Button>
+                    </PopoverFooter>
+                  </PopoverContent>
+                </Popover>
+              )
+            }
+
           </Flex>
           <BuildOrderList page={pageIndex} filters={{ tagsFilter, civFilter }} setPagesCount={setPagesCount} alignContent="start" width="100%" pb={4} />
           <BuildOrderList display={"none"} page={pageIndex + 1} filters={{ tagsFilter, civFilter }} setPagesCount={setPagesCount} alignContent="start" width="100%" />
