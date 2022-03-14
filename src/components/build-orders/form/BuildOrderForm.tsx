@@ -48,7 +48,7 @@ export const BuildOrderForm = (): JSX.Element => {
   const [selectedTags, setSelectedTags] = useState<Tag[]>([]);
   const { nextStep, prevStep, reset, activeStep } = useSteps({ initialStep: 0 });
 
-  const validateFirstStep = useCallback((data) => Object.keys(data).reduce((obj, key) => ({ ...obj, [key]: true }), {}), []);
+  const setObjValuesToTrue = useCallback((data) => Object.keys(data).reduce((obj, key) => ({ ...obj, [key]: true }), {}), []);
 
   return (
     <Box>
@@ -62,6 +62,11 @@ export const BuildOrderForm = (): JSX.Element => {
           desription: Yup.string()
             .max(1000, 'Description can only be 1000 characters'),
           youtube: Yup.string().url('Must be a valid YouTube link (don\'t forget the https://)').matches(/(.*youtube.*)/, { message: 'Must be a valid YouTube link', excludeEmptyString: true }),
+          steps: Yup.array().of(
+            Yup.object().shape({
+              description: Yup.string().required('Description required'),
+            }),
+          ),
         })}
         onSubmit={async (values, actions) => {
           const buildOrderBody = {
@@ -107,7 +112,7 @@ export const BuildOrderForm = (): JSX.Element => {
                     </>
                   )}
                   {index === 1 && (
-                    <FieldArray name="steps">
+                    <FieldArray name="steps" validateOnChange={false}>
                       {({ push, remove }) => (
                         <Box>
                           <Grid templateColumns='repeat(12, 1fr)' gap={6}>
@@ -192,7 +197,24 @@ export const BuildOrderForm = (): JSX.Element => {
                 >
                   Prev
                 </Button>
-                <Button size="sm" onClick={activeStep === steps.length - 1 ? (e) => { nextStep(); handleSubmit(e as any); } : () => validateForm().then((data) => Object.keys(data).length === 0 ? nextStep() : setTouched(validateFirstStep(data)))}>
+                <Button size="sm" onClick={(e) => {
+                  validateForm().then(data => {
+                    if (activeStep === steps.length - 1) {
+                      if (data.steps) {
+                        setTouched({ steps: (data.steps as Array<any>).map(_ => ({ description: true })) });
+                      } else {
+                        nextStep();
+                        handleSubmit(e as any);
+                      }
+                    } else {
+                      if (Object.keys(data).length === 1 && data.steps) {
+                        nextStep();
+                      } else {
+                        setTouched(setObjValuesToTrue(data));
+                      }
+                    }
+                  });
+                }}>
                   {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
                 </Button>
               </Flex>
