@@ -4,6 +4,7 @@ import { ThumbUpIcon, ThumbDownIcon } from '@heroicons/react/outline';
 import { Tags } from './tags/Tags';
 import { FlagImage } from '../FlagImage';
 import { getLocalDate } from '../../lib/utils/dates';
+import Link from 'next/link';
 
 
 interface Props {
@@ -25,7 +26,9 @@ export const BuildOrderListTile = ({ buildOrder }: Props): JSX.Element => {
               </Text>
             </VStack>
             <Box ml={4}>
-              <Heading size="md" alignItems="center">{buildOrder.name}</Heading>
+              <Link href={`/build-orders/${buildOrder._id}`} passHref>
+                <Heading size="md" alignItems="center" transitionDuration=".2s" _hover={{ cursor: 'pointer', color: 'blue.600' }} >{buildOrder.name}</Heading>
+              </Link>
               <Text fontSize="sm">Updated at {getLocalDate(buildOrder.updatedAt)}</Text>
             </Box>
           </Box>

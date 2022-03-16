@@ -55,6 +55,7 @@ const BuildOrders = (): JSX.Element => {
 
           </Flex>
           <BuildOrderList page={pageIndex} filters={{ tagsFilter, civFilter }} setPagesCount={setPagesCount} alignContent="start" width="100%" pb={4} />
+          {/* Load the next page behind the scenes */}
           <BuildOrderList display={"none"} page={pageIndex + 1} filters={{ tagsFilter, civFilter }} setPagesCount={setPagesCount} alignContent="start" width="100%" />
           <ButtonGroup variant="outline" spacing={2} mb={4}>
             <Button disabled={pageIndex === 1} leftIcon={<Icon as={ArrowSmLeftIcon} />} onClick={() => setPageIndex(pageIndex - 1)}>Prev</Button>
