@@ -1,12 +1,10 @@
 import mongoose, { Document, Model, model, ObjectId, Schema, SchemaTimestampsConfig } from 'mongoose';
-import { Civilization, Tag } from '../../consts';
+import { BO_DESCRIPTION_MAX_LENGTH, BO_NAME_MAX_LENGTH, Civilization, Tag } from '../../consts';
 import { IBoStepDoc } from './BoStep';
 import { IUserDoc } from './User';
 const wilsonScore = require('wilson-score-rank');
 
 const REACTION_LIMIT = 1000;
-export const BO_NAME_MAX_LENGTH = 30;
-export const BO_DESCRIPTION_MAX_LENGTH = 30;
 
 export interface IBuildOrder {
   name: string;

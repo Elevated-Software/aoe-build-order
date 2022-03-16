@@ -1,7 +1,7 @@
 import { FilterQuery, LeanDocument } from 'mongoose';
 import type { NextApiHandler, NextApiRequest } from 'next';
 import { NextApiRequestQuery } from 'next/dist/server/api-utils';
-import { Civilization, Errors, PAGINATION_SIZE_LIMIT, Tag } from '../../../lib/consts';
+import { Civilization, Errors, PAGINATION_SIZE_LIMIT, Tag, youtubeRegex } from '../../../lib/consts';
 import { withDb, withHandleErrors } from '../../../lib/middlewares';
 import { EsApiResponse, EsError } from '../../../lib/models/api';
 import { BuildOrder, IBuildOrderDoc } from '../../../lib/models/database';
@@ -97,6 +97,12 @@ interface PostOpts {
   patch?: string;
 }
 const post = async ({ name, userId, description, civilization, youtube, tags, patch }: PostOpts) => {
+  if (youtube && youtubeRegex.test(youtube)) {
+    youtube = youtube.replace(youtubeRegex, 'https://www.youtube.com/embed/$1');
+  } else {
+    youtube = '';
+  }
+
   let buildOrder = new BuildOrder({
     name,
     user: userId,

@@ -1,17 +1,16 @@
-import { Box, Button, Center, filter, Flex, Grid, GridItem, Heading, IconButton, Spinner, Text, VStack } from '@chakra-ui/react';
+import { Box, Button, Center, Flex, Grid, GridItem, Heading, IconButton, Spinner, Text, VStack } from '@chakra-ui/react';
 import Image from 'next/image';
 import { Step, Steps, useSteps } from 'chakra-ui-steps';
 import { FieldArray, Formik } from 'formik';
 import React, { useCallback, useState } from 'react';
 import * as Yup from "yup";
-import { Civilization, Patch, Tag } from '../../../lib/consts';
+import { BO_DESCRIPTION_MAX_LENGTH, BO_NAME_MAX_LENGTH, Civilization, Patch, STEP_DESCRIPTION_MAX_LENGTH, Tag, youtubeRegex } from '../../../lib/consts';
 import { SelectTags } from '../tags/SelectTags';
 import { FieldSelect } from './FieldSelect';
 import { FieldText } from './FieldText';
 import { FieldTextarea } from './FieldTextarea';
 import { AddIcon, DeleteIcon } from '@chakra-ui/icons';
 import { useRouter } from 'next/router';
-import { BO_DESCRIPTION_MAX_LENGTH, BO_NAME_MAX_LENGTH, STEP_DESCRIPTION_MAX_LENGTH } from '../../../lib/models/database';
 
 const steps = [
   { label: 'Details' },
@@ -62,7 +61,7 @@ export const BuildOrderForm = (): JSX.Element => {
             .max(BO_NAME_MAX_LENGTH, `Name can only be ${BO_NAME_MAX_LENGTH} characters`),
           desription: Yup.string()
             .max(BO_DESCRIPTION_MAX_LENGTH, `Description can only be ${BO_DESCRIPTION_MAX_LENGTH} characters`),
-          youtube: Yup.string().url('Must be a valid YouTube link (don\'t forget the https://)').matches(/(.*youtube.*)/, { message: 'Must be a valid YouTube link', excludeEmptyString: true }),
+          youtube: Yup.string().matches(youtubeRegex, { message: 'Must be a YouTube video', excludeEmptyString: true }),
           steps: Yup.array().of(
             Yup.object().shape({
               description: Yup.string().required('Description required').max(STEP_DESCRIPTION_MAX_LENGTH, `Description can only be ${STEP_DESCRIPTION_MAX_LENGTH} characters`),
@@ -109,7 +108,7 @@ export const BuildOrderForm = (): JSX.Element => {
                         <SelectTags selectedTags={selectedTags} setTagsFilter={setSelectedTags} />
                       </Box>
                       <FieldSelect width={{ base: 'full', md: '50%' }} label="Patch" options={patchOptions} name="patch" placeholder="Patch Version" />
-                      <FieldText label="YouTube Link" name="youtube" placeholder="https://www.youtube.com/embed/jiQJU_vS_Cg" />
+                      <FieldText label="YouTube Link" name="youtube" placeholder="https://www.youtube.com/watch?v=jiQJU_vS_Cg" />
                     </>
                   )}
                   {index === 1 && (

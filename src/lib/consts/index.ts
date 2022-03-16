@@ -1,4 +1,5 @@
 export * from './errors';
+export * from './database';
 
 export const PAGINATION_SIZE_LIMIT = 8;
 
@@ -98,3 +99,5 @@ export const tagToHexWithAlpha = {
 
 export const Patch = Object.freeze(<const>['11963', '11009', '10257']);
 export type Patch = typeof Patch[number];
+
+export const youtubeRegex = new RegExp(/(?:https:\/\/)?(?:www\.)?(?:youtube\.com|youtu\.be)\/(?:watch\?v=)?(.+)/);

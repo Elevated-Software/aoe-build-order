@@ -1,7 +1,6 @@
 import mongoose, { Document, Model, model, Schema } from 'mongoose';
 import { BuildOrder } from '.';
-
-export const STEP_DESCRIPTION_MAX_LENGTH = 150;
+import { STEP_DESCRIPTION_MAX_LENGTH } from '../../consts';
 
 export interface IBoStep {
   gameTime: string,

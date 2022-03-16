@@ -1,0 +1,3 @@
+export const BO_NAME_MAX_LENGTH = 30;
+export const BO_DESCRIPTION_MAX_LENGTH = 1000;
+export const STEP_DESCRIPTION_MAX_LENGTH = 150;
