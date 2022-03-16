@@ -1,8 +1,8 @@
-import { Box, Button, Center, Grid, GridItem, Heading, HStack, Spacer, Spinner, Table, Tbody, Td, Text, Th, Thead, Tooltip, Tr, useBreakpoint } from '@chakra-ui/react';
+import { Box, Button, ButtonGroup, Center, Grid, GridItem, Heading, HStack, Popover, PopoverArrow, PopoverBody, PopoverCloseButton, PopoverContent, PopoverFooter, PopoverHeader, PopoverTrigger, Spacer, Spinner, Table, Tbody, Td, Text, Th, Thead, Tooltip, Tr, useBreakpoint } from '@chakra-ui/react';
 import { useSession } from 'next-auth/react';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
-import { useCallback } from 'react';
+import { LegacyRef, useCallback, useRef } from 'react';
 import useSWR from 'swr';
 import { BuildOrderDetails } from '../../../components/build-orders/BuildOrderDetails';
 import { Tags } from '../../../components/build-orders/tags/Tags';
@@ -21,6 +21,19 @@ const BuildOrder = (): JSX.Element => {
   const swrKey = `/api/build-orders/${boId}`;
   const { data, error, mutate } = useSWR<{ success: boolean, buildOrder: BoWithPopulatedSteps; }>(boId ? swrKey : null, { dedupingInterval: 5000 });
   const isOwnedByLoggedInUser = data?.buildOrder.user.toString() === session?.user.userId;
+
+  const cancelDeleteRef = useRef();
+
+  const deleteBuildOrder = async () => {
+    const res = await fetch(`${swrKey}`, { method: 'DELETE' });
+    const json = await res.json();
+    if (!res.ok) {
+      toaster({ message: json.message, status: 'error' });
+      return;
+    }
+
+    router.replace('/build-orders');
+  };
 
   const react = useCallback(async (reaction: 'like' | 'dislike', direction: 1 | -1) => {
     if (!data) {
@@ -68,9 +81,33 @@ const BuildOrder = (): JSX.Element => {
               <Heading>{data.buildOrder.name}</Heading>
               <Spacer />
               {session && isOwnedByLoggedInUser && (
-                <Tooltip hasArrow shouldWrapChildren label="Coming soon" placement="top">
-                  <Button colorScheme="yellow" mb={8} size="sm" disabled>Edit</Button>
-                </Tooltip>
+                <ButtonGroup pb={8}>
+                  <Tooltip hasArrow shouldWrapChildren label="Coming soon" placement="top">
+                    <Button colorScheme="yellow" size="sm" disabled>Edit</Button>
+                  </Tooltip>
+                  <Popover initialFocusRef={cancelDeleteRef as any}>
+                    {({ onClose }) => (
+                      <>
+                        <PopoverTrigger>
+                          <Button colorScheme="red" size="sm">Delete</Button>
+                        </PopoverTrigger>
+                        <PopoverContent>
+                          <PopoverArrow />
+                          <PopoverCloseButton />
+                          <PopoverHeader fontWeight="bold">Delete Build Order</PopoverHeader>
+                          <PopoverBody>Are you sure you want to delete this Build Order?</PopoverBody>
+                          <PopoverFooter border={0}>
+                            <ButtonGroup>
+                              <Button ref={cancelDeleteRef as any} onClick={onClose} size="sm">Cancel</Button>
+                              <Button onClick={deleteBuildOrder} colorScheme="red" size="sm">Delete</Button>
+                            </ButtonGroup>
+                          </PopoverFooter>
+                        </PopoverContent>
+
+                      </>
+                    )}
+                  </Popover>
+                </ButtonGroup>
               )
               }
             </HStack>

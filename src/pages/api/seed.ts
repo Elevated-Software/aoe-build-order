@@ -39,14 +39,15 @@ const handler: NextApiHandler = async (req: NextApiRequest, res: NextApiResponse
       [Tag.CHEESE, Tag.RUSH, Tag.BOOM, Tag.FAST_FEUDAL, Tag.FAST_CASTLE, Tag.LAND, Tag.WATER],
     ];
     const civ = civs[getRandomInt(0, 8)];
+    console.log(civ);
     await BuildOrder.create({
       name: `Test Build Order ${j}`,
       user: user._id,
       description: 'Ram Archer Rush actually this is the super long description that would tell people about the build and what it\'s good for and bad against and stuff now i\'m just saying words but this does need to be longer so that I can get three lines on the main page',
       civilization: civ,
       tags: tags[j],
-      patch: '11009',
-      youtube: 'https://www.youtube.com/watch?v=mO3aX06hmlc',
+      patch: '11963',
+      youtube: 'https://www.youtube.com/embed/mO3aX06hmlc',
       steps: boStepIds,
       reactionCounts: {
         l: getRandomInt(0, 15),
@@ -55,7 +56,7 @@ const handler: NextApiHandler = async (req: NextApiRequest, res: NextApiResponse
       reactionLimitReached: false,
       reactions: [{
         reaction: 'l',
-        userId: '61ebb1d955196fb0c6fc53ee'
+        userId: user._id
       }]
     });
   }
