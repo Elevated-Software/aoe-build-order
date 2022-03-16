@@ -5,6 +5,8 @@ import { IUserDoc } from './User';
 const wilsonScore = require('wilson-score-rank');
 
 const REACTION_LIMIT = 1000;
+export const BO_NAME_MAX_LENGTH = 30;
+export const BO_DESCRIPTION_MAX_LENGTH = 30;
 
 export interface IBuildOrder {
   name: string;
@@ -27,8 +29,12 @@ const BuildOrderSchemaFields: Record<keyof IBuildOrder, any> = {
   name: {
     type: String,
     required: true,
+    maxLength: BO_NAME_MAX_LENGTH,
   },
-  description: String,
+  description: {
+    type: String,
+    maxLength: BO_DESCRIPTION_MAX_LENGTH,
+  },
   user: {
     type: Schema.Types.ObjectId,
     ref: 'User',

@@ -1,6 +1,8 @@
 import mongoose, { Document, Model, model, Schema } from 'mongoose';
 import { BuildOrder } from '.';
 
+export const STEP_DESCRIPTION_MAX_LENGTH = 150;
+
 export interface IBoStep {
   gameTime: string,
   population: number,
@@ -26,6 +28,7 @@ const BoStepSchemaFields: Record<keyof IBoStep, any> = {
   description: {
     type: String,
     required: true,
+    maxLength: STEP_DESCRIPTION_MAX_LENGTH,
   },
 };
 const BoStepSchema = new Schema(BoStepSchemaFields);

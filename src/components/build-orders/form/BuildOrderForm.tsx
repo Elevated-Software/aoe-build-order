@@ -11,6 +11,7 @@ import { FieldText } from './FieldText';
 import { FieldTextarea } from './FieldTextarea';
 import { AddIcon, DeleteIcon } from '@chakra-ui/icons';
 import { useRouter } from 'next/router';
+import { BO_DESCRIPTION_MAX_LENGTH, BO_NAME_MAX_LENGTH, STEP_DESCRIPTION_MAX_LENGTH } from '../../../lib/models/database';
 
 const steps = [
   { label: 'Details' },
@@ -58,13 +59,13 @@ export const BuildOrderForm = (): JSX.Element => {
           civilization: Yup.string().required('Civilization is required'),
           name: Yup.string()
             .required('Name is required')
-            .max(40, 'Name can only be 40 characters'),
+            .max(BO_NAME_MAX_LENGTH, `Name can only be ${BO_NAME_MAX_LENGTH} characters`),
           desription: Yup.string()
-            .max(1000, 'Description can only be 1000 characters'),
+            .max(BO_DESCRIPTION_MAX_LENGTH, `Description can only be ${BO_DESCRIPTION_MAX_LENGTH} characters`),
           youtube: Yup.string().url('Must be a valid YouTube link (don\'t forget the https://)').matches(/(.*youtube.*)/, { message: 'Must be a valid YouTube link', excludeEmptyString: true }),
           steps: Yup.array().of(
             Yup.object().shape({
-              description: Yup.string().required('Description required'),
+              description: Yup.string().required('Description required').max(STEP_DESCRIPTION_MAX_LENGTH, `Description can only be ${STEP_DESCRIPTION_MAX_LENGTH} characters`),
             }),
           ),
         })}
@@ -101,8 +102,8 @@ export const BuildOrderForm = (): JSX.Element => {
                   {index === 0 && (
                     <>
                       <FieldSelect width={{ base: 'full', md: '50%' }} label="Civilization" options={civilizationOptions} name="civilization" placeholder="Choose A Civilization" isRequired />
-                      <FieldText label="Name" name="name" placeholder="Super Strong Build" isRequired />
-                      <FieldTextarea label="Description" name="description" placeholder="This build order will never fail!" maxLength={1000} />
+                      <FieldText label="Name" name="name" placeholder="Super Strong Build" isRequired maxLength={BO_NAME_MAX_LENGTH} />
+                      <FieldTextarea label="Description" name="description" placeholder="This build order will never fail!" maxLength={BO_DESCRIPTION_MAX_LENGTH} />
                       <Box pb={4} w="75%">
                         <Heading fontSize="md" py={4}>Tags</Heading>
                         <SelectTags selectedTags={selectedTags} setTagsFilter={setSelectedTags} />
@@ -156,7 +157,7 @@ export const BuildOrderForm = (): JSX.Element => {
                                     <FieldText name={`steps.${stepIndex}.gameTime`} placeholder='00:00' />
                                   </GridItem>
                                   <GridItem colSpan={4}>
-                                    <FieldText name={`steps.${stepIndex}.description`} />
+                                    <FieldText name={`steps.${stepIndex}.description`} maxLength={STEP_DESCRIPTION_MAX_LENGTH} />
                                   </GridItem>
                                   <GridItem display="flex">
                                     {
