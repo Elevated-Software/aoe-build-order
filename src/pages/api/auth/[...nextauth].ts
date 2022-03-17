@@ -10,6 +10,10 @@ import { dbConnect } from '../../../lib/middlewares/withDb';
 })();
 
 export default NextAuth({
+  pages: {
+    signIn: '/auth/signin',
+    verifyRequest: '/auth/verify-request',
+  },
   providers: [
     EmailProvider({
       server: process.env.SMTP_SERVER,
