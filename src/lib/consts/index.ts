@@ -1,5 +1,6 @@
 export * from './errors';
 export * from './database';
+export * from './stripe';
 
 export const PAGINATION_SIZE_LIMIT = 8;
 

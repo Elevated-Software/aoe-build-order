@@ -34,7 +34,7 @@ export const NavBar = (): JSX.Element => {
           </Link>
         </NextLink>
         <Spacer />
-        <NextLink href="">
+        <NextLink href="/donate">
           <Link fontWeight="semibold" transitionDuration=".3s" _hover={{
             color: 'teal.400',
           }}>
