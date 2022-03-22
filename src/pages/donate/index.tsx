@@ -75,13 +75,13 @@ const DonatePage = (): JSX.Element => {
       <Stack
         spacing={4}
         w="full"
-        maxW="lg"
+        maxW="3xl"
         bg={cardBg}
         rounded="xl"
         boxShadow="lg"
         p={6}
         my={12}>
-        <Heading fontSize="lg" fontWeight="semibold">Your contribution will help the creation of Build Orders!</Heading>
+        <Heading fontSize="lg" fontWeight="semibold">Your contribution to Elevated Software will help the creation of Build Orders!</Heading>
         <InputGroup>
           <InputLeftElement pointerEvents="none" color="gray.300" fontSize="1.2em" children="$" />
           <Input placeholder="Enter Amount" type="number" step={AMOUNT_STEP} min={MIN_AMOUNT} max={MAX_AMOUNT} value={input.customDonation} name="customDonation" onChange={handleInputChange} />
