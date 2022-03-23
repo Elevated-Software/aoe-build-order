@@ -8,11 +8,11 @@ const PrivacyPolicy = (): JSX.Element => {
 
         <Heading>Privacy Policy for Elevated Software LLC</Heading>
 
-        <Text>At RTS Builder, accessible from https://www.rtsbuilder.com, one of our main priorities is the privacy of our visitors. This Privacy Policy document contains types of information that is collected and recorded by RTS Builder and how we use it.</Text>
+        <Text>At RTS Build Orders, accessible from https://www.rtsbuildorders.com.com, one of our main priorities is the privacy of our visitors. This Privacy Policy document contains types of information that is collected and recorded by RTS Build Orders and how we use it.</Text>
 
         <Text>If you have additional questions or require more information about our Privacy Policy, do not hesitate to contact us at contact@elevatedsoftware.dev</Text>
 
-        <Text>This Privacy Policy applies only to our online activities and is valid for visitors to our website with regards to the information that they shared and/or collect in RTS Builder. This policy is not applicable to any information collected offline or via channels other than this website.
+        <Text>This Privacy Policy applies only to our online activities and is valid for visitors to our website with regards to the information that they shared and/or collect in RTS Build Orders. This policy is not applicable to any information collected offline or via channels other than this website.
           Our Privacy Policy was created with the help of the <a href="https://www.privacypolicygenerator.info">Free Privacy Policy Generator</a>.</Text>
 
         <Heading fontSize="lg">Consent</Heading>
@@ -39,25 +39,25 @@ const PrivacyPolicy = (): JSX.Element => {
 
         <Heading fontSize="lg">Log Files</Heading>
 
-        <Text>RTS Builder follows a standard procedure of using log files. These files log visitors when they visit websites. All hosting companies do this and a part of hosting services&#39; analytics. The information collected by log files include internet protocol (IP) addresses, browser type, Internet Service Provider (ISP), date and time stamp, referring/exit pages, and possibly the number of clicks. These are not linked to any information that is personally identifiable. The purpose of the information is for analyzing trends, administering the site, tracking users&#39; movement on the website, and gathering demographic information.</Text>
+        <Text>RTS Build Orders follows a standard procedure of using log files. These files log visitors when they visit websites. All hosting companies do this and a part of hosting services&#39; analytics. The information collected by log files include internet protocol (IP) addresses, browser type, Internet Service Provider (ISP), date and time stamp, referring/exit pages, and possibly the number of clicks. These are not linked to any information that is personally identifiable. The purpose of the information is for analyzing trends, administering the site, tracking users&#39; movement on the website, and gathering demographic information.</Text>
 
         <Heading fontSize="lg">Cookies and Web Beacons</Heading>
 
-        <Text>Like any other website, RTS Builder uses &#39;cookies&#39;. These cookies are used to store information including visitors&#39; preferences, and the pages on the website that the visitor accessed or visited. The information is used to optimize the users&#39; experience by customizing our web page content based on visitors&#39; browser type and/or other information.</Text>
+        <Text>Like any other website, RTS Build Orders uses &#39;cookies&#39;. These cookies are used to store information including visitors&#39; preferences, and the pages on the website that the visitor accessed or visited. The information is used to optimize the users&#39; experience by customizing our web page content based on visitors&#39; browser type and/or other information.</Text>
 
         <Text>For more general information on cookies, please read <a href="https://www.generateprivacypolicy.com/#cookies">the Cookies article on Generate Privacy Policy website</a>.</Text>
 
         {/* <Heading fontSize="lg">Advertising Partners Privacy Policies</Heading>
 
-        <Text>You may consult this list to find the Privacy Policy for each of the advertising partners of RTS Builder.</Text>
+        <Text>You may consult this list to find the Privacy Policy for each of the advertising partners of RTS Build Orders.</Text>
 
-        <Text>Third-party ad servers or ad networks uses technologies like cookies, JavaScript, or Web Beacons that are used in their respective advertisements and links that appear on RTS Builder, which are sent directly to users&#39; browser. They automatically receive your IP address when this occurs. These technologies are used to measure the effectiveness of their advertising campaigns and/or to personalize the advertising content that you see on websites that you visit.</Text>
+        <Text>Third-party ad servers or ad networks uses technologies like cookies, JavaScript, or Web Beacons that are used in their respective advertisements and links that appear on RTS Build Orders, which are sent directly to users&#39; browser. They automatically receive your IP address when this occurs. These technologies are used to measure the effectiveness of their advertising campaigns and/or to personalize the advertising content that you see on websites that you visit.</Text>
 
-        <Text>Note that RTS Builder has no access to or control over these cookies that are used by third-party advertisers.</Text> */}
+        <Text>Note that RTS Build Orders has no access to or control over these cookies that are used by third-party advertisers.</Text> */}
 
         <Heading fontSize="lg">Third Party Privacy Policies</Heading>
 
-        <Text>RTS Builder&#39;s Privacy Policy does not apply to other advertisers or websites. Thus, we are advising you to consult the respective Privacy Policies of these third-party ad servers for more detailed information. It may include their practices and instructions about how to opt-out of certain options. </Text>
+        <Text>RTS Build Orders&#39;s Privacy Policy does not apply to other advertisers or websites. Thus, we are advising you to consult the respective Privacy Policies of these third-party ad servers for more detailed information. It may include their practices and instructions about how to opt-out of certain options. </Text>
 
         <Text>You can choose to disable cookies through your individual browser options. To know more detailed information about cookie management with specific web browsers, it can be found at the browsers&#39; respective websites.</Text>
 
@@ -84,7 +84,7 @@ const PrivacyPolicy = (): JSX.Element => {
 
         <Text>Another part of our priority is adding protection for children while using the internet. We encourage parents and guardians to observe, participate in, and/or monitor and guide their online activity.</Text>
 
-        <Text>RTS Builder does not knowingly collect any Personal Identifiable Information from children under the age of 13. If you think that your child provided this kind of information on our website, we strongly encourage you to contact us immediately and we will do our best efforts to promptly remove such information from our records.</Text>
+        <Text>RTS Build Orders does not knowingly collect any Personal Identifiable Information from children under the age of 13. If you think that your child provided this kind of information on our website, we strongly encourage you to contact us immediately and we will do our best efforts to promptly remove such information from our records.</Text>
       </Stack>
     </Container>
   );

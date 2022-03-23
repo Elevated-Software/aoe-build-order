@@ -34,7 +34,7 @@ export const Container = ({ includeNavBar = true, ...rest }: Props): JSX.Element
           spacing={4}
           justify={{ base: 'center', md: 'space-between' }}
           align={{ base: 'center', md: 'center' }}>
-          <Text fontSize="sm" opacity="50%" >Age of Empires IV© Microsoft Corporation. rtsbuilder.com was created by <Link href='https://www.elevatedsoftware.dev' fontWeight="semibold" transitionDuration=".3s" _hover={{ color: 'teal.400' }}>Elevated Software</Link> under Microsoft&#39;s &ldquo;Game Content Usage Rules&rdquo; using assets from Age of Empires IV , and it is not endorsed by or affiliated with Microsoft.</Text>
+          <Text fontSize="sm" opacity="50%" >Age of Empires IV© Microsoft Corporation. rtsbuildorders.com.com was created by <Link href='https://www.elevatedsoftware.dev' fontWeight="semibold" transitionDuration=".3s" _hover={{ color: 'teal.400' }}>Elevated Software</Link> under Microsoft&#39;s &ldquo;Game Content Usage Rules&rdquo; using assets from Age of Empires IV , and it is not endorsed by or affiliated with Microsoft.</Text>
           <NextLink passHref href="/privacy-policy" >
             <Link fontWeight="semibold" transitionDuration=".3s" _hover={{
               color: 'teal.400',
