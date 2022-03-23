@@ -9,8 +9,6 @@ interface Props extends FlexProps {
 export const Container = ({ includeNavBar = true, ...rest }: Props): JSX.Element => {
   const bg = useColorModeValue('light.bg', 'dark.bg');
   const color = useColorModeValue('light.primary', 'dark.primary');
-  const breakpoint = useBreakpoint();
-  console.log(breakpoint);
 
   return (
     <Box bgColor={bg} color={color} minHeight="100vh">
