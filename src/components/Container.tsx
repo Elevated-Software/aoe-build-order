@@ -1,4 +1,4 @@
-import { Box, Container as ChakraContainer, Flex, FlexProps, Link, Stack, Text, useColorModeValue } from '@chakra-ui/react';
+import { Box, Container as ChakraContainer, Flex, FlexProps, Link, Stack, Text, useBreakpoint, useColorModeValue } from '@chakra-ui/react';
 import NextLink from 'next/link';
 import { NavBar } from './navbar/NavBar';
 
@@ -9,6 +9,8 @@ interface Props extends FlexProps {
 export const Container = ({ includeNavBar = true, ...rest }: Props): JSX.Element => {
   const bg = useColorModeValue('light.bg', 'dark.bg');
   const color = useColorModeValue('light.primary', 'dark.primary');
+  const breakpoint = useBreakpoint();
+  console.log(breakpoint);
 
   return (
     <Box bgColor={bg} color={color} minHeight="100vh">
@@ -17,7 +19,7 @@ export const Container = ({ includeNavBar = true, ...rest }: Props): JSX.Element
         direction="column"
         alignItems="center"
         justifyContent="flex-start"
-        pb={16}
+        pb={{ base: 52, md: 24, lg: 20 }}
         {...rest}
       />
       <ChakraContainer
