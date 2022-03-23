@@ -4,7 +4,7 @@ import { Step, Steps, useSteps } from 'chakra-ui-steps';
 import { FieldArray, Formik } from 'formik';
 import React, { useCallback, useState } from 'react';
 import * as Yup from "yup";
-import { BO_DESCRIPTION_MAX_LENGTH, BO_NAME_MAX_LENGTH, Civilization, Patch, STEP_DESCRIPTION_MAX_LENGTH, Tag, youtubeRegex } from '../../../lib/consts';
+import { BO_DESCRIPTION_MAX_LENGTH, BO_NAME_MAX_LENGTH, Civilization, gameTimeRegex, Patch, STEP_DESCRIPTION_MAX_LENGTH, Tag, youtubeRegex } from '../../../lib/consts';
 import { SelectTags } from '../tags/SelectTags';
 import { FieldSelect } from './FieldSelect';
 import { FieldText } from './FieldText';
@@ -64,6 +64,7 @@ export const BuildOrderForm = (): JSX.Element => {
           youtube: Yup.string().matches(youtubeRegex, { message: 'Must be a YouTube video', excludeEmptyString: true }),
           steps: Yup.array().of(
             Yup.object().shape({
+              gameTime: Yup.string().matches(gameTimeRegex, { message: 'Must be in the format 0:00 or 00:00' }),
               description: Yup.string().required('Description required').max(STEP_DESCRIPTION_MAX_LENGTH, `Description can only be ${STEP_DESCRIPTION_MAX_LENGTH} characters`),
             }),
           ),

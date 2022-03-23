@@ -102,3 +102,4 @@ export const Patch = Object.freeze(<const>['11963', '11009', '10257']);
 export type Patch = typeof Patch[number];
 
 export const youtubeRegex = new RegExp(/(?:https:\/\/)?(?:www\.)?(?:youtube\.com|youtu\.be)\/(?:watch\?v=)?(.+)/);
+export const gameTimeRegex = new RegExp(/\d{1,2}:\d{2}/);

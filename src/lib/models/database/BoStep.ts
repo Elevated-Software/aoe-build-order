@@ -1,6 +1,6 @@
 import mongoose, { Document, Model, model, Schema } from 'mongoose';
 import { BuildOrder } from '.';
-import { STEP_DESCRIPTION_MAX_LENGTH } from '../../consts';
+import { gameTimeRegex, STEP_DESCRIPTION_MAX_LENGTH } from '../../consts';
 
 export interface IBoStep {
   gameTime: string,
@@ -17,7 +17,7 @@ export interface IBoStepDoc extends IBoStep, Document { };
 const BoStepSchemaFields: Record<keyof IBoStep, any> = {
   gameTime: {
     type: String,
-    match: [/\d{2}:\d{2}/, 'Game time must be in the format 00:00'],
+    match: [gameTimeRegex, 'Game time must be in the format 0:00 or 00:00'],
   },
   population: Number,
   food: Number,
