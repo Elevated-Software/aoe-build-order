@@ -74,7 +74,7 @@ export const BuildOrderForm = (): JSX.Element => {
             name: values.name,
             civilization: values.civilization,
             description: values.description,
-            tags: values.tags,
+            tags: selectedTags,
             patch: values.patch,
             youtube: values.youtube,
           };
