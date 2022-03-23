@@ -15,9 +15,23 @@ export default NextAuth({
     verifyRequest: '/auth/verify-request',
   },
   providers: [
+    // EmailProvider({
+    //   server: process.env.SMTP_SERVER,
+    //   from: process.env.FROM_EMAIL,
+    //   // Email is valid for 2hrs
+    //   maxAge: 60 * 60 * 2,
+    // }),
     EmailProvider({
-      server: process.env.SMTP_SERVER,
-      from: process.env.FROM_EMAIL,
+      server: {
+        host: process.env.SMTP_HOST,
+        port: process.env.SMTP_PORT,
+        name: 'mail.elevatedsoftware.dev',
+        auth: {
+          user: process.env.SMTP_EMAIL_USER,
+          pass: process.env.SMTP_EMAIL_PW
+        }
+      },
+      from: process.env.STMP_EMAIL_FROM,
       // Email is valid for 2hrs
       maxAge: 60 * 60 * 2,
     }),

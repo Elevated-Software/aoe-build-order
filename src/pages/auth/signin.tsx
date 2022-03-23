@@ -1,7 +1,9 @@
 import { Button, Heading, Input, Stack, Text, useColorModeValue, FormControl } from '@chakra-ui/react';
 import { GetServerSidePropsContext } from 'next';
 import { getCsrfToken } from "next-auth/react";
+import { useState } from 'react';
 import { Container } from '../../components/Container';
+import { toaster } from '../../lib/utils/toaster';
 
 interface Props {
   csrfToken: string;
@@ -9,6 +11,10 @@ interface Props {
 
 export default function SignIn({ csrfToken }: Props) {
   const cardBg = useColorModeValue('light.cardBg', 'dark.cardBg');
+  const [email, setEmail] = useState<string>('');
+  const [loading, setLoading] = useState<boolean>(false);
+
+  const handleInputChange: React.ChangeEventHandler<HTMLInputElement> = (e) => setEmail(e.currentTarget.value);
 
   return (
     <Container>
@@ -26,7 +32,7 @@ export default function SignIn({ csrfToken }: Props) {
           Sign In With Email
         </Heading>
         <Text opacity="75%" fontSize={{ base: 'sm', sm: 'md' }}>
-          You&apos;ll get an email with a sign in link
+          You&apos;ll get an email from noreply@elevatedsoftware.dev with a sign in link
         </Text>
         <form method="post" action="/api/auth/signin/email">
           <input name="csrfToken" type="hidden" defaultValue={csrfToken} />
@@ -36,12 +42,14 @@ export default function SignIn({ csrfToken }: Props) {
               placeholder="your-email@example.com"
               _placeholder={{ color: 'gray.500', opacity: '75%' }}
               type="email"
+              onChange={handleInputChange}
+              value={email}
             />
           </FormControl>
           <Button
             mt={4}
-            type="submit"
             colorScheme="blue"
+            type="submit"
           >
             Request Link
           </Button>

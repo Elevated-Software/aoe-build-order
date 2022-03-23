@@ -2,19 +2,23 @@ import { Box, Container as ChakraContainer, Flex, FlexProps, Link, Stack, Text, 
 import NextLink from 'next/link';
 import { NavBar } from './navbar/NavBar';
 
-export const Container = (props: FlexProps): JSX.Element => {
+interface Props extends FlexProps {
+  includeNavBar?: boolean;
+}
+
+export const Container = ({ includeNavBar = true, ...rest }: Props): JSX.Element => {
   const bg = useColorModeValue('light.bg', 'dark.bg');
   const color = useColorModeValue('light.primary', 'dark.primary');
 
   return (
     <Box bgColor={bg} color={color} minHeight="100vh">
-      <NavBar />
+      {includeNavBar && <NavBar />}
       <Flex
         direction="column"
         alignItems="center"
         justifyContent="flex-start"
         pb={16}
-        {...props}
+        {...rest}
       />
       <ChakraContainer
         position="absolute"

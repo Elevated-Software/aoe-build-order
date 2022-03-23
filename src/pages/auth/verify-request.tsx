@@ -6,7 +6,7 @@ export default function VerifyRequest() {
   const cardBg = useColorModeValue('light.cardBg', 'dark.cardBg');
 
   return (
-    <Container>
+    <Container includeNavBar={false}>
       <Stack
         spacing={4}
         w="full"
@@ -20,7 +20,7 @@ export default function VerifyRequest() {
           Check your email
         </Heading>
         <Text>
-          A sign in link has been sent to your email address.
+          A sign in link has been sent to your email address. Check your spam folder!
         </Text>
       </Stack>
     </Container>
