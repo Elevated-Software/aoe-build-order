@@ -161,7 +161,7 @@ export const BuildOrderForm = (): JSX.Element => {
                                   </GridItem>
                                   <GridItem display="flex">
                                     {
-                                      values.steps.length !== 1 && <IconButton size="sm" mr={2} colorScheme="red" aria-label="delete row" icon={<DeleteIcon />} onClick={() => remove(index)} />
+                                      values.steps.length !== 1 && <IconButton size="sm" mr={2} colorScheme="red" aria-label="delete row" icon={<DeleteIcon />} onClick={() => remove(stepIndex)} />
                                     }
                                     {
                                       stepIndex === values.steps.length - 1 && <IconButton size="sm" colorScheme="green" aria-label="add row" icon={<AddIcon />} onClick={() => push(emptyStep)} />
