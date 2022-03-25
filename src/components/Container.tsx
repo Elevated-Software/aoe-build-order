@@ -1,4 +1,4 @@
-import { Box, Container as ChakraContainer, Flex, FlexProps, Link, Stack, Text, useBreakpoint, useColorModeValue } from '@chakra-ui/react';
+import { Box, Container as ChakraContainer, Flex, FlexProps, Link, Stack, Text, useColorModeValue } from '@chakra-ui/react';
 import NextLink from 'next/link';
 import { NavBar } from './navbar/NavBar';
 
