@@ -11,7 +11,7 @@ export const Container = ({ includeNavBar = true, ...rest }: Props): JSX.Element
   const color = useColorModeValue('light.primary', 'dark.primary');
 
   return (
-    <Box bgColor={bg} color={color} minHeight="100vh">
+    <Box bgColor={bg} color={color} minHeight="100vh" position={{ base: 'absolute', md: 'inherit' }}>
       {includeNavBar && <NavBar />}
       <Flex
         direction="column"
