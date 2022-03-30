@@ -1,4 +1,4 @@
-import { Box, Heading, HStack, Icon, Text, useBreakpoint, useColorModeValue, VStack } from '@chakra-ui/react';
+import { Box, Heading, HStack, Icon, Text, useColorModeValue, VStack } from '@chakra-ui/react';
 import { BoListItem } from '../../lib/models/api';
 import { ThumbUpIcon, ThumbDownIcon } from '@heroicons/react/outline';
 import { Tags } from './tags/Tags';
