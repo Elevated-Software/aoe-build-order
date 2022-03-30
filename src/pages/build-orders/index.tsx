@@ -1,4 +1,4 @@
-import { Button, ButtonGroup, Flex, Grid, GridItem, Heading, Icon, Popover, PopoverArrow, PopoverBody, PopoverCloseButton, PopoverContent, PopoverFooter, PopoverHeader, PopoverTrigger, Text, useBreakpoint, useColorModeValue } from '@chakra-ui/react';
+import { Box, Button, ButtonGroup, Flex, Grid, GridItem, Heading, Icon, Popover, PopoverArrow, PopoverBody, PopoverCloseButton, PopoverContent, PopoverFooter, PopoverHeader, PopoverTrigger, Text, useBreakpoint, useBreakpointValue, useColorModeValue } from '@chakra-ui/react';
 import { ArrowSmLeftIcon, ArrowSmRightIcon } from '@heroicons/react/outline';
 import { signIn, useSession } from 'next-auth/react';
 import Link from 'next/link';
@@ -10,8 +10,6 @@ import { Tag } from '../../lib/consts';
 
 const BuildOrders = (): JSX.Element => {
   const { data: session, status } = useSession();
-  const breakpoint = useBreakpoint();
-  const smallScreen = breakpoint === 'base' || breakpoint === 'sm';
   const activeButtonBg = useColorModeValue('gray.300', 'gray.700');
 
   const [pageIndex, setPageIndex] = useState(1);
@@ -21,13 +19,12 @@ const BuildOrders = (): JSX.Element => {
 
   return (
     <Container>
-      <Grid w={{ base: '90%', md: '60%' }} templateColumns={{ base: "repeat(1, 1fr)", md: "repeat(3, 1fr)" }} gap={smallScreen ? undefined : 16}>
-        {
-          smallScreen &&
+      <Grid w={{ base: '90%', md: '60%' }} templateColumns={{ base: "repeat(1, 1fr)", md: "repeat(3, 1fr)" }} gap={{ base: undefined, md: 16 }}>
+        <Box display={{ base: 'flex', md: 'none' }}>
           <GridItem colSpan={1} mb={8}>
             <BuildOrderFilter selectedTags={tagsFilter} civ={civFilter} setTagsFilter={setTagsFilter} setCivFilter={setCivFilter} />
           </GridItem>
-        }
+        </Box>
         <GridItem colSpan={2}>
           <Flex justifyContent="space-between" mb={4}>
             <Heading size="xl">Build Orders</Heading>
@@ -93,12 +90,11 @@ const BuildOrders = (): JSX.Element => {
             <Button disabled={pageIndex === pagesCount || pagesCount === 0} rightIcon={<Icon as={ArrowSmRightIcon} />} onClick={() => setPageIndex(pageIndex + 1)}>Next</Button>
           </ButtonGroup>
         </GridItem>
-        {
-          !smallScreen &&
+        <Box display={{ base: 'none', md: 'flex' }}>
           <GridItem colSpan={1}>
             <BuildOrderFilter selectedTags={tagsFilter} civ={civFilter} setTagsFilter={setTagsFilter} setCivFilter={setCivFilter} />
           </GridItem>
-        }
+        </Box>
       </Grid>
     </Container>
   );
