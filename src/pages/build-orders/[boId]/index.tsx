@@ -1,4 +1,4 @@
-import { Box, Button, ButtonGroup, Center, Grid, GridItem, Heading, HStack, Popover, PopoverArrow, PopoverBody, PopoverCloseButton, PopoverContent, PopoverFooter, PopoverHeader, PopoverTrigger, Spacer, Spinner, Table, Tbody, Td, Text, Th, Thead, Tooltip, Tr, useBreakpoint } from '@chakra-ui/react';
+import { Box, Button, ButtonGroup, Center, Grid, GridItem, Heading, HStack, Popover, PopoverArrow, PopoverBody, PopoverCloseButton, PopoverContent, PopoverFooter, PopoverHeader, PopoverTrigger, Spacer, Spinner, Table, Tbody, Td, Text, Th, Thead, Tooltip, Tr } from '@chakra-ui/react';
 import { useSession } from 'next-auth/react';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
@@ -15,8 +15,6 @@ const BuildOrder = (): JSX.Element => {
   const router = useRouter();
   const { data: session, status } = useSession();
   const { boId } = router.query;
-  const breakpoint = useBreakpoint();
-  const smallScreen = breakpoint === 'base' || breakpoint === 'sm';
 
   const swrKey = `/api/build-orders/${boId}`;
   const { data, error, mutate } = useSWR<{ success: boolean, buildOrder: BoWithPopulatedSteps; }>(boId ? swrKey : null, { dedupingInterval: 5000 });
@@ -74,7 +72,7 @@ const BuildOrder = (): JSX.Element => {
   if (data) {
     return (
       <Container>
-        <Grid w={{ base: '90%', md: '70%' }} templateColumns={{ base: "repeat(1, 1fr)", '2xl': "repeat(3, 1fr)" }} gap={smallScreen ? 10 : 16}>
+        <Grid w={{ base: '90%', md: '70%' }} templateColumns={{ base: "repeat(1, 1fr)", '2xl': "repeat(3, 1fr)" }} gap={{ base: 10, md: 16 }}>
           <GridItem colSpan={2}>
             <HStack spacing={4} mb={4}>
               <FlagImage civilization={data.buildOrder.civilization} />
