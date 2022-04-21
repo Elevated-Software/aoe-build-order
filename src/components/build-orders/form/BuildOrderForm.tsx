@@ -1,4 +1,4 @@
-import { Box, Button, Center, Flex, Grid, GridItem, Heading, IconButton, Spinner, Text, VStack } from '@chakra-ui/react';
+import { Box, Button, Center, Flex, Grid, GridItem, Heading, IconButton, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, SimpleGrid, Spinner, Text, useDisclosure, VStack } from '@chakra-ui/react';
 import Image from 'next/image';
 import { Step, Steps, useSteps } from 'chakra-ui-steps';
 import { FieldArray, Formik } from 'formik';
@@ -49,6 +49,7 @@ export const BuildOrderForm = (): JSX.Element => {
   const { nextStep, prevStep, reset, activeStep } = useSteps({ initialStep: 0 });
 
   const setObjValuesToTrue = useCallback((data) => Object.keys(data).reduce((obj, key) => ({ ...obj, [key]: true }), {}), []);
+  const { isOpen, onOpen, onClose } = useDisclosure();
 
   return (
     <Box>
@@ -113,67 +114,133 @@ export const BuildOrderForm = (): JSX.Element => {
                     </>
                   )}
                   {index === 1 && (
-                    <FieldArray name="steps" validateOnChange={false}>
-                      {({ push, remove }) => (
-                        <Box>
-                          <Grid templateColumns='repeat(12, 1fr)' gap={6}>
-                            {['food', 'gold', 'stone', 'wood'].map(resource => (
-                              <GridItem key={`${resource}`}>
-                                <Image src={`/images/resources/${resource}.png`} width={31.5} height={24} alt={`${resource} resource`} />
+                    <>
+                      <Modal isOpen={isOpen} onClose={onClose}>
+                        <ModalOverlay />
+                        <ModalContent>
+                          <ModalHeader>Build Order Steps</ModalHeader>
+                          <ModalCloseButton />
+                          <ModalBody>
+                            <Text>It is better and faster to upload your Build Order steps through a CSV file!</Text>
+                            <Text mt={2}>Download an example</Text>
+                            <Grid templateColumns='repeat(3, 1fr)' gap={6} mt={4}>
+                              <GridItem>
+                                <Text fontWeight="bold">Headers</Text>
                               </GridItem>
-                            ))}
-                            <GridItem>
-                              <Image src={`/images/other/population.png`} width={24} height={24} alt="population" />
-                            </GridItem>
-                            <GridItem colSpan={2}>
-                              <Image src={`/images/other/game_time.png`} width={16} height={16} alt="game time" />
-                            </GridItem>
-                            <GridItem colSpan={4} display="flex">
-                              Description
-                              <Text ml={1} color="red.400">*</Text>
-                            </GridItem>
-                          </Grid>
-                          <Grid templateColumns='repeat(12, 1fr)' gap={6}>
-                            {
-                              values.steps.length > 0 &&
-                              values.steps.map((step, stepIndex) => (
-                                <React.Fragment key={stepIndex}>
-                                  <GridItem>
-                                    <FieldText name={`steps.${stepIndex}.food`} type="number" placeholder='0' />
-                                  </GridItem>
-                                  <GridItem>
-                                    <FieldText name={`steps.${stepIndex}.gold`} type="number" placeholder='0' />
-                                  </GridItem>
-                                  <GridItem>
-                                    <FieldText name={`steps.${stepIndex}.stone`} type="number" placeholder='0' />
-                                  </GridItem>
-                                  <GridItem>
-                                    <FieldText name={`steps.${stepIndex}.wood`} type="number" placeholder='0' />
-                                  </GridItem>
-                                  <GridItem>
-                                    <FieldText name={`steps.${stepIndex}.population`} type="number" placeholder='0' />
-                                  </GridItem>
-                                  <GridItem colSpan={2}>
-                                    <FieldText name={`steps.${stepIndex}.gameTime`} placeholder='00:00' />
-                                  </GridItem>
-                                  <GridItem colSpan={4}>
-                                    <FieldText name={`steps.${stepIndex}.description`} maxLength={STEP_DESCRIPTION_MAX_LENGTH} />
-                                  </GridItem>
-                                  <GridItem display="flex">
-                                    {
-                                      values.steps.length !== 1 && <IconButton size="sm" mr={2} colorScheme="red" aria-label="delete row" icon={<DeleteIcon />} onClick={() => remove(stepIndex)} />
-                                    }
-                                    {
-                                      stepIndex === values.steps.length - 1 && <IconButton size="sm" colorScheme="green" aria-label="add row" icon={<AddIcon />} onClick={() => push(emptyStep)} />
-                                    }
-                                  </GridItem>
-                                </React.Fragment>
-                              ))
-                            }
-                          </Grid>
-                        </Box>
-                      )}
-                    </FieldArray>
+                              <GridItem colSpan={2}>
+                                <Text fontWeight="bold">Description</Text>
+                              </GridItem>
+                              <GridItem>
+                                <Text borderRight="1px" fontWeight="semibold">Food</Text>
+                              </GridItem>
+                              <GridItem colSpan={2}>
+                                <Text>Number of villagers on food</Text>
+                              </GridItem>
+                              <GridItem>
+                                <Text borderRight="1px" fontWeight="semibold">Gold</Text>
+                              </GridItem>
+                              <GridItem colSpan={2}>
+                                <Text>Number of villagers on gold</Text>
+                              </GridItem>
+                              <GridItem>
+                                <Text borderRight="1px" fontWeight="semibold">Stone</Text>
+                              </GridItem>
+                              <GridItem colSpan={2}>
+                                <Text>Number of villagers on stone</Text>
+                              </GridItem>
+                              <GridItem>
+                                <Text borderRight="1px" fontWeight="semibold">Wood</Text>
+                              </GridItem>
+                              <GridItem colSpan={2}>
+                                <Text>Number of villagers on wood</Text>
+                              </GridItem>
+                              <GridItem>
+                                <Text borderRight="1px" fontWeight="semibold">Population</Text>
+                              </GridItem>
+                              <GridItem colSpan={2}>
+                                <Text>Current population count</Text>
+                              </GridItem>
+                              <GridItem>
+                                <Text borderRight="1px" fontWeight="semibold">Game Time</Text>
+                              </GridItem>
+                              <GridItem colSpan={2}>
+                                <Text>Current game time (00:00)</Text>
+                              </GridItem>
+                              <GridItem>
+                                <Text borderRight="1px" fontWeight="semibold">Description<Box as="span" color="red">*</Box></Text>
+                              </GridItem>
+                              <GridItem colSpan={2}>
+                                <Text>Step description</Text>
+                              </GridItem>
+                            </Grid>
+                          </ModalBody>
+                          <ModalFooter>
+                            <Button colorScheme='blue' mr={3} onClick={() => { }}>Import File</Button>
+                          </ModalFooter>
+                        </ModalContent>
+                      </Modal>
+                      <FieldArray name="steps" validateOnChange={false}>
+                        {({ push, remove }) => (
+                          <Box>
+                            <Grid templateColumns='repeat(12, 1fr)' gap={6}>
+                              {['food', 'gold', 'stone', 'wood'].map(resource => (
+                                <GridItem key={`${resource}`}>
+                                  <Image src={`/images/resources/${resource}.png`} width={31.5} height={24} alt={`${resource} resource`} />
+                                </GridItem>
+                              ))}
+                              <GridItem>
+                                <Image src={`/images/other/population.png`} width={24} height={24} alt="population" />
+                              </GridItem>
+                              <GridItem colSpan={2}>
+                                <Image src={`/images/other/game_time.png`} width={16} height={16} alt="game time" />
+                              </GridItem>
+                              <GridItem colSpan={4} display="flex">
+                                Description
+                                <Text ml={1} color="red.400">*</Text>
+                              </GridItem>
+                            </Grid>
+                            <Grid templateColumns='repeat(12, 1fr)' gap={6}>
+                              {
+                                values.steps.length > 0 &&
+                                values.steps.map((step, stepIndex) => (
+                                  <React.Fragment key={stepIndex}>
+                                    <GridItem>
+                                      <FieldText name={`steps.${stepIndex}.food`} type="number" placeholder='0' />
+                                    </GridItem>
+                                    <GridItem>
+                                      <FieldText name={`steps.${stepIndex}.gold`} type="number" placeholder='0' />
+                                    </GridItem>
+                                    <GridItem>
+                                      <FieldText name={`steps.${stepIndex}.stone`} type="number" placeholder='0' />
+                                    </GridItem>
+                                    <GridItem>
+                                      <FieldText name={`steps.${stepIndex}.wood`} type="number" placeholder='0' />
+                                    </GridItem>
+                                    <GridItem>
+                                      <FieldText name={`steps.${stepIndex}.population`} type="number" placeholder='0' />
+                                    </GridItem>
+                                    <GridItem colSpan={2}>
+                                      <FieldText name={`steps.${stepIndex}.gameTime`} placeholder='00:00' />
+                                    </GridItem>
+                                    <GridItem colSpan={4}>
+                                      <FieldText name={`steps.${stepIndex}.description`} maxLength={STEP_DESCRIPTION_MAX_LENGTH} />
+                                    </GridItem>
+                                    <GridItem display="flex">
+                                      {
+                                        values.steps.length !== 1 && <IconButton size="sm" mr={2} colorScheme="red" aria-label="delete row" icon={<DeleteIcon />} onClick={() => remove(stepIndex)} />
+                                      }
+                                      {
+                                        stepIndex === values.steps.length - 1 && <IconButton size="sm" colorScheme="green" aria-label="add row" icon={<AddIcon />} onClick={() => push(emptyStep)} />
+                                      }
+                                    </GridItem>
+                                  </React.Fragment>
+                                ))
+                              }
+                            </Grid>
+                          </Box>
+                        )}
+                      </FieldArray>
+                    </>
                   )}
                 </Step>
               ))}
@@ -209,6 +276,7 @@ export const BuildOrderForm = (): JSX.Element => {
                       }
                     } else {
                       if (Object.keys(data).length === 1 && data.steps) {
+                        onOpen();
                         nextStep();
                       } else {
                         setTouched(setObjValuesToTrue(data));
