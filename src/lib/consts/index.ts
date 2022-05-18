@@ -98,7 +98,7 @@ export const tagToHexWithAlpha = {
   [Tag.WATER]: '#3182ceCC',
 };
 
-export const Patch = Object.freeze(<const>['11963', '11009', '10257']);
+export const Patch = Object.freeze(<const>['14681', '12973', '11963', '11009', '10257']);
 export type Patch = typeof Patch[number];
 
 export const youtubeRegex = new RegExp(/(?:https:\/\/)?(?:www\.)?(?:youtube\.com|youtu\.be)\/(?:watch\?v=)?(.+)/);
