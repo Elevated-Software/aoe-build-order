@@ -2,7 +2,7 @@ import { Box, Button, ButtonGroup, Center, Grid, GridItem, Heading, HStack, Popo
 import { useSession } from 'next-auth/react';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
-import { LegacyRef, useCallback, useRef } from 'react';
+import { useCallback, useRef } from 'react';
 import useSWR from 'swr';
 import { BuildOrderDetails } from '../../../components/build-orders/BuildOrderDetails';
 import { Tags } from '../../../components/build-orders/tags/Tags';

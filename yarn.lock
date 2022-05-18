@@ -3390,6 +3390,11 @@ pako@~1.0.5:
   resolved "https://registry.yarnpkg.com/pako/-/pako-1.0.11.tgz#6c9599d340d54dfd3946380252a35705a6b992bf"
   integrity sha512-4hLB8Py4zZce5s4yd9XzopqwVv/yGNhV1Bl8NTmCq1763HeK2+EwVTv+leGeL13Dnh2wfbqowVPXCIO0z4taYw==
 
+papaparse@^5.3.0:
+  version "5.3.2"
+  resolved "https://registry.yarnpkg.com/papaparse/-/papaparse-5.3.2.tgz#d1abed498a0ee299f103130a6109720404fbd467"
+  integrity sha512-6dNZu0Ki+gyV0eBsFKJhYr+MdQYAzFUGlBMNj3GNrmHxmz1lfRa24CjFObPXtjcetlOv5Ad299MhIK0znp3afw==
+
 parent-module@^1.0.0:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/parent-module/-/parent-module-1.0.1.tgz#691d2709e78c79fae3a156622452d00762caaaa2"
@@ -3618,6 +3623,13 @@ react-clientside-effect@^1.2.5:
   integrity sha512-2bL8qFW1TGBHozGGbVeyvnggRpMjibeZM2536AKNENLECutp2yfs44IL8Hmpn8qjFQ2K7A9PnYf3vc7aQq/cPA==
   dependencies:
     "@babel/runtime" "^7.12.13"
+
+react-csv-reader@^3.5.0:
+  version "3.5.0"
+  resolved "https://registry.yarnpkg.com/react-csv-reader/-/react-csv-reader-3.5.0.tgz#8121622b20111b41849a1de7eb4abe9a353d9dd5"
+  integrity sha512-wh4qsjPWnXI6DFbrh2uaKpGW7E2ZxzwKI3juK35/zcCqLLAnpI6jfspDwut9Q66MSXqEFXQ+nnMGMHJKIesH3g==
+  dependencies:
+    papaparse "^5.3.0"
 
 react-dom@^17:
   version "17.0.2"

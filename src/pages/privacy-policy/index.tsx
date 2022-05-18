@@ -8,7 +8,7 @@ const PrivacyPolicy = (): JSX.Element => {
 
         <Heading>Privacy Policy for Elevated Software LLC</Heading>
 
-        <Text>At RTS Build Orders, accessible from https://www.rtsbuildorders.com.com, one of our main priorities is the privacy of our visitors. This Privacy Policy document contains types of information that is collected and recorded by RTS Build Orders and how we use it.</Text>
+        <Text>At RTS Build Orders, accessible from https://www.rtsbuildorders.com, one of our main priorities is the privacy of our visitors. This Privacy Policy document contains types of information that is collected and recorded by RTS Build Orders and how we use it.</Text>
 
         <Text>If you have additional questions or require more information about our Privacy Policy, do not hesitate to contact us at contact@elevatedsoftware.dev</Text>
 
