@@ -12,6 +12,7 @@ import { FieldTextarea } from './FieldTextarea';
 import { AddIcon, DeleteIcon } from '@chakra-ui/icons';
 import { useRouter } from 'next/router';
 import CSVReader from 'react-csv-reader';
+import { toaster } from '../../../lib/utils/toaster';
 
 const steps = [
   { label: 'Details' },
@@ -121,6 +122,11 @@ export const BuildOrderForm = (): JSX.Element => {
 
           const buildOrderRes = await fetch(`/api/build-orders`, { method: 'POST', body: JSON.stringify(buildOrderBody) });
           const buildOrderJson = await buildOrderRes.json();
+
+          if (!buildOrderJson.buildOrders) {
+            toaster({ message: 'There was an error, try again later!', status: 'error' });
+            return;
+          }
 
           await fetch(`/api/build-orders/${buildOrderJson.buildOrders._id}/steps`, { method: 'POST', body: JSON.stringify(values.steps) });
           actions.resetForm();
